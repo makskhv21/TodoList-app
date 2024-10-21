@@ -6,8 +6,27 @@ import { useState } from 'react';
 
 function App() {
     const [selectedProject, setSelectedProject] = useState('Work 👜');
+    const [projects, setProjects] = useState(['Work 👜', 'Groceries 🛒', 'Reading List 📚', 'Personal 📝']);
 
-    const projects = ['Work 👜', 'Groceries 🛒', 'Reading List 📚', 'Personal 📝'];
+    const addProject = (newProject) => {
+        if ( newProject && !projects.includes(newProject)) {
+            setProjects([...projects, newProject])
+        }
+    }
+
+    const editProject = (oldProject, newProject) => {
+        if (newProject && oldProject !== newProject) {
+            setProjects(
+                projects.map(project => 
+                    project === oldProject ? newProject : project
+                )
+            );
+            
+            if (selectedProject === oldProject) {
+                setSelectedProject(newProject)
+            }
+        }
+    }
 
     const toggleTaskCompletion = (id) => {
         setTasks(tasks.map(task => 
@@ -32,6 +51,8 @@ function App() {
             <Sidebar 
                 projects={projects} 
                 setSelectedProject={setSelectedProject} 
+                addProject={addProject}
+                editProject={editProject}
             />
             <MainContent 
                 tasks={tasks} 
