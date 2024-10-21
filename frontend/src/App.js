@@ -21,6 +21,12 @@ function App() {
         setTasks(prevTasks => [...prevTasks, newTask]);
     };
 
+    const editTask = (id, newText) => {
+        setTasks(tasks.map(task => 
+            task.id === id ? { ...task, text: newText } : task
+        ));
+    };
+
     return(
         <div className="app">
             <Sidebar 
@@ -31,7 +37,8 @@ function App() {
                 tasks={tasks} 
                 selectedProject={selectedProject} 
                 toggleTaskCompletion={toggleTaskCompletion}
-                addTask={addTask} 
+                addTask={addTask}
+                editTask={editTask} 
             />
         </div>
     )

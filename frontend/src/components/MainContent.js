@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask }) {
+function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask, editTask }) {
     const [newTask, setNewTask] = useState('');
 
     const handleAddTask = () => {
@@ -15,6 +15,23 @@ function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask }) 
       }
     }
 
+    const [editingTaskId, setEditingTaskId] = useState(null);
+    const [editingTaskText, setEditingTaskText] = useState('');
+
+    const handleEditTask = (id) => {
+      const taskToEdit = tasks.find(task => task.id === id);
+      setEditingTaskId(id);
+      setEditingTaskText(taskToEdit.text);
+    }
+
+    const handleSaveEdit = () => {
+      if(editingTaskText.trim()) {
+        editTask(editingTaskId, editingTaskText);
+        setEditingTaskId(null);
+        setEditingTaskText('')
+      }
+    }
+
     return (
       <div className="main-content">
         <h2>{selectedProject}</h2>
@@ -26,7 +43,20 @@ function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask }) 
                     checked={task.completed} 
                     onChange={() => toggleTaskCompletion(task.id)} 
                 />
-                {task.text}
+                {editingTaskId === task.id ? (
+                  <input
+                      type="text"
+                      value={editingTaskText}
+                      onChange={(e) => setEditingTaskText(e.target.value)}
+                      onBlur={handleSaveEdit}
+                      onKeyDown={(e) => e.key === "Enter" && handleSaveEdit()}
+                  />
+                ) : (
+                  <span onDoubleClick={() => handleEditTask(task.id)}>
+                    {task.text}
+                  </span>
+                )}
+                
             </div>
           ))}
           <div className="add-task">
