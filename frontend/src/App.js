@@ -28,6 +28,14 @@ function App() {
         }
     }
 
+
+    const deleteProject = (projectToDelete) => {
+        setProjects(projects.filter(project => project !== projectToDelete));
+        if (selectedProject === projectToDelete) {
+            setSelectedProject('Work 👜'); 
+        }
+    };
+
     const toggleTaskCompletion = (id) => {
         setTasks(tasks.map(task => 
             task.id ===id ? { ...task, completed: !task.completed } : task
@@ -46,6 +54,10 @@ function App() {
         ));
     };
 
+    const deleteTask = (id) => {
+        setTasks(tasks.filter(task => task.id !== id));
+    };
+
     return(
         <div className="app">
             <Sidebar 
@@ -53,6 +65,7 @@ function App() {
                 setSelectedProject={setSelectedProject} 
                 addProject={addProject}
                 editProject={editProject}
+                deleteProject={deleteProject}
             />
             <MainContent 
                 tasks={tasks} 
@@ -60,6 +73,7 @@ function App() {
                 toggleTaskCompletion={toggleTaskCompletion}
                 addTask={addTask}
                 editTask={editTask} 
+                deleteTask={deleteTask}
             />
         </div>
     )

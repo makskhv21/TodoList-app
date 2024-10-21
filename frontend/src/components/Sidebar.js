@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 
-function Sidebar( { projects, setSelectedProject, addProject, editProject } ) {
+function Sidebar( { projects, setSelectedProject, addProject, editProject, deleteProject } ) {
     
     const [newProject, setNewProject] = useState('');
     const [editMode, setEditMode] = useState(false);
@@ -38,6 +38,7 @@ function Sidebar( { projects, setSelectedProject, addProject, editProject } ) {
                     <div key={index} className="sidebar-item">
                         <span onClick={() => setSelectedProject(project)}>{project}</span>
                         <button onClick={() => handleEditProject(project)}>Edit</button>
+                        <button onClick={() => deleteProject(project)}>Delete</button>
                     </div>
                     ))}
                     {editMode && (

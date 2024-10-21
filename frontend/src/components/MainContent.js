@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask, editTask }) {
+function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask }) {
     const [newTask, setNewTask] = useState('');
 
     const handleAddTask = () => {
@@ -56,7 +56,7 @@ function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask, ed
                     {task.text}
                   </span>
                 )}
-                
+                <button onClick={() => deleteTask(task.id)}>Delete</button>               
             </div>
           ))}
           <div className="add-task">
