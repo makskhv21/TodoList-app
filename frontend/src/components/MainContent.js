@@ -1,16 +1,18 @@
 
 
 
-function MainContent({ tasks }) {
+function MainContent({ tasks, selectedProject, toggleTaskCompletion   }) {
   
     return (
       <div className="main-content">
-        <h2>My todoList-app</h2>
+        <h2>{selectedProject}</h2>
         <div className="task-list">
           {tasks.map(task => (
-            <div key={task.id} task={task} >
+            <div key={task.id} task={task} style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
                 <input 
                     type="checkbox"
+                    checked={task.completed} 
+                    onChange={() => toggleTaskCompletion(task.id)} 
                 />
                 {task.text}
             </div>
