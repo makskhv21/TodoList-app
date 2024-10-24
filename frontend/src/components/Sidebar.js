@@ -1,23 +1,12 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import ProjectItem from './Sidebar/ProjectItem';
 
 function Sidebar({ projects, setSelectedProject, addProject, editProject, deleteProject }) {
     const [newProject, setNewProject] = useState('');
-    const [editedProjectName, setEditedProjectName] = useState('');
 
     const handleAddProject = () => {
         addProject(newProject);
         setNewProject('');
-    };
-
-    const handleEditProject = (project) => {
-        setEditedProjectName(project);
-    };
-
-    const handleSaveEdit = (project) => {
-        editProject(project, editedProjectName);
-        setEditedProjectName('');
     };
 
     return (
@@ -28,34 +17,13 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
             <hr />
             <div className="projects">
                 {projects.map((project, index) => (
-                    <div key={index} className="sidebar-item">
-                        <span onClick={() => setSelectedProject(project)}>
-                            {project === editedProjectName ? (
-                                <input
-                                    value={editedProjectName}
-                                    onChange={(e) => setEditedProjectName(e.target.value)}
-                                    onBlur={() => handleSaveEdit(project)}
-                                    onKeyDown={(e) => e.key === "Enter" && handleSaveEdit(project)}
-                                />
-                            ) : (
-                                project
-                            )}
-                        </span>
-                        <div className='btn-save-edit-delete'>
-                            {project === editedProjectName ? (
-                                <button onClick={() => handleSaveEdit(project)}>
-                                    <FontAwesomeIcon icon={faSave} />
-                                </button>
-                            ) : (
-                                <button onClick={() => handleEditProject(project)}>
-                                    <FontAwesomeIcon icon={faEdit} /> 
-                                </button>
-                            )}
-                            <button onClick={() => deleteProject(project)}>
-                                <FontAwesomeIcon icon={faTrash} />
-                            </button>
-                        </div>
-                    </div>
+                    <ProjectItem
+                        key={index}
+                        project={project}
+                        onSelect={setSelectedProject}
+                        onEdit={editProject}
+                        onDelete={deleteProject}
+                    />
                 ))}
                 <div className="sidebar-item">
                     <input
