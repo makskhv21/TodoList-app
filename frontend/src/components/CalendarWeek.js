@@ -80,7 +80,7 @@ const Calendar = () => {
             const newEventText = newEventByDay[dayKey] || '';
 
             days.push(
-                <div className="day" key={i}>
+                <div className="dayWeek" key={i}>
                     <h4>{date.toDateString()}</h4>
                     <ul>
                         {eventsForDay.map(event => (
@@ -140,8 +140,8 @@ const Calendar = () => {
     };
 
     return (
-        <div className="calendar">
-            <div className="calendar-grid">
+        <div className="calendarWeek">
+            <div className="calendarWeek-grid">
                 {renderDays()}
             </div>
         </div>
