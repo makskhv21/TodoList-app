@@ -12,7 +12,7 @@ function ProjectItem({ project, onSelect, onEdit, onDelete }) {
     };
 
     return (
-        <div className="sidebar-item">
+        <div className="sidebar-item small">
             <span onClick={() => onSelect(project)}>
                 {isEditing ? (
                     <input

@@ -117,7 +117,7 @@ const Calendar = () => {
                             <div key={day} className="calendar-cell" onClick={() => selectDayForTask(day)}>
                                 <div className="day-number">{day}</div>
                                 <div
-                                    className="task-list"
+                                    className="task-list-calendar"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         openModal(day);

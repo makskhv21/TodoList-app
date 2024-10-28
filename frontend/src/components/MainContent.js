@@ -35,9 +35,11 @@ function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask, ed
                         setEditingTaskText={setEditingTaskText}
                         handleSaveEdit={handleSaveEdit}
                     />
-                    <AddTask addTask={addTask} />
                 </>
             )}
+            <div className="add-task-container">
+                <AddTask addTask={addTask} />
+            </div>
         </div>
     );
 }
