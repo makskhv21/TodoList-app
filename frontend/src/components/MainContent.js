@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TaskList from "./MainContent/TaskList/TaskList";
 import AddTask from "./MainContent/AddTask";
-import Calendar from './Calendar'; 
+import Calendar from './MainContent/Calendar/Calendar'; 
 import CalendarWeek from './MainContent/CalendarWeek/CalendarWeek';
 
 function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask }) {
