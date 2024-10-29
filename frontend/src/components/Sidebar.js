@@ -11,10 +11,11 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
 
     return (
         <div className="sidebar">
-            <div className="sidebar-item large" onClick={() => setSelectedProject('Inbox')}>📋 Inbox</div>
-            <div className="sidebar-item large" onClick={() => setSelectedProject('Today')}>📅 Today</div>
-            <div className="sidebar-item large" onClick={() => setSelectedProject('Next 7 days')}>🗓️ Next 7 days</div>
-            <div className="sidebar-item large" onClick={() => setSelectedProject('Calendar')}>🗓️ Calendar</div>
+            <div className="sidebar-item large" onClick={() => setSelectedProject('Today')}>⏳ Today</div>
+            <div className="sidebar-item large" onClick={() => setSelectedProject('Important')}>⭐ Важливо</div>
+            <div className="sidebar-item large" onClick={() => setSelectedProject('Next 7 days')}>📆 Next 7 days</div>
+            <div className="sidebar-item large" onClick={() => setSelectedProject('Calendar')}>📖 Calendar</div>
+            <div className="sidebar-item large" onClick={() => setSelectedProject('Tasks')}>📝 Завдання</div>
             <hr />
             <div className="projects">
                 {projects.map((project, index) => (

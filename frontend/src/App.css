@@ -70,28 +70,37 @@ h2 {
 .task-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 }
 
-.task-item {
+.task-container {
+    height: auto;
+    background-color: #06c277;
+    border-radius: 15px;
+    padding-left: 20px;
+    white-space: normal;
+    overflow: hidden; 
+    overflow-wrap: break-word; 
+}
+
+.input-check {
+    width: 15px;
+    height: 15px;
+    margin-top: 20px;
+}
+
+.btn-conteiner-task {
     display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background 0.3s;
+    gap: 10px;
+    margin-right: 20px;
+    float: right;
+    padding-bottom: 10px;
 }
 
-.task-item:hover {
-    background-color: #f0f0f0;
-}
-
-.task-item span {
-    flex: 1;
-    margin-left: 10px;
-    cursor: pointer;
+.completed-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .add-task-container {
