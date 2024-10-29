@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Task from "./Task";
+import Task from "../TaskList/Task";
 
 function TaskList({toggleImportant, tasks, toggleTaskCompletion, deleteTask, editingTaskId, setEditingTaskId, editingTaskText, setEditingTaskText, handleSaveEdit }) {
     
