@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Day from './Day';
 
 const CalendarWeek = () => {
@@ -7,6 +7,17 @@ const CalendarWeek = () => {
     const [editingEventId, setEditingEventId] = useState(null);
     const [editingEventText, setEditingEventText] = useState('');
     const [selectedDay, setSelectedDay] = useState(null);
+
+    useEffect(() => {
+        const savedEvents = JSON.parse(localStorage.getItem('calendarEvents'));
+        if (savedEvents) {
+            setEventsByDay(savedEvents);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('calendarEvents', JSON.stringify(eventsByDay));
+    }, [eventsByDay]);
 
     const addEvent = (day) => {
         const newEvent = newEventByDay[day] || '';
