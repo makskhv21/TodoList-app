@@ -3,10 +3,12 @@ import TaskList from "./MainContent/TaskList/TaskList";
 import AddTask from "./MainContent/AddTask";
 import Calendar from './MainContent/Calendar/Calendar'; 
 import CalendarWeek from './MainContent/CalendarWeek/CalendarWeek';
+import Menu from './Menu';
 
 function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask }) {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editingTaskText, setEditingTaskText] = useState('');
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const handleSaveEdit = () => {
         if (editingTaskText.trim()) {
@@ -22,7 +24,11 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
 
     return (
         <div className="main-content">
-            <h2>{selectedProject}</h2>
+            <div className="header">
+                <h2 className="header-title">{selectedProject}</h2>
+                <button onClick={() => setMenuOpen(!menuOpen)} className="menu-button">...</button>
+                <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+            </div>
             {selectedProject === 'Next 7 days' ? (
                 <CalendarWeek />
             ) : selectedProject === 'Calendar' ? (
@@ -49,5 +55,4 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
     );
 }
 
-export default MainContent;
-
+export default MainContent; 
