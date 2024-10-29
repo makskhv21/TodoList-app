@@ -9,6 +9,7 @@ function AddTask({ addTask }) {
                 id: Date.now(),
                 text: newTask, 
                 completed: false,
+                important: false,
             };
             addTask(newTaskObject);
             setNewTask('');

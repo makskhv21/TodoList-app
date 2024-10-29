@@ -4,7 +4,7 @@ import AddTask from "./MainContent/AddTask";
 import Calendar from './Calendar'; 
 import CalendarWeek from './CalendarWeek';
 
-function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask }) {
+function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask }) {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editingTaskText, setEditingTaskText] = useState('');
 
@@ -16,6 +16,10 @@ function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask, ed
         }
     };
 
+    const filteredTasks = selectedProject === 'Important'
+        ? tasks.filter(task => task.important)
+        : tasks; 
+
     return (
         <div className="main-content">
             <h2>{selectedProject}</h2>
@@ -26,7 +30,7 @@ function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask, ed
             ) : (
                 <>
                     <TaskList 
-                        tasks={tasks}
+                        tasks={filteredTasks}
                         toggleTaskCompletion={toggleTaskCompletion}
                         deleteTask={deleteTask}
                         editingTaskId={editingTaskId}
@@ -34,6 +38,7 @@ function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask, ed
                         editingTaskText={editingTaskText}
                         setEditingTaskText={setEditingTaskText}
                         handleSaveEdit={handleSaveEdit}
+                        toggleImportant={toggleImportant} 
                     />
                 </>
             )}
@@ -45,3 +50,4 @@ function MainContent({ tasks, selectedProject, toggleTaskCompletion, addTask, ed
 }
 
 export default MainContent;
+

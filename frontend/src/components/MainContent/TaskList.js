@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Task from "./Task";
 
-function TaskList({ tasks, toggleTaskCompletion, deleteTask, editingTaskId, setEditingTaskId, editingTaskText, setEditingTaskText, handleSaveEdit }) {
+function TaskList({toggleImportant, tasks, toggleTaskCompletion, deleteTask, editingTaskId, setEditingTaskId, editingTaskText, setEditingTaskText, handleSaveEdit }) {
     
     const incompleteTasks = tasks.filter(task => !task.completed);
     const completedTasks = tasks.filter(task => task.completed);
@@ -20,6 +20,7 @@ function TaskList({ tasks, toggleTaskCompletion, deleteTask, editingTaskId, setE
                     key={task.id}
                     task={task}
                     toggleTaskCompletion={toggleTaskCompletion}
+                    toggleImportant={toggleImportant}
                     onEdit={() => {
                         setEditingTaskId(task.id);
                         setEditingTaskText(task.text);

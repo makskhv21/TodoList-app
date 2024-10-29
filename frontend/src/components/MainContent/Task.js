@@ -1,11 +1,11 @@
-import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons'; 
+import { faEdit, faSave, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons';
 
-function Task({ task, toggleTaskCompletion, onEdit, onDelete, isEditing, editingTaskText, setEditingTaskText, handleSaveEdit }) {
+
+function Task({ task, toggleTaskCompletion, onEdit, onDelete, isEditing, editingTaskText, setEditingTaskText, handleSaveEdit, toggleImportant }) {
     return (
-        <div className="task-container" 
-            style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+        <div className="task-container" style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
             <input 
                 className="input-check"
                 type="checkbox"
@@ -24,7 +24,10 @@ function Task({ task, toggleTaskCompletion, onEdit, onDelete, isEditing, editing
                     {task.text}
                 </span>
             )}
-            <div className="btn-conteiner-task">
+            <div className="btn-container-task">
+                <button onClick={() => toggleImportant(task.id)}>
+                    <FontAwesomeIcon icon={task.important ? faStar : faStarEmpty} />
+                </button>
                 {isEditing ? (
                     <button onClick={handleSaveEdit}>
                         <FontAwesomeIcon icon={faSave} />

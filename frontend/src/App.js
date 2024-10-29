@@ -58,6 +58,12 @@ function App() {
         setTasks(tasks.filter(task => task.id !== id));
     };
 
+    const toggleImportant = (id) => {
+        setTasks(tasks.map(task => 
+            task.id === id ? { ...task, important: !task.important } : task
+        ));
+    };
+
     return(
         <div className="app">
             <Sidebar 
@@ -74,6 +80,7 @@ function App() {
                 addTask={addTask}
                 editTask={editTask} 
                 deleteTask={deleteTask}
+                toggleImportant={toggleImportant}
             />
         </div>
     )
