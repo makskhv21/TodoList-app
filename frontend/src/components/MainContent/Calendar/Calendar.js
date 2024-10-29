@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Calendar.css';
 import CalendarHeader from './CalendarHeader';
 import CalendarGrid from './CalendarGrid';
@@ -14,6 +14,20 @@ const Calendar = () => {
     const [currentTasks, setCurrentTasks] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
     const [editedText, setEditedText] = useState('');
+
+    useEffect(() => {
+        // Load tasks from localStorage
+        const savedTasks = localStorage.getItem('tasks');
+        if (savedTasks) {
+            setTasks(JSON.parse(savedTasks));
+        }
+    }, []);
+
+    useEffect(() => {
+        // Save tasks to localStorage whenever tasks change
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
+
 
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
     const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
