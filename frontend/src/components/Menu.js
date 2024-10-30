@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Menu.css'; 
 import themes from './themes.js';
 
-const Menu = ({ isOpen, onClose, onThemeChange, selectedProject, tasks, toggleSortingAlphabetically, toggleSortingByLength, isSortedAlphabetically, isSortedByLength, toggleSortingByDate, isSortedByDate, toggleSortingByImportance, isSortedByImportance }) => {
+const Menu = ({ isOpen, onClose, onThemeChange, selectedProject, tasks, toggleSortingOption, sortOptions }) => {
     const [isSortingMenuOpen, setIsSortingMenuOpen] = useState(false);
 
     const handleThemeSelect = (themeName) => {
@@ -88,22 +88,15 @@ const Menu = ({ isOpen, onClose, onThemeChange, selectedProject, tasks, toggleSo
         <div className={`menu ${isOpen ? 'open' : ''}`}>
             <button onClick={onClose} className="close-button">✖</button>
             <ul className='optionMenu'>
-                    <li onClick={toggleSortingMenu} className="sort-button">Сортування</li>
-                    {isSortingMenuOpen && (
+            <li onClick={() => setIsSortingMenuOpen(!isSortingMenuOpen)} className="sort-button">Сортування</li>
+                {isSortingMenuOpen && (
                     <div className="sorting-menu">
                         <ul>
-                            <li onClick={toggleSortingAlphabetically}>
-                                {isSortedAlphabetically ? 'Скасувати' : 'За алфавітом'}
-                            </li>
-                            <li onClick={toggleSortingByLength}>
-                                {isSortedByLength ? 'Скасувати' : 'За довжиною'}
-                            </li>
-                            <li onClick={toggleSortingByDate}>
-                                {isSortedByDate ? 'Скасувати' : 'За датою'}
-                            </li>
-                            <li onClick={toggleSortingByImportance}>
-                                {isSortedByImportance ? 'Скасувати' : 'За важливістю'}
-                            </li>
+                            {['alphabetically', 'byLength', 'byDate', 'byImportance'].map(option => (
+                                <li key={option} onClick={() => toggleSortingOption(option)}>
+                                    {sortOptions[option] ? 'Скасувати' : `За ${option === 'alphabetically' ? 'алфавітом' : option === 'byLength' ? 'довжиною' : option === 'byDate' ? 'датою' : 'важливістю'}`}
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 )}
