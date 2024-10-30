@@ -2,7 +2,7 @@ import React from 'react';
 import './Menu.css'; 
 import themes from './themes.js';
 
-const Menu = ({ isOpen, onClose, onThemeChange, selectedProject }) => {
+const Menu = ({ isOpen, onClose, onThemeChange, selectedProject, tasks }) => {
 
     const handleThemeSelect = (themeName) => {
         onThemeChange(themeName); 
@@ -70,6 +70,15 @@ const Menu = ({ isOpen, onClose, onThemeChange, selectedProject }) => {
         onClose();
     };
 
+    const handleEmailSend = () => {
+        const emailBody = tasks.map(task => `${task.completed ? '[✓]' : '[ ]'} ${task.text}`).join('\n');
+        const emailSubject = `Завдання для проекту: ${selectedProject}`;
+        const mailtoLink = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        
+        window.open(mailtoLink);
+        onClose();
+    };
+
     return (
         <div className={`menu ${isOpen ? 'open' : ''}`}>
             <button onClick={onClose} className="close-button">✖</button>
@@ -87,7 +96,7 @@ const Menu = ({ isOpen, onClose, onThemeChange, selectedProject }) => {
                     ))}
                 </div>
                 <li onClick={handlePrint}>Друк списку</li>
-                <li onClick={onClose}>Надіслати поштою</li>
+                <li onClick={handleEmailSend}>Надіслати поштою</li>
             </ul>
         </div>
     );
