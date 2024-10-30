@@ -34,10 +34,24 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
                 <h2 className="header-title">{selectedProject}</h2>
                 <button onClick={() => setMenuOpen(!menuOpen)} className="menu-button">...</button>
                 <Menu 
+                    selectedProject={selectedProject}
                     isOpen={menuOpen} 
                     onClose={() => setMenuOpen(false)} 
                     onThemeChange={handleThemeChange}
+                    tasks={filteredTasks}
                 />
+            </div>
+            <div id="printable-area" style={{ display: 'none' }}>
+            {filteredTasks.map((task, index) => (
+                <div key={index} className="task">
+                    <input 
+                        type="checkbox" 
+                        checked={task.completed} 
+                        onChange={() => toggleTaskCompletion(task.id)}
+                    />
+                    <span>{task.text}</span>
+                </div>
+            ))}
             </div>
             {selectedProject === 'Next 7 days' ? (
                 <CalendarWeek />
