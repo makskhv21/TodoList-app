@@ -55,7 +55,9 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
         <div className="main-content" style={{ background: selectedTheme.background, color: selectedTheme.color }}>
             <div className="header">
                 <h2 className="header-title">{selectedProject}</h2>
-                <button onClick={() => setMenuOpen(!menuOpen)} className="menu-button">...</button>
+                {selectedProject !== 'Calendar' && selectedProject !== 'Next 7 days' && (
+                    <button onClick={() => setMenuOpen(!menuOpen)} className="menu-button">...</button>
+                )}
                 <Menu 
                     selectedProject={selectedProject}
                     isOpen={menuOpen} 
