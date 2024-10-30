@@ -11,10 +11,12 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
     const [editingTaskText, setEditingTaskText] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const [selectedTheme, setSelectedTheme] = useState(themes.light);
-    const [isSortedAlphabetically, setIsSortedAlphabetically] = useState(false);
-    const [isSortedByLength, setIsSortedByLength] = useState(false);
-    const [isSortedByDate, setIsSortedByDate] = useState(false);
-    const [isSortedByImportance, setIsSortedByImportance] = useState(false);
+    const [sortOptions, setSortOptions] = useState({
+        alphabetically: false,
+        byLength: false,
+        byDate: false,
+        byImportance: false
+    });
 
     const handleSaveEdit = () => {
         if (editingTaskText.trim()) {
@@ -28,58 +30,25 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
         ? tasks.filter(task => task.important)
         : tasks;
 
-
-    const sortedTasks = (() => {
-        let result = filteredTasks.slice();
-
-        if (isSortedByImportance) {
-            result.sort((a, b) => (b.important === a.important ? 0 : b.important ? 1 : -1));
-        }
-
-        if (isSortedByDate) {
-            result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        } else if (isSortedByLength) {
-            result.sort((a, b) => b.text.length - a.text.length);
-        } else if (isSortedAlphabetically) {
-            result.sort((a, b) => a.text.localeCompare(b.text));
-        }
-
-        return result;
-    })();
-
     const handleThemeChange = (themeName) => {
         setSelectedTheme(themes[themeName] || themes.light);
-    };
+    };    
 
-    const toggleSortingByImportance = () => {
-        setIsSortedByImportance(!isSortedByImportance);
-        setIsSortedAlphabetically(false);
-        setIsSortedByLength(false);
-        setIsSortedByDate(false);
-    };
+    const sortedTasks = [...filteredTasks].sort((a, b) => {
+        if (sortOptions.alphabetically) return a.text.localeCompare(b.text);
+        if (sortOptions.byImportance) return b.important - a.important;
+        if (sortOptions.byDate) return new Date(b.createdAt) - new Date(a.createdAt);
+        if (sortOptions.byLength) return b.text.length - a.text.length;
+        return 0;
+    });
 
-
-    const toggleSortingByDate = () => {
-        setIsSortedByDate(!isSortedByDate);
-        setIsSortedAlphabetically(false);
-        setIsSortedByLength(false);
-        setIsSortedByImportance(false);
-    };
-
-
-    const toggleSortingByLength = () => {
-        setIsSortedByLength(!isSortedByLength);
-        setIsSortedAlphabetically(false); 
-        setIsSortedByDate(false);
-        setIsSortedByImportance(false);
-    };
-
-
-    const toggleSortingAlphabetically = () => {
-        setIsSortedAlphabetically(!isSortedAlphabetically);
-        setIsSortedByLength(false); 
-        setIsSortedByDate(false); 
-        setIsSortedByImportance(false);
+    const toggleSortingOption = (option) => {
+        setSortOptions(prev => ({
+            alphabetically: option === 'alphabetically' ? !prev.alphabetically : false,
+            byImportance: option === 'byImportance' ? !prev.byImportance : false,
+            byDate: option === 'byDate' ? !prev.byDate : false,
+            byLength: option === 'byLength' ? !prev.byLength : false,
+        }));
     };
 
     return (
@@ -93,14 +62,8 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
                     onClose={() => setMenuOpen(false)} 
                     onThemeChange={handleThemeChange}
                     tasks={sortedTasks}
-                    toggleSortingAlphabetically={toggleSortingAlphabetically}
-                    toggleSortingByLength={toggleSortingByLength}
-                    toggleSortingByDate={toggleSortingByDate}
-                    toggleSortingByImportance={toggleSortingByImportance}
-                    isSortedAlphabetically={isSortedAlphabetically}
-                    isSortedByLength={isSortedByLength}
-                    isSortedByDate={isSortedByDate}
-                    isSortedByImportance={isSortedByImportance} 
+                    toggleSortingOption={toggleSortingOption}
+                    sortOptions={sortOptions} 
                 />
             </div>
             <div id="printable-area" style={{ display: 'none' }}>
