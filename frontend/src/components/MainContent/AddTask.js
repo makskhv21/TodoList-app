@@ -10,6 +10,7 @@ function AddTask({ addTask }) {
                 text: newTask, 
                 completed: false,
                 important: false,
+                createdAt: new Date().toISOString(),
             };
             addTask(newTaskObject);
             setNewTask('');

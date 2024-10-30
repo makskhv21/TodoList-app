@@ -11,6 +11,10 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
     const [editingTaskText, setEditingTaskText] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const [selectedTheme, setSelectedTheme] = useState(themes.light);
+    const [isSortedAlphabetically, setIsSortedAlphabetically] = useState(false);
+    const [isSortedByLength, setIsSortedByLength] = useState(false);
+    const [isSortedByDate, setIsSortedByDate] = useState(false);
+    const [isSortedByImportance, setIsSortedByImportance] = useState(false);
 
     const handleSaveEdit = () => {
         if (editingTaskText.trim()) {
@@ -22,10 +26,60 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
 
     const filteredTasks = selectedProject === 'Important'
         ? tasks.filter(task => task.important)
-        : tasks; 
+        : tasks;
+
+
+    const sortedTasks = (() => {
+        let result = filteredTasks.slice();
+
+        if (isSortedByImportance) {
+            result.sort((a, b) => (b.important === a.important ? 0 : b.important ? 1 : -1));
+        }
+
+        if (isSortedByDate) {
+            result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        } else if (isSortedByLength) {
+            result.sort((a, b) => b.text.length - a.text.length);
+        } else if (isSortedAlphabetically) {
+            result.sort((a, b) => a.text.localeCompare(b.text));
+        }
+
+        return result;
+    })();
 
     const handleThemeChange = (themeName) => {
         setSelectedTheme(themes[themeName] || themes.light);
+    };
+
+    const toggleSortingByImportance = () => {
+        setIsSortedByImportance(!isSortedByImportance);
+        setIsSortedAlphabetically(false);
+        setIsSortedByLength(false);
+        setIsSortedByDate(false);
+    };
+
+
+    const toggleSortingByDate = () => {
+        setIsSortedByDate(!isSortedByDate);
+        setIsSortedAlphabetically(false);
+        setIsSortedByLength(false);
+        setIsSortedByImportance(false);
+    };
+
+
+    const toggleSortingByLength = () => {
+        setIsSortedByLength(!isSortedByLength);
+        setIsSortedAlphabetically(false); 
+        setIsSortedByDate(false);
+        setIsSortedByImportance(false);
+    };
+
+
+    const toggleSortingAlphabetically = () => {
+        setIsSortedAlphabetically(!isSortedAlphabetically);
+        setIsSortedByLength(false); 
+        setIsSortedByDate(false); 
+        setIsSortedByImportance(false);
     };
 
     return (
@@ -38,20 +92,28 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
                     isOpen={menuOpen} 
                     onClose={() => setMenuOpen(false)} 
                     onThemeChange={handleThemeChange}
-                    tasks={filteredTasks}
+                    tasks={sortedTasks}
+                    toggleSortingAlphabetically={toggleSortingAlphabetically}
+                    toggleSortingByLength={toggleSortingByLength}
+                    toggleSortingByDate={toggleSortingByDate}
+                    toggleSortingByImportance={toggleSortingByImportance}
+                    isSortedAlphabetically={isSortedAlphabetically}
+                    isSortedByLength={isSortedByLength}
+                    isSortedByDate={isSortedByDate}
+                    isSortedByImportance={isSortedByImportance} 
                 />
             </div>
             <div id="printable-area" style={{ display: 'none' }}>
-            {filteredTasks.map((task, index) => (
-                <div key={index} className="task">
-                    <input 
-                        type="checkbox" 
-                        checked={task.completed} 
-                        onChange={() => toggleTaskCompletion(task.id)}
-                    />
-                    <span>{task.text}</span>
-                </div>
-            ))}
+                {sortedTasks.map((task, index) => (
+                    <div key={index} className="task">
+                        <input 
+                            type="checkbox" 
+                            checked={task.completed} 
+                            onChange={() => toggleTaskCompletion(task.id)}
+                        />
+                        <span>{task.text}</span>
+                    </div>
+                ))}
             </div>
             {selectedProject === 'Next 7 days' ? (
                 <CalendarWeek />
@@ -59,7 +121,7 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
                 <Calendar addTask={addTask} />
             ) : (
                 <TaskList 
-                    tasks={filteredTasks}
+                    tasks={sortedTasks}
                     toggleTaskCompletion={toggleTaskCompletion}
                     deleteTask={deleteTask}
                     editingTaskId={editingTaskId}
@@ -78,3 +140,4 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
 }
 
 export default MainContent;
+

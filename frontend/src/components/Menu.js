@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Menu.css'; 
 import themes from './themes.js';
 
-const Menu = ({ isOpen, onClose, onThemeChange, selectedProject, tasks }) => {
+const Menu = ({ isOpen, onClose, onThemeChange, selectedProject, tasks, toggleSortingAlphabetically, toggleSortingByLength, isSortedAlphabetically, isSortedByLength, toggleSortingByDate, isSortedByDate, toggleSortingByImportance, isSortedByImportance }) => {
+    const [isSortingMenuOpen, setIsSortingMenuOpen] = useState(false);
 
     const handleThemeSelect = (themeName) => {
         onThemeChange(themeName); 
@@ -79,11 +80,33 @@ const Menu = ({ isOpen, onClose, onThemeChange, selectedProject, tasks }) => {
         onClose();
     };
 
+    const toggleSortingMenu = () => {
+        setIsSortingMenuOpen(!isSortingMenuOpen);
+    };
+
     return (
         <div className={`menu ${isOpen ? 'open' : ''}`}>
             <button onClick={onClose} className="close-button">✖</button>
             <ul className='optionMenu'>
-                <li onClick={onClose}>Сортування</li>
+                    <li onClick={toggleSortingMenu} className="sort-button">Сортування</li>
+                    {isSortingMenuOpen && (
+                    <div className="sorting-menu">
+                        <ul>
+                            <li onClick={toggleSortingAlphabetically}>
+                                {isSortedAlphabetically ? 'Скасувати' : 'За алфавітом'}
+                            </li>
+                            <li onClick={toggleSortingByLength}>
+                                {isSortedByLength ? 'Скасувати' : 'За довжиною'}
+                            </li>
+                            <li onClick={toggleSortingByDate}>
+                                {isSortedByDate ? 'Скасувати' : 'За датою'}
+                            </li>
+                            <li onClick={toggleSortingByImportance}>
+                                {isSortedByImportance ? 'Скасувати' : 'За важливістю'}
+                            </li>
+                        </ul>
+                    </div>
+                )}
                 <li>Тема:</li>
                 <div className="theme-selector">
                     {Object.keys(themes).map((themeName) => (
