@@ -2,10 +2,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSave, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons';
 
-
-function Task({ task, toggleTaskCompletion, onEdit, onDelete, isEditing, editingTaskText, setEditingTaskText, handleSaveEdit, toggleImportant }) {
+function Task({ 
+    task, 
+    toggleTaskCompletion, 
+    onEdit, 
+    onDelete, 
+    isEditing, 
+    editingTaskText, 
+    setEditingTaskText, 
+    handleSaveEdit, 
+    toggleImportant, 
+    onClick 
+}) {
     return (
-        <div className="task-container" style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+        <div className="task-container" style={{ textDecoration: task.completed ? 'line-through' : 'none' }} onClick={onClick}>
             <input 
                 className="input-check"
                 type="checkbox"
@@ -14,7 +24,7 @@ function Task({ task, toggleTaskCompletion, onEdit, onDelete, isEditing, editing
             />
             {isEditing ? (
                 <input
-                    style={{ width: '85%', marginLeft: '15px', marginBottom: '13px'}}
+                    style={{ width: '85%', marginLeft: '15px', marginBottom: '13px' }}
                     type="text"
                     value={editingTaskText}
                     onChange={(e) => setEditingTaskText(e.target.value)}

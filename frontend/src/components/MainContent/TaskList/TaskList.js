@@ -1,8 +1,20 @@
 import React, { useState } from "react";
 import Task from "../TaskList/Task";
 
-function TaskList({toggleImportant, tasks, toggleTaskCompletion, deleteTask, editingTaskId, setEditingTaskId, editingTaskText, setEditingTaskText, handleSaveEdit }) {
-    
+function TaskList({ 
+    toggleImportant, 
+    tasks, 
+    toggleTaskCompletion, 
+    deleteTask, 
+    editingTaskId, 
+    setEditingTaskId, 
+    editingTaskText, 
+    setEditingTaskText, 
+    handleSaveEdit, 
+    menuTask, 
+    setMenuTask, 
+    setSelectedTask,  
+}) {
     const incompleteTasks = tasks.filter(task => !task.completed);
     const completedTasks = tasks.filter(task => task.completed);
     
@@ -10,6 +22,11 @@ function TaskList({toggleImportant, tasks, toggleTaskCompletion, deleteTask, edi
 
     const handleToggleCompleted = () => {
         setShowCompleted(prevState => !prevState);
+    };
+
+    const handleTaskClick = (task) => {
+        setSelectedTask(task);
+        setMenuTask(prev => !prev);
     };
 
     return (
@@ -30,6 +47,7 @@ function TaskList({toggleImportant, tasks, toggleTaskCompletion, deleteTask, edi
                     editingTaskText={editingTaskText}
                     setEditingTaskText={setEditingTaskText}
                     handleSaveEdit={handleSaveEdit}
+                    onClick={() => handleTaskClick(task)}
                 />
             ))}
 
@@ -55,6 +73,17 @@ function TaskList({toggleImportant, tasks, toggleTaskCompletion, deleteTask, edi
                             handleSaveEdit={handleSaveEdit}
                         />
                     ))}
+                </div>
+            )}
+            {menuTask && (
+                <div className="task-menu">
+                    <h3>Дії з завданням</h3>
+                    <button>Кроки цього завдання</button>
+                    <button>Нагадати</button>
+                    <button>Додати термін</button>
+                    <button>Повторювати</button>
+                    <button>Додати файл</button>
+                    <button>Додати нотатки</button>
                 </div>
             )}
         </div>
