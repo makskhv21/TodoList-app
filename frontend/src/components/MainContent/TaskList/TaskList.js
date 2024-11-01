@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Task from "../TaskList/Task";
 
 function TaskList({ 
@@ -22,6 +22,9 @@ function TaskList({
     const [newStep, setNewStep] = useState("");  
     const [editingStepIndex, setEditingStepIndex] = useState(null); 
     const [editingStepText, setEditingStepText] = useState("");
+    
+    const [reminderDate, setReminderDate] = useState("");
+    const [reminderTime, setReminderTime] = useState("");
 
     const handleToggleCompleted = () => {
         setShowCompleted(prevState => !prevState);
@@ -45,7 +48,7 @@ function TaskList({
                 ...prev,
                 [selectedTask.id]: {
                     ...prev[selectedTask.id],
-                    steps: [...(prev[selectedTask.id]?.steps || []), { text: newStep, completed: false }]  // Add new step with completed state
+                    steps: [...(prev[selectedTask.id]?.steps || []), { text: newStep, completed: false }]
                 }
             }));
             setNewStep("");  
@@ -90,6 +93,44 @@ function TaskList({
             setEditingStepText("");
         }
     };
+
+    const handleSetReminder = () => {
+        if (selectedTask && reminderDate && reminderTime) {
+            const reminderDateTime = new Date(`${reminderDate}T${reminderTime}`);
+            setMenuTask(prev => ({
+                ...prev,
+                [selectedTask.id]: {
+                    ...prev[selectedTask.id],
+                    reminder: reminderDateTime
+                }
+            }));
+
+            setReminderDate("");
+            setReminderTime("");
+            alert(`Нагадування встановлено на ${reminderDateTime}`);
+        }
+    };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            tasks.forEach(task => {
+                const taskReminder = menuTask[task.id]?.reminder;
+                if (taskReminder && new Date() >= taskReminder) {
+                    alert(`Час виконати завдання: "${task.text}"!`);
+                    
+                    setMenuTask(prev => ({
+                        ...prev,
+                        [task.id]: {
+                            ...prev[task.id],
+                            reminder: null 
+                        }
+                    }));
+                }
+            });
+        }, 1000);
+
+        return () => clearInterval(intervalId); 
+    }, [tasks, menuTask]);
 
     return (
         <div className="task-list">
@@ -177,7 +218,27 @@ function TaskList({
                         ))}
                     </ul>
                     <button onClick={handleAddStep}>Додати крок</button>
-                    <button>Нагадати</button>
+                    
+                    <div>
+                        <input 
+                            type="date" 
+                            value={reminderDate} 
+                            onChange={(e) => setReminderDate(e.target.value)} 
+                        />
+                        <input 
+                            type="time" 
+                            value={reminderTime} 
+                            onChange={(e) => setReminderTime(e.target.value)} 
+                        />
+                        <button onClick={handleSetReminder}>Нагадати</button>
+                    </div>
+
+                    {menuTask[selectedTask.id]?.reminder && (
+                        <div>
+                            <p>Нагадування встановлено на: {menuTask[selectedTask.id].reminder.toLocaleString()}</p>
+                        </div>
+                    )}
+
                     <button>Додати термін</button>
                     <button>Повторювати</button>
                     <button>Додати файл</button>
