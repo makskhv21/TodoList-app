@@ -172,6 +172,7 @@ function TaskList({
                             editingTaskText={editingTaskText}
                             setEditingTaskText={setEditingTaskText}
                             handleSaveEdit={handleSaveEdit}
+                            onClick={() => handleTaskClick(task)}
                         />
                     ))}
                 </div>
