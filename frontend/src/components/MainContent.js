@@ -18,9 +18,6 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
         byImportance: false
     });
 
-    const [menuTask, setMenuTask] = useState(false);
-    const [selectedTask, setSelectedTask] = useState(null);
-
     const handleSaveEdit = () => {
         if (editingTaskText.trim()) {
             editTask(editingTaskId, editingTaskText);
@@ -98,10 +95,6 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
                     setEditingTaskText={setEditingTaskText}
                     handleSaveEdit={handleSaveEdit}
                     toggleImportant={toggleImportant}
-                    menuTask={menuTask}
-                    setMenuTask={setMenuTask}
-                    setSelectedTask={setSelectedTask}
-                    selectedTask={selectedTask} 
                 />
             )}
             <div className="add-task-container">
