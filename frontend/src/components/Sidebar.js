@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProjectItem from './Sidebar/ProjectItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import QuoteModal from './QuoteModal';
+import AccountInfo from './AccountInfo';
 
 const quotes = [
     "Цитата 1: Секрет успіху – це вміння приймати невдачі.",
@@ -12,7 +13,7 @@ const quotes = [
     "Цитата 5: Ваша єдина межа – це ви самі.",
 ];
 
-function Sidebar({ projects, setSelectedProject, addProject, editProject, deleteProject }) {
+function Sidebar({ projects, setSelectedProject, addProject, editProject, deleteProject, user }) {
     const [newProject, setNewProject] = useState('');
     const [isDarkTheme, setIsDarkTheme] = useState(false);
     const [quote, setQuote] = useState(null);
@@ -44,18 +45,22 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
 
     return (
         <div className="sidebar">
-            <div className='btn-container'>            
-                <button 
-                    className={`btn-quote`} 
-                    onClick={generateQuote}>
-                    <FontAwesomeIcon icon={faLightbulb} style={{ width: '20px', color: 'yellow' }} />
-                </button>
-                <button 
-                    className={`btn-theme`} 
-                    onClick={toggleTheme}>
-                    {isDarkTheme ? '🌞' : '🌜'}
-                </button>
+            <div className='container-header'>            
+                <AccountInfo user={user} />
+                <div className='btn-container'>
+                    <button 
+                        className={`btn-quote`} 
+                        onClick={generateQuote}>
+                        <FontAwesomeIcon icon={faLightbulb} style={{ width: '20px', color: 'yellow' }} />
+                    </button>
+                    <button 
+                        className={`btn-theme`} 
+                        onClick={toggleTheme}>
+                        {isDarkTheme ? '🌞' : '🌜'}
+                    </button>
+                </div>
             </div>
+            <hr />
             <div className="sidebar-item large" onClick={() => setSelectedProject('Today')}>⏳ Today</div>
             <div className="sidebar-item large" onClick={() => setSelectedProject('Important')}>⭐ Важливо</div>
             <div className="sidebar-item large" onClick={() => setSelectedProject('Next 7 days')}>📆 Next 7 days</div>
