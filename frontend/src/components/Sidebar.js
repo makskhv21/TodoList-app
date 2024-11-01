@@ -1,9 +1,28 @@
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react';
 import ProjectItem from './Sidebar/ProjectItem';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import QuoteModal from './QuoteModal';
+
+const quotes = [
+    "Цитата 1: Секрет успіху – це вміння приймати невдачі.",
+    "Цитата 2: Ваша робота заповнить велику частину вашого життя.",
+    "Цитата 3: Успіх – це не ключ до щастя. Щастя – це ключ до успіху.",
+    "Цитата 4: Не бійся зробити перший крок. Не має значення, наскільки малим він буде.",
+    "Цитата 5: Ваша єдина межа – це ви самі.",
+];
 
 function Sidebar({ projects, setSelectedProject, addProject, editProject, deleteProject }) {
     const [newProject, setNewProject] = useState('');
     const [isDarkTheme, setIsDarkTheme] = useState(false);
+    const [quote, setQuote] = useState(null);
+    const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+
+    useEffect(() => {
+        const today = new Date();
+        const dayOfYear = today.getDate() % quotes.length;
+        setQuote(quotes[dayOfYear]);
+    }, []);
 
     const handleAddProject = () => {
         addProject(newProject);
@@ -15,13 +34,28 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
         document.documentElement.setAttribute('data-theme', isDarkTheme ? 'light' : 'dark');
     };
 
+    const generateQuote = () => {
+        setIsQuoteModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsQuoteModalOpen(false); 
+    };
+
     return (
         <div className="sidebar">
-            <button 
-                className='btn-theme' 
-                onClick={toggleTheme}>
-                {isDarkTheme ? '🌞' : '🌜'}
-            </button>
+            <div className='btn-container'>            
+                <button 
+                    className={`btn-quote`} 
+                    onClick={generateQuote}>
+                    <FontAwesomeIcon icon={faLightbulb} style={{ width: '20px', color: 'yellow' }} />
+                </button>
+                <button 
+                    className={`btn-theme`} 
+                    onClick={toggleTheme}>
+                    {isDarkTheme ? '🌞' : '🌜'}
+                </button>
+            </div>
             <div className="sidebar-item large" onClick={() => setSelectedProject('Today')}>⏳ Today</div>
             <div className="sidebar-item large" onClick={() => setSelectedProject('Important')}>⭐ Важливо</div>
             <div className="sidebar-item large" onClick={() => setSelectedProject('Next 7 days')}>📆 Next 7 days</div>
@@ -48,6 +82,8 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
                     <button onClick={handleAddProject}>+</button>
                 </div>
             </div>
+
+            <QuoteModal quote={quote} onClose={closeModal} isOpen={isQuoteModalOpen} />
         </div>
     );
 }
