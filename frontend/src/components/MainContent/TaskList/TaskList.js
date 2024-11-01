@@ -25,6 +25,7 @@ function TaskList({
     
     const [reminderDate, setReminderDate] = useState("");
     const [reminderTime, setReminderTime] = useState("");
+    const [termDate, setTermDate] = useState("");
 
     const handleToggleCompleted = () => {
         setShowCompleted(prevState => !prevState);
@@ -108,6 +109,20 @@ function TaskList({
             setReminderDate("");
             setReminderTime("");
             alert(`Нагадування встановлено на ${reminderDateTime}`);
+        }
+    };
+
+    const handleSetTermDate = () => {
+        if (selectedTask && termDate) {
+            setMenuTask(prev => ({
+                ...prev,
+                [selectedTask.id]: {
+                    ...prev[selectedTask.id],
+                    term: termDate
+                }
+            }));
+            setTermDate("");
+            alert(`Термін встановлено на ${termDate}`);
         }
     };
 
@@ -240,7 +255,21 @@ function TaskList({
                         </div>
                     )}
 
-                    <button>Додати термін</button>
+                    <div>
+                        <input 
+                            type="date" 
+                            value={termDate} 
+                            onChange={(e) => setTermDate(e.target.value)} 
+                        />
+                        <button onClick={handleSetTermDate}>Додати термін</button>
+                    </div>
+
+                    {menuTask[selectedTask.id]?.term && (
+                        <div>
+                            <p>Термін встановлено на: {menuTask[selectedTask.id].term}</p>
+                        </div>
+                    )}
+                    
                     <button>Повторювати</button>
                     <button>Додати файл</button>
                     <button>Додати нотатки</button>
