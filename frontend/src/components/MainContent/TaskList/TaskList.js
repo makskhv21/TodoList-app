@@ -32,7 +32,7 @@ function TaskList({
     const [periodType, setPeriodType] = useState("days");
 
     const [selectedFile, setSelectedFile] = useState(null);
-
+    const [noteText, setNoteText] = useState(""); 
 
     const handleToggleCompleted = () => {
         setShowCompleted(prevState => !prevState);
@@ -202,6 +202,7 @@ function TaskList({
             setNoteText("");
         }
     };
+    
 
     return (
         <div className="task-list">
@@ -382,7 +383,23 @@ function TaskList({
                             </a>
                         </div>
                     )}
-                    <button>Додати нотатки</button>
+
+                    <div>
+                        <textarea
+                            value={noteText}
+                            onChange={(e) => setNoteText(e.target.value)}
+                            placeholder="Введіть вашу нотатку..."
+                            rows="3"
+                            style={{ width: "100%", marginBottom: "10px" }}
+                        />
+                        {menuTask[selectedTask.id]?.notes && (
+                            <ul className="notes-list">
+                                {menuTask[selectedTask.id].notes.map((note, index) => (
+                                    <li key={index}>{note}</li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
                 </div>
             )}
         </div>
