@@ -112,16 +112,7 @@
     color:#244568;
 }
 
-.task {
-    background-color: #f1f1f1;
-    border-radius: 4px;
-    margin: 2px 0;
-    padding: 5px;
-    max-width: 400px;
-    white-space: normal;
-    overflow: hidden; 
-    overflow-wrap: break-word; 
-}
+
 
 .task-input-container {
     display: flex;

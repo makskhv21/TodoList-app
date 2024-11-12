@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import TaskList from "./MainContent/TaskList/TaskList";
-import AddTask from "./MainContent/AddTask";
-import Calendar from './MainContent/Calendar/Calendar'; 
-import CalendarWeek from './MainContent/CalendarWeek/CalendarWeek';
-import Menu from './Menu';
-import themes from './themes';
+import "./MainContent.css"
+import TaskList from "./TaskList/TaskList";
+import AddTask from "./AddTask/AddTask";
+import Calendar from './Calendar/Calendar'; 
+import CalendarWeek from './CalendarWeek/CalendarWeek';
+import Menu from './Menu/Menu';
+import themes from './Menu/themes';
 
 function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask }) {
     const [editingTaskId, setEditingTaskId] = useState(null);

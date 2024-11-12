@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './AddTask'
 
 function AddTask({ addTask }) {
     const [newTask, setNewTask] = useState('');
@@ -18,7 +19,7 @@ function AddTask({ addTask }) {
     };
 
     return (
-        <div className="add-task">
+        <div>
             <input 
                 type="text" 
                 value={newTask} 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Calendar.css';
-import CalendarHeader from './CalendarHeader';
-import CalendarGrid from './CalendarGrid';
-import TaskInput from './TaskInput';
-import TaskModal from './TaskModal';
+import CalendarHeader from './CalendarHeader/CalendarHeader';
+import CalendarGrid from './CalendarGrid/CalendarGrid';
+import TaskInput from './TaskInput/TaskInput';
+import TaskModal from './TaskModal/TaskModal';
 
 const Calendar = () => {
     const [currentDate, setCurrentDate] = useState(new Date());

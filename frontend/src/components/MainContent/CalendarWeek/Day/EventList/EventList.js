@@ -1,5 +1,5 @@
 import React from 'react';
-import Event from './Event';
+import Event from './Event/Event';
 
 const EventList = ({ events, onEdit, onDelete, isEditing, onSave, editingText, onTextChange }) => (
     <ul>

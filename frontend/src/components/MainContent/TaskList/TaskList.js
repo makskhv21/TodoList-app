@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import Task from "../TaskList/Task";
-import MenuTask from "./compTaskList/MenuTask"
+import './TaskList'
+
+import Task from "./Task/Task";
+import MenuTask from "./MenuTask/MenuTask"
 
 function TaskList({ 
     toggleImportant, 

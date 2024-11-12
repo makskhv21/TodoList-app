@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Day from './Day';
+import Day from './Day/Day';
+import './CalendarWeek';
 
 const CalendarWeek = () => {
     const [eventsByDay, setEventsByDay] = useState({});

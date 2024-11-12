@@ -1,5 +1,6 @@
 import React from 'react';
-import EventList from './EventList';
+import EventList from './EventList/EventList';
+import './Day'
 
 const Day = ({ date, events, newEventText, onNewEventChange, onAddEvent, onEdit, onDelete, isEditing, onSave, editingText, onTextChange }) => (
     <div className="dayWeek">

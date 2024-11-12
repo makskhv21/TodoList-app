@@ -1,10 +1,10 @@
 import React, {useState, useEffect } from "react";
-import TaskSteps from "./TaskSteps"
-import Reminder from "./Reminder";
-import Term from "./Term";
-import Repeat from "./Repeat";
-import FileUpload from "./FileUpload"
-import Notes from "./Notes"
+import TaskSteps from "./TaskSteps/TaskSteps"
+import Reminder from "./Reminder/Reminder";
+import Term from "./Term/Term";
+import Repeat from "./Repeat/Repeat";
+import FileUpload from "./FileUpload/FileUpload"
+import Notes from "./Notes/Notes"
 
 function MenuTask({ menuTask, setMenuTask, selectedTask, tasks }) {
 

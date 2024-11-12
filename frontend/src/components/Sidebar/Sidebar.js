@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import ProjectItem from './Sidebar/ProjectItem';
+import "./Sidebar"
+
+import ProjectItem from './ProjectItem/ProjectItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
-import QuoteModal from './QuoteModal';
-import AccountInfo from './AccountInfo';
+import QuoteModal from './QuoteModal/QuoteModal';
+import AccountInfo from './AccountInfo/AccountInfo';
 
 const quotes = [
     "Цитата 1: Секрет успіху – це вміння приймати невдачі.",
