@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
+import iconLock from './img/iconLock.png';
+import iconUser from './img/iconUser.png';
+
 import iconEyeClose from './img/iconEyeClose.png';
 import iconEyeOpen from './img/iconEyeOpen.png';
 
@@ -30,6 +33,7 @@ const Login = ({ onLogin }) => {
 
                 <form onSubmit={handleSubmit} className="login-form">
                     <div className="input-group">
+                        <img src={iconLock} alt="Email Icon" className="input-icon" />
                         <input
                             type="email"
                             id="email"
@@ -43,6 +47,7 @@ const Login = ({ onLogin }) => {
                     </div>
 
                     <div className="input-group">
+                        <img src={iconUser} alt="Password Icon" className="input-icon" />
                         <input
                             type={showPassword ? "text" : "password"}
                             id="password"
