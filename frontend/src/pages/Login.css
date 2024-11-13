@@ -1,0 +1,129 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #F0F1FF;
+}
+
+.login-box {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+    height: 50px;
+    padding-right: 40px; 
+    box-sizing: border-box;
+}
+
+.input-field:focus {
+    border-color: #5cb85c;
+    outline: none;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.eye-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.login-btn {
+    padding: 12px;
+    border: none;
+    background-color: #7950F2;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    height: 50px;
+}
+
+.login-btn:hover {
+    background-color: #6332f6;
+}
+
+.login-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.footer {
+    margin-top: 20px;
+}
+
+.footer-text {
+    font-size: 16px;
+    color: #777;
+}
+
+.footer-link {
+    color: #6332f6;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-box {
+    animation: fadeIn 0.5s ease-in-out;
+}
