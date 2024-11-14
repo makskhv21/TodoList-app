@@ -88,19 +88,25 @@ const Menu = ({ isOpen, onClose, onThemeChange, selectedProject, tasks, toggleSo
         <div className={`menu ${isOpen ? 'open' : ''}`}>
             <button onClick={onClose} className="close-button">✖</button>
             <ul className='optionMenu'>
-            <li onClick={() => setIsSortingMenuOpen(!isSortingMenuOpen)} className="sort-button">Сортування</li>
+                <li onClick={() => setIsSortingMenuOpen(!isSortingMenuOpen)} className="sort-button">Сортування</li>
                 {isSortingMenuOpen && (
                     <div className="sorting-menu">
                         <ul>
-                            {['alphabetically', 'byLength', 'byDate', 'byImportance'].map(option => (
-                                <li key={option} onClick={() => toggleSortingOption(option)}>
-                                    {sortOptions[option] ? 'Скасувати' : `За ${option === 'alphabetically' ? 'алфавітом' : option === 'byLength' ? 'довжиною' : option === 'byDate' ? 'датою' : 'важливістю'}`}
+                            {[
+                                { id: 'alphabetically', label: 'алфавітом', icon: '🔤' },
+                                { id: 'byLength', label: 'довжиною', icon: '📏' },
+                                { id: 'byDate', label: 'датою', icon: '⏰' },
+                                { id: 'byImportance', label: 'важливістю', icon: '🔔' },
+                            ].map(option => (
+                                <li key={option.id} onClick={() => toggleSortingOption(option.id)}>
+                                    <span className="icon">{option.icon}</span>{' '}
+                                    {sortOptions[option.id] ? 'Скасувати' : `За ${option.label}`}
                                 </li>
                             ))}
                         </ul>
                     </div>
                 )}
-                <li>Тема:</li>
+                <li className='themaLi'>Тема:</li>
                 <div className="theme-selector">
                     {Object.keys(themes).map((themeName) => (
                         <div 

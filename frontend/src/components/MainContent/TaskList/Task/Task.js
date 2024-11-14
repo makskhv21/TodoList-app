@@ -27,13 +27,13 @@ function Task({
             />
             {isEditing ? (
                 <input
-                    style={{ width: '85%', marginLeft: '15px', marginBottom: '13px' }}
+                    style={{ width: '65%', marginLeft: '5px', marginBottom: '8px', marginRight: '10px'}}
                     type="text"
                     value={editingTaskText}
                     onChange={(e) => setEditingTaskText(e.target.value)}
                 />
-            ) : (
-                <span onDoubleClick={onEdit}>
+            ) : (                
+                <span onDoubleClick={onEdit} >
                     {task.text}
                 </span>
             )}
@@ -43,15 +43,15 @@ function Task({
                 </button>
                 {isEditing ? (
                     <button onClick={handleSaveEdit}>
-                        <FontAwesomeIcon icon={faSave} />
+                        <FontAwesomeIcon icon={faSave} className='btn-task-icon' />
                     </button>
                 ) : (
                     <button onClick={onEdit}>
-                        <FontAwesomeIcon icon={faEdit} /> 
+                        <FontAwesomeIcon icon={faEdit} className='btn-task-icon'/> 
                     </button> 
                 )}
                 <button onClick={onDelete}>
-                    <FontAwesomeIcon icon={faTrash} /> 
+                    <FontAwesomeIcon icon={faTrash} className='btn-task-icon' /> 
                 </button>
             </div>
         </div>

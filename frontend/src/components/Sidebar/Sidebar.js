@@ -3,7 +3,7 @@ import "./Sidebar"
 
 import ProjectItem from './ProjectItem/ProjectItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import { faLightbulb, faPlus } from '@fortawesome/free-solid-svg-icons';
 import QuoteModal from './QuoteModal/QuoteModal';
 import AccountInfo from './AccountInfo/AccountInfo';
 
@@ -64,10 +64,10 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
             </div>
             <hr />
             <div className="sidebar-item large" onClick={() => setSelectedProject('Today')}>⏳ Today</div>
-            <div className="sidebar-item large" onClick={() => setSelectedProject('Important')}>⭐ Важливо</div>
+            <div className="sidebar-item large" onClick={() => setSelectedProject('Important')}>⭐ Important</div>
             <div className="sidebar-item large" onClick={() => setSelectedProject('Next 7 days')}>📆 Next 7 days</div>
             <div className="sidebar-item large" onClick={() => setSelectedProject('Calendar')}>📖 Calendar</div>
-            <div className="sidebar-item large" onClick={() => setSelectedProject('Tasks')}>📝 Завдання</div>
+            <div className="sidebar-item large" onClick={() => setSelectedProject('Tasks')}>📝 Missed goals</div>
             <hr />
             <div className="projects">
                 {projects.map((project, index) => (
@@ -79,14 +79,16 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
                         onDelete={deleteProject}
                     />
                 ))}
-                <div className="sidebar-item">
+                <div className="sidebar-item newProject">
                     <input
                         type="text"
                         value={newProject}
                         onChange={(e) => setNewProject(e.target.value)}
-                        placeholder="New project name"
+                        placeholder="New list"
                     />
-                    <button onClick={handleAddProject}>+</button>
+                    <button onClick={handleAddProject}>
+                        <FontAwesomeIcon icon={faPlus}  />
+                    </button>
                 </div>
             </div>
 

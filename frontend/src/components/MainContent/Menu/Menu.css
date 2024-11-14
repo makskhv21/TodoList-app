@@ -43,11 +43,19 @@
     right: 5px;
 }
 
+.close-button:hover {
+    background-color: #9568C9;
+}
+
 .theme-selector {
     display: flex;
     flex-wrap: wrap; 
     gap: 10px;
     margin: 10px 0; 
+}
+
+.optionMenu {
+    font-size: 16px;
 }
 
 .theme-square {
@@ -62,9 +70,6 @@
     transform: scale(1.1);
     border-color: #aaa;
 }
-
-
-
 
 .sort-button {
     margin: 0;
@@ -98,4 +103,8 @@
 
 .sorting-menu li:hover {
     background-color: #f0f0f0;
+}
+
+.themaLi:hover {
+    cursor: default;
 }

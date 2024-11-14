@@ -17,6 +17,7 @@ function ProjectItem({ project, onSelect, onEdit, onDelete }) {
             <span onClick={() => onSelect(project)}>
                 {isEditing ? (
                     <input
+                        className='editingInput'
                         value={editedProjectName}
                         onChange={(e) => setEditedProjectName(e.target.value)}
                         onBlur={handleSaveEdit}
@@ -41,7 +42,7 @@ function ProjectItem({ project, onSelect, onEdit, onDelete }) {
                 </button>
             </div>
         </div>
-    );
-}
+    )
+};
 
 export default ProjectItem;

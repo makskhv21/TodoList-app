@@ -19,7 +19,7 @@ const AccountInfo = () => {
         <div className="account-info-container" onClick={handleOpenModal}>
             <img src={avatar} alt='avatar' className="account-photo" />
             <div className='account-description'>
-                <h2 className="account-name">Maksim Khvyts</h2>
+                <h2 className="account-name">Username</h2>
                 <p className="account-email">myemail@example.com</p>
             </div>
             <AccountModal isOpen={isModalOpen} onClose={handleCloseModal} />
