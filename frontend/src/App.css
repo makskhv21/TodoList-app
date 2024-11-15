@@ -198,6 +198,7 @@ html, body {
 }
 
 .modal-title {
+    text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
@@ -217,14 +218,15 @@ html, body {
 .tabs {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
-    background-color: #3bc0d4;
+    padding: 5px 15px;
+    padding-bottom: 13px;
+    background-color: #2349ef;
+    border-radius: 5px;
 }
 
 .tab {
     flex: 1;
-    padding: 10px;
-    border: none;
+    padding: 10px 5px;
     background: transparent;
     cursor: pointer;
     font-weight: bold;
@@ -232,33 +234,25 @@ html, body {
 }
 
 .tab:hover {
-    background: #f0f0f0;
-    color: #007BFF;
+    background: #739bce;
+    color: #ffffff;
 }
 
 .active {
-    border-bottom: 2px solid #007BFF;
-    color: #007BFF;
+    border: 1px solid #fcfcfc;
+    color: #ffffff;
 }
 
 .tab-content {
     margin-top: 15px;
 }
 
-.account-avatar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
 
-.avatar-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 15px;
-    border: 2px solid #007BFF;
-}
 
+
+
+
+/*
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -301,7 +295,7 @@ button:hover {
     background: #dc3545;
     color: white;
     margin-top: 20px;
-}
+}*/
 
 
 .btn-save-edit-delete {

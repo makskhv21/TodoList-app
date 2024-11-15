@@ -4,6 +4,7 @@ import SecurityTab from './SecurityTab';
 import SettingsTab from './SettingsTab';
 import HelpTab from './HelpTab';
 import avatar from "../avatar.png";
+import './AccountModal.css';
 
 const AccountModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
