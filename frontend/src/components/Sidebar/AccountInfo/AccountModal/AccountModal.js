@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import ProfileTab from './ProfileTab';
-import SecurityTab from './SecurityTab';
-import SettingsTab from './SettingsTab';
-import HelpTab from './HelpTab';
-import avatar from "../avatar.png";
+
+import avatar from "../img/avatar.png";
 import './AccountModal.css';
+
+import ProfileTab from './ProfileTab/ProfileTab';
+import SecurityTab from './SecurityTab/SecurityTab';
+import SettingsTab from './SettingsTab/SettingsTab';
+import HelpTab from './HelpTab/HelpTab';
 
 const AccountModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;

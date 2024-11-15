@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import iconSetting from './img/iconSetting.png';
-import iconRenameCamera from './img/iconRenameCamera.png';
-import dayIcon from './img/dayIcon.png';
-import nightIcon from './img/nightIcon.png';
 
 import './ProfileTab.css'
+
+import iconSetting from '../img/iconSetting.png';
+import iconRenameCamera from '../img/iconRenameCamera.png';
+import dayIcon from '../img/dayIcon.png';
+import nightIcon from '../img/nightIcon.png';
+
 
 const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData }) => {
     const [isEditing, setIsEditing] = useState(false);

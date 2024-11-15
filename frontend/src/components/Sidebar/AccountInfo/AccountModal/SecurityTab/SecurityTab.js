@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+
 import './SecurityTab.css';
 
-import iconEyeOpen from '../../../../pages/img/iconEyeOpen.png';
-import iconEyeClose from '../../../../pages/img/iconEyeClose.png';
+import iconEyeOpen from '../../../../../pages/img/iconEyeOpen.png';
+import iconEyeClose from '../../../../../pages/img/iconEyeClose.png';
+
 
 const SecurityTab = () => {
     const [newPassword, setNewPassword] = useState('');

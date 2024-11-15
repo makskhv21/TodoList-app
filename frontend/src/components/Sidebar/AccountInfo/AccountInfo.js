@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import "./AccountInfo"
-import avatar from "./avatar.png";
+import avatar from "./img/avatar.png";
 import AccountModal from './AccountModal/AccountModal';
 
 const AccountInfo = () => {
