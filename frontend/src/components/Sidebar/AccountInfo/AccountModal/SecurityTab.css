@@ -1,0 +1,134 @@
+.account-security {
+    width: 100%;
+    text-align: left;
+}
+
+.account-security h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 0.8rem 0.5rem;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+}
+
+.input-wrapper input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.toggle-visibility {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-80%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.toggle-visibility:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.toggle-visibility img {
+    width: 1.2rem;
+    height: 1.2rem;
+    filter: grayscale(100%);
+    transition: filter 0.3s;
+}
+
+.toggle-visibility:hover img {
+    filter: grayscale(0%);
+}
+
+.password-strength-bar {
+    display: flex;
+    margin-left: 50px;
+    width: 80%;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    overflow: hidden;
+}
+
+.password-strength-bar div {
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+}
+
+.weak {
+    background-color: #ff4d4d;
+}
+
+.medium {
+    background-color: #ffa500;
+}
+
+.strong {
+    background-color: #28a745;
+}
+
+.password-strength-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.password-errors {
+    color: red;
+    margin-top: 0.5rem;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.password-errors li {
+    font-size: 0.9rem;
+}
+
+.password-strength-label {
+    margin-left: 50px;
+}
+
+.error-message {
+    color: #dc3545;
+}
+
+.success-message {
+    color: #28a745;
+    margin-left: 3.1rem;
+}
+
+.container-btn-security {
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+}
