@@ -1,50 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './SettingsTab.css'
 
-const SettingsTab = ({ formData, setFormData, emailError, setEmailError }) => {
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-
-        if (name === "email") {
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            setEmailError(emailPattern.test(value) ? "" : "Invalid email format");
+const SettingsTab = ({ formData, setFormData }) => {
+    const handleAccountDeletion = () => {
+        if (window.confirm("Are you sure you want to delete your account? This action is irreversible.")) {
+            alert("Account deleted!");
         }
-    };
-
-    const handleSaveChanges = () => {
-        const confirmed = window.confirm("Are you sure you want to save your changes?");
-        if (confirmed) {
-            alert('Changes saved successfully!');
-        }
-    };
-
-    const handleResetChanges = () => {
-        setFormData({
-            username: "My name",
-            email: "myemail@example.com",
-        });
-        setEmailError("");
     };
 
     return (
         <div className="account-settings">
             <h3>Edit Profile</h3>
-            <input
-                type="text"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                placeholder="Username"
-            />
-            <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email"
-            />
-            <button onClick={handleSaveChanges}>Save Changes</button>
-            <button onClick={handleResetChanges}>Reset Changes</button>
+
+            <div className="language-settings">
+                <h4>Language Settings</h4>
+                <select
+                    value={formData.language}
+                    onChange={(e) => setFormData({ ...formData, language: e.target.value })}
+                    className="select-language"
+                >
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                </select>
+            </div>
+
+            <div className="notification-sounds">
+                <h4>Notification Preferences</h4>
+                <div>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={formData.notificationSounds}
+                            onChange={(e) => setFormData({ ...formData, notificationSounds: e.target.checked })}
+                            className="checkbox"
+                        />
+                        Enable Sound Notifications
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={formData.pushNotifications}
+                            onChange={(e) => setFormData({ ...formData, pushNotifications: e.target.checked })}
+                            className="checkbox"
+                        />
+                        Enable Push Notifications
+                    </label>
+                </div>
+            </div>
+
+            <div className="account-deletion">
+                <h4>Account Deletion</h4>
+                <p>If you want to delete your account, please click the button below. This action is irreversible.</p>
+                <button onClick={handleAccountDeletion} className="delete-btn">Delete Account</button>
+            </div>
+
         </div>
     );
 };

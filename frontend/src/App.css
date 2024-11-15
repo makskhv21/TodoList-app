@@ -290,13 +290,12 @@ button:hover {
     color: red;
     font-size: 12px;
 }
-
+*/
 .modal-logout {
     background: #dc3545;
     color: white;
     margin-top: 20px;
-}*/
-
+}
 
 .btn-save-edit-delete {
     display: flex;
