@@ -98,9 +98,11 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
                     toggleImportant={toggleImportant}
                 />
             )}
-            <div className="add-task-container">
-                <AddTask addTask={addTask} />
-            </div>
+            {selectedProject !== 'Calendar' && selectedProject !== 'Next 7 days' && (
+                <div className="add-task-container">
+                    <AddTask addTask={addTask} />
+                </div>
+            )}
         </div>
     );
 }
