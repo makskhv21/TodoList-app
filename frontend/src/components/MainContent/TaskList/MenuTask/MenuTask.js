@@ -6,6 +6,8 @@ import Repeat from "./Repeat/Repeat";
 import FileUpload from "./FileUpload/FileUpload"
 import Notes from "./Notes/Notes"
 
+import './MenuTask.css';
+
 function MenuTask({ menuTask, setMenuTask, selectedTask, tasks }) {
 
     return (

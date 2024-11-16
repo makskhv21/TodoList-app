@@ -1,24 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-function Notes({ selectedTask, menuTask }) {
+function Notes() {
     const [note, setNote] = useState("");
+    const textAreaRef = useRef(null);
+    
+    useEffect(() => {
+        if (textAreaRef.current) {
+            textAreaRef.current.style.height = "auto"; 
+            textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+        }
+    }, [note]);
 
     return (
         <div>
             <textarea
+                ref={textAreaRef}
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="Введіть вашу нотатку..."
-                rows="3"
-                style={{ width: "100%", marginBottom: "10px" }}
+                rows="1"
+                style={{
+                    width: "90%",
+                    minHeight: "40px",
+                    resize: "none",
+                    overflow: "hidden",
+                }}
             />
-            {menuTask[selectedTask.id]?.notes && (
-                <ul className="notes-list">
-                    {menuTask[selectedTask.id].notes.map((note, index) => (
-                        <li key={index}>{note}</li>
-                    ))}
-                </ul>
-            )}
         </div>
     );
 }

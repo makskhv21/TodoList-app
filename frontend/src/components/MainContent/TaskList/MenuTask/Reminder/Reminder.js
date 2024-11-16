@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './Reminder.css';
 
 function Reminder({ selectedTask, setMenuTask, menuTask, tasks }) {
     const [reminderDate, setReminderDate] = useState("");
@@ -20,7 +21,18 @@ function Reminder({ selectedTask, setMenuTask, menuTask, tasks }) {
         }
     };
 
-    
+    const handleDeleteReminder = () => {
+        if (selectedTask) {
+            setMenuTask(prev => ({
+                ...prev,
+                [selectedTask.id]: {
+                    ...prev[selectedTask.id],
+                    reminder: null
+                }
+            }));
+        }
+    };
+
     useEffect(() => {
         const intervalId = setInterval(() => {
             tasks.forEach(task => {
@@ -43,23 +55,28 @@ function Reminder({ selectedTask, setMenuTask, menuTask, tasks }) {
     }, [tasks, menuTask]);
 
     return (
-        <div>
-            <input
-                type="date"
-                value={reminderDate}
-                onChange={(e) => setReminderDate(e.target.value)}
-            />
-            <input
-                type="time"
-                value={reminderTime}
-                onChange={(e) => setReminderTime(e.target.value)}
-            />
-            <button onClick={handleSetReminder}>Нагадати</button>
-            {menuTask[selectedTask.id]?.reminder && (
-                <div>
-                    <p>Нагадування встановлено на: {menuTask[selectedTask.id].reminder.toLocaleString()}</p>
-                </div>
-            )}
+        <div className="container-reminder">
+            <div className="container-reminder-input">
+                <input
+                    type="date"
+                    value={reminderDate}
+                    onChange={(e) => setReminderDate(e.target.value)}
+                />
+                <input
+                    type="time"
+                    value={reminderTime}
+                    onChange={(e) => setReminderTime(e.target.value)}
+                />
+            </div>
+            <div>
+                <button className="container-reminder-button" onClick={handleSetReminder}>Нагадати</button>
+                {menuTask[selectedTask.id]?.reminder && (
+                    <div className="reminder-info">
+                        <p>Нагадування встановлено на: {menuTask[selectedTask.id].reminder.toLocaleString()}</p>
+                        <button className="delete-button" onClick={handleDeleteReminder}>&times;</button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

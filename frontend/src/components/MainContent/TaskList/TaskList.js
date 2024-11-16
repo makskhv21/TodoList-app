@@ -58,6 +58,7 @@ function TaskList({
                     setEditingTaskText={setEditingTaskText}
                     handleSaveEdit={handleSaveEdit}
                     onClick={() => handleTaskClick(task)}
+                    isMenuVisible={selectedTask?.id === task.id && menuTask[task.id]?.visible}
                 />
             ))}
 
@@ -81,6 +82,7 @@ function TaskList({
                             setEditingTaskText={setEditingTaskText}
                             handleSaveEdit={handleSaveEdit}
                             onClick={() => handleTaskClick(task)}
+                            isMenuVisible={selectedTask?.id === task.id && menuTask[task.id]?.visible}
                         />
                     ))}
                 </div>

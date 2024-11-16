@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import './AddTask'
 
 function AddTask({ addTask }) {
     const [newTask, setNewTask] = useState('');
@@ -18,12 +17,19 @@ function AddTask({ addTask }) {
         }
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleAddTask();
+        }
+    };
+
     return (
         <div>
             <input 
                 type="text" 
                 value={newTask} 
                 onChange={(e) => setNewTask(e.target.value)} 
+                onKeyDown={handleKeyDown}
                 placeholder="Enter a new task" 
             />
             <button onClick={handleAddTask}>+ Add Task</button>

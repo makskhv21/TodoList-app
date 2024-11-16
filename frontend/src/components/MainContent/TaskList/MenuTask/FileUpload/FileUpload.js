@@ -1,57 +1,75 @@
-import React, { useState } from "react";
+import React from "react";
+
+import "./FileUpload.css";
 
 function FileUpload({ menuTask, setMenuTask, selectedTask }) {
-    const [selectedFile, setSelectedFile] = useState(null);
-
     const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedFile(file);
-    };
+        const files = Array.from(event.target.files);
+        const fileData = files.map((file) => ({
+            name: file.name,
+            url: URL.createObjectURL(file),
+        }));
 
-    const handleFileUpload = () => {
-        if (selectedTask && selectedFile) {
-            const fileURL = URL.createObjectURL(selectedFile);
+        if (selectedTask) {
             setMenuTask((prev) => ({
                 ...prev,
                 [selectedTask.id]: {
                     ...prev[selectedTask.id],
-                    file: { name: selectedFile.name, url: fileURL }
-                }
+                    files: [...(prev[selectedTask.id]?.files || []), ...fileData],
+                },
             }));
-            setSelectedFile(null);
-            alert("Файл додано до завдання.");
+        }
+    };
+
+    const handleDeleteFile = (fileToDelete) => {
+        if (selectedTask) {
+            setMenuTask((prev) => ({
+                ...prev,
+                [selectedTask.id]: {
+                    ...prev[selectedTask.id],
+                    files: prev[selectedTask.id]?.files.filter((file) => file.url !== fileToDelete.url),
+                },
+            }));
         }
     };
 
     return (
-        <div>
+        <div className="container-fileupload">
+            {menuTask[selectedTask.id]?.files?.length > 0 && (
+                <div className="file-list">
+                    {menuTask[selectedTask.id].files.map((file, index) => (
+                        <div key={index} className="file-item">
+                            <a
+                                href={file.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="file-link"
+                            >
+                                {file.name}
+                            </a>
+                            <button
+                                className="delete-button"
+                                onClick={() => handleDeleteFile(file)}
+                            >
+                                &times;
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            )}
             <input
                 type="file"
                 onChange={handleFileChange}
                 style={{ display: "none" }}
                 id="file-input"
+                multiple
             />
-            <button onClick={() => document.getElementById("file-input").click()}>
-                Додати файл
+            <button
+                className="upload-button"
+                onClick={() => document.getElementById("file-input").click()}
+            >
+                Додати файли
             </button>
-            {selectedFile && (
-                <div>
-                    <p>Доданий файл: {selectedFile.name}</p>
-                    <button onClick={handleFileUpload}>Зберегти файл</button>
-                </div>
-            )}
-            {menuTask[selectedTask.id]?.file && (
-                <div>
-                    <p>Доданий файл: {menuTask[selectedTask.id].file.name}</p>
-                    <a
-                        href={menuTask[selectedTask.id].file.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Переглянути файл
-                    </a>
-                </div>
-            )}
         </div>
     );
 }

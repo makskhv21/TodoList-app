@@ -1,0 +1,43 @@
+.select-repeat-option,
+.select-period-type,
+.custom-period-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.custom-period-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.custom-period-container input {
+    width: 60px;
+}
+
+.button-set-repeat {
+    background-color: #784BC3;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: center;
+    width: 100%;
+}
+
+.button-set-repeat:hover {
+    background-color: #AE91DB;
+}
+
+.button-set-repeat:focus {
+    outline: none;
+}

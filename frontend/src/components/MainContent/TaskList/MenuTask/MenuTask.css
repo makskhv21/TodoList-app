@@ -1,0 +1,67 @@
+.task-menu {
+    position: fixed;
+    top: 0px;
+    right: 15px;
+    background-color: #e5e4e4;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px; 
+    z-index: 900;
+    height: calc(100vh - 40px);
+    overflow-x: hidden;
+}
+
+.task-menu h3 {
+    font-size: 19px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.container-taskStep, 
+.container-reminder, 
+.container-term, 
+.container-repeat,
+.container-fileupload  {
+    padding: 10px;
+    background-color: rgb(204, 188, 222);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.task-steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0px 0;
+}
+
+.task-step {
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+.task-step:hover {
+    background-color: #f0f8ff;
+}
+
+.step-checkbox {
+    margin-right: 10px;
+}
+
+input[type="text"], 
+input[type="date"], 
+input[type="time"], 
+select, 
+textarea {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: border-color 0.3s;
+}
