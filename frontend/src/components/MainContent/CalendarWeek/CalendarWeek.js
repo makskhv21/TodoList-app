@@ -1,83 +1,81 @@
 import React, { useState, useEffect } from "react";
 import Day from './Day/Day';
-import './CalendarWeek';
 
-const CalendarWeek = () => {
+const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteTask, editTask }) => {
     const [eventsByDay, setEventsByDay] = useState({});
     const [newEventByDay, setNewEventByDay] = useState({});
-    const [editingEventId, setEditingEventId] = useState(null);
-    const [editingEventText, setEditingEventText] = useState('');
-    const [selectedDay, setSelectedDay] = useState(null);
+    const [editingEvent, setEditingEvent] = useState({ day: null, id: null, text: '' });
 
     useEffect(() => {
-        const savedEvents = JSON.parse(localStorage.getItem('calendarEvents'));
-        if (savedEvents) {
-            setEventsByDay(savedEvents);
-        }
-    }, []);
+        const eventsForTasks = {};
+        tasks.forEach((task) => {
+            const taskDate = new Date(task.createdAt).toDateString();
+            if (!eventsForTasks[taskDate]) {
+                eventsForTasks[taskDate] = [];
+            }
+            eventsForTasks[taskDate].push(task);
+        });
 
-    useEffect(() => {
-        localStorage.setItem('calendarEvents', JSON.stringify(eventsByDay));
-    }, [eventsByDay]);
+        setEventsByDay(eventsForTasks);
+    }, [tasks]);
 
     const addEvent = (day) => {
-        const newEvent = newEventByDay[day] || '';
-        if (newEvent.trim()) {
-            setEventsByDay((prevEvents) => {
-                const eventsForDay = prevEvents[day] || [];
-                return {
-                    ...prevEvents,
-                    [day]: [...eventsForDay, { id: Date.now(), text: newEvent, completed: false }],
-                };
-            });
-            setNewEventByDay(prevState => ({
-                ...prevState,
-                [day]: '',
+        const todayKey = new Date().toDateString(); // Ключ для сьогоднішньої дати
+
+        const newEvent = newEventByDay[day]?.trim();
+        if (newEvent) {
+            const event = { id: Date.now(), text: newEvent, completed: false, createdAt: new Date(day) };
+            
+            setEventsByDay(prev => ({
+                ...prev,
+                [day]: [...(prev[day] || []), event],
             }));
+
+            if (day === todayKey) {
+                addEventToTaskList(event);
+            }
+
+            setNewEventByDay(prev => ({ ...prev, [day]: '' })); // Очищення поля вводу
         }
-    };
-
-    const editEvent = (day, id) => {
-        const eventToEdit = eventsByDay[day].find(event => event.id === id);
-        setEditingEventId(id);
-        setEditingEventText(eventToEdit.text);
-        setSelectedDay(day);
-    };
-
-    const saveEdit = () => {
-        setEventsByDay((prevEvents) => {
-            const updatedEventsForDay = prevEvents[selectedDay].map(event =>
-                event.id === editingEventId ? { ...event, text: editingEventText } : event
-            );
-            return {
-                ...prevEvents,
-                [selectedDay]: updatedEventsForDay,
-            };
-        });
-        setEditingEventId(null);
-        setEditingEventText('');
     };
 
     const deleteEvent = (day, id) => {
-        setEventsByDay((prevEvents) => {
-            const updatedEventsForDay = prevEvents[day].filter(event => event.id !== id);
-            return {
-                ...prevEvents,
-                [day]: updatedEventsForDay,
-            };
-        });
+        setEventsByDay(prev => ({
+            ...prev,
+            [day]: prev[day].filter(event => event.id !== id),
+        }));
+        deleteTask(id);
     };
 
     const toggleCompletion = (day, id) => {
-        setEventsByDay((prevEvents) => {
-            const updatedEventsForDay = prevEvents[day].map(event =>
+        setEventsByDay(prev => ({
+            ...prev,
+            [day]: prev[day].map(event =>
                 event.id === id ? { ...event, completed: !event.completed } : event
-            );
-            return {
-                ...prevEvents,
-                [day]: updatedEventsForDay,
-            };
-        });
+            ),
+        }));
+        toggleTaskCompletion(id);
+    };
+
+    const startEditing = (day, id) => {
+        const event = eventsByDay[day]?.find(task => task.id === id);
+        if (event) {
+            setEditingEvent({ day, id, text: event.text });
+        }
+    };
+
+    const saveEdit = () => {
+        if (editingEvent.text.trim()) {
+            const { day, id, text } = editingEvent;
+            setEventsByDay(prev => ({
+                ...prev,
+                [day]: prev[day].map(event =>
+                    event.id === id ? { ...event, text } : event
+                ),
+            }));
+            editTask(id, text);
+            setEditingEvent({ day: null, id: null, text: '' });
+        }
     };
 
     const renderDays = () => {
@@ -87,29 +85,30 @@ const CalendarWeek = () => {
             const date = new Date(today);
             date.setDate(today.getDate() + i);
             const dayKey = date.toDateString();
+
             const eventsForDay = eventsByDay[dayKey] || [];
             const newEventText = newEventByDay[dayKey] || '';
 
-            const sortedEvents = eventsForDay.sort((a, b) => a.completed - b.completed);
-
             days.push(
                 <Day
-                    key={i}
+                    key={dayKey}
                     date={date}
-                    events={sortedEvents}
+                    events={eventsForDay}
                     newEventText={newEventText}
-                    onNewEventChange={(e) => setNewEventByDay({
-                        ...newEventByDay,
+                    onNewEventChange={(e) => setNewEventByDay(prev => ({
+                        ...prev,
                         [dayKey]: e.target.value,
-                    })}
+                    }))}
                     onAddEvent={() => addEvent(dayKey)}
-                    onEdit={(id) => editEvent(dayKey, id)}
+                    onEdit={(id) => startEditing(dayKey, id)}
                     onDelete={(id) => deleteEvent(dayKey, id)}
                     onToggleCompletion={(id) => toggleCompletion(dayKey, id)}
-                    isEditing={editingEventId}
+                    isEditing={editingEvent.id}
                     onSave={saveEdit}
-                    editingText={editingEventText}
-                    onTextChange={(e) => setEditingEventText(e.target.value)}
+                    editingText={editingEvent.text}
+                    onTextChange={(e) =>
+                        setEditingEvent(prev => ({ ...prev, text: e.target.value }))
+                    }
                 />
             );
         }

@@ -1,8 +1,9 @@
+import React, { useState } from 'react';
 import "./App.css"
+
 import Sidebar from "./components/Sidebar/Sidebar"
 import MainContent from './components/MainContent/MainContent';
 
-import { useState } from 'react';
 
 function App() {
     const [selectedProject, setSelectedProject] = useState('Work 👜');
@@ -27,7 +28,6 @@ function App() {
             }
         }
     }
-
 
     const deleteProject = (projectToDelete) => {
         setProjects(projects.filter(project => project !== projectToDelete));

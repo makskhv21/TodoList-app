@@ -18,12 +18,11 @@ function TaskList({
 
     const [menuTask, setMenuTask] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null); 
+    const [showCompleted, setShowCompleted] = useState(false); 
 
     const incompleteTasks = tasks.filter(task => !task.completed);
     const completedTasks = tasks.filter(task => task.completed);
     
-    const [showCompleted, setShowCompleted] = useState(false); 
-
     const handleTaskClick = (task) => {
         setSelectedTask(task);
         setMenuTask(prev => ({

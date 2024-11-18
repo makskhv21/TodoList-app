@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import './ProjectItem'
 
 function ProjectItem({ project, onSelect, onEdit, onDelete }) {
     const [isEditing, setIsEditing] = useState(false);
