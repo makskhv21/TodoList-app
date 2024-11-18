@@ -2,13 +2,14 @@ import React from 'react';
 import EventList from './EventList/EventList';
 import './Day'
 
-const Day = ({ date, events, newEventText, onNewEventChange, onAddEvent, onEdit, onDelete, isEditing, onSave, editingText, onTextChange }) => (
+const Day = ({ date, events, newEventText, onNewEventChange, onAddEvent, onEdit, onDelete, isEditing, onSave, editingText, onTextChange, onToggleCompletion }) => (
     <div className="dayWeek">
         <h4>{date.toDateString()}</h4>
         <EventList
             events={events}
             onEdit={onEdit}
             onDelete={onDelete}
+            onToggleCompletion={onToggleCompletion}
             isEditing={isEditing}
             onSave={onSave}
             editingText={editingText}
@@ -22,7 +23,12 @@ const Day = ({ date, events, newEventText, onNewEventChange, onAddEvent, onEdit,
                 placeholder="New event"
                 style={{ flex: 1, marginRight: '10px' }}
             />
-            <button onClick={onAddEvent}>Add Task</button>
+            <button 
+                style={{ position: 'relative', bottom: '5px'}}
+                onClick={onAddEvent}
+            >
+                    Add Task
+            </button>
         </div>
     </div>
 );

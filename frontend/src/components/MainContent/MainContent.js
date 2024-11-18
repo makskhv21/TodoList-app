@@ -7,7 +7,7 @@ import CalendarWeek from './CalendarWeek/CalendarWeek';
 import Menu from './Menu/Menu';
 import themes from './Menu/themes';
 
-function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask }) {
+function MainContent({ toggleImportant, tasks, selectedProject,setSelectedProject, toggleTaskCompletion, addTask, editTask, deleteTask }) {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editingTaskText, setEditingTaskText] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
@@ -82,9 +82,9 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
                 ))}
             </div>
             {selectedProject === 'Next 7 days' ? (
-                <CalendarWeek />
+                <CalendarWeek selectedProject={selectedProject} />
             ) : selectedProject === 'Calendar' ? (
-                <Calendar addTask={addTask} />
+                <Calendar addTask={addTask} selectedProject={selectedProject} setSelectedProject={setSelectedProject}/>
             ) : (
                 <TaskList 
                     tasks={sortedTasks}

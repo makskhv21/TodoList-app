@@ -37,6 +37,9 @@
 }
 
 .task {
+    display: flex;
+    align-items: center;
+    text-align: left;
     background-color: #f1f1f1;
     border-radius: 4px;
     margin: 2px 0;

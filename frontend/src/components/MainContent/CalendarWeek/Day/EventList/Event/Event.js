@@ -1,39 +1,100 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const Event = ({ event, onEdit, onDelete, isEditing, onSave, editingText, onTextChange }) => (
-    <li style={{ textDecoration: event.completed ? 'line-through' : 'none' }}>
-        <input
-            type="checkbox"
-            checked={event.completed}
-            onChange={event.toggleCompletion}
-        />
-        {isEditing ? (
-            <>
+const Event = ({
+    event,
+    onEdit,
+    onDelete,
+    isEditing,
+    onSave,
+    editingText,
+    onTextChange,
+    onToggleCompletion,
+}) => {
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            onSave();
+        }
+    };
+
+    return (
+        <li
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '1px',
+
+                height: 'auto',
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word',
+                flexWrap: 'wrap',
+                width: '90%',
+            }}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flex: 1,
+                    width: 'calc(100% - 100px)',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                }}
+            >
                 <input
-                    type="text"
-                    value={editingText}
-                    onChange={onTextChange}
+                    style = {{ marginLeft: '5px'}}
+                    type="checkbox"
+                    checked={event.completed}
+                    onChange={onToggleCompletion}
                 />
-                <button onClick={onSave}>
-                    <FontAwesomeIcon icon={faSave} />
-                </button>
-            </>
-        ) : (
-            <>
-                {event.text}
-                <div className="group-task">
-                    <button onClick={onEdit}>
-                        <FontAwesomeIcon icon={faEdit} />
-                    </button>
-                    <button onClick={onDelete}>
-                        <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                </div>
-            </>
-        )}
-    </li>
-);
+                {isEditing ? (
+                    <input
+                        type="text"
+                        value={editingText}
+                        onChange={onTextChange}
+                        onKeyDown={handleKeyDown}
+                        autoFocus
+                        style={{
+                            flex: 1,
+                            padding: '5px',
+                            border: '1px solid #ccc',
+                            borderRadius: '4px',
+                        }}
+                    />
+                ) : (
+                    <span
+                        onDoubleClick={onEdit}
+                        style={{
+                            flex: 1,
+                            cursor: 'pointer',
+                            userSelect: 'none',
+                            textDecoration: event.completed ? 'line-through' : 'none',
+                            wordWrap: 'break-word',
+                            overflowWrap: 'break-word',
+                            display: 'inline-block',
+                            width: '80%',
+                        }}
+                    >
+                        {event.text}
+                    </span>
+                )}
+            </div>
+            <button
+                onClick={onDelete}
+                style={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    color: '#ff4d4d',
+                    cursor: 'pointer',
+                    fontSize: '18px',
+                    marginLeft: 'auto',
+                }}
+                aria-label="Delete"
+            >
+                ×
+            </button>
+        </li>
+    );
+};
 
 export default Event;

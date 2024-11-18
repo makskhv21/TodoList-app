@@ -1,8 +1,9 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashAlt, faSave } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
+
 
 const TaskModal = ({ currentTasks, setCurrentTasks, selectedDay, closeModal, tasks, setTasks, editIndex, setEditIndex, editedText, setEditedText }) => {
+    const [isEditing, setIsEditing] = useState(false);
+
     const deleteTask = (index) => {
         const dateKey = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${selectedDay}`;
         const updatedTasks = [...currentTasks];
@@ -14,9 +15,16 @@ const TaskModal = ({ currentTasks, setCurrentTasks, selectedDay, closeModal, tas
         setCurrentTasks(updatedTasks);
     };
 
-    const editTask = (index) => {
+    const handleDoubleClick = (index) => {
         setEditIndex(index);
         setEditedText(currentTasks[index]);
+        setIsEditing(true);
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && editedText.trim()) {
+            saveTask();
+        }
     };
 
     const saveTask = () => {
@@ -31,6 +39,7 @@ const TaskModal = ({ currentTasks, setCurrentTasks, selectedDay, closeModal, tas
             setCurrentTasks(updatedTasks);
             setEditIndex(null);
             setEditedText('');
+            setIsEditing(false);
         }
     };
 
@@ -40,33 +49,35 @@ const TaskModal = ({ currentTasks, setCurrentTasks, selectedDay, closeModal, tas
                 <span className="close" onClick={closeModal}>&times;</span>
                 <h4>Tasks for {new Date().toLocaleString('default', { month: 'long' })} {selectedDay}</h4>
                 {currentTasks.length > 0 ? (
-                    <ul>
-                        {currentTasks.map((task, index) => (
-                            <li key={index} className="task">
-                                {editIndex === index ? (
-                                    <input
-                                        type="text"
-                                        value={editedText}
-                                        onChange={(e) => setEditedText(e.target.value)}
-                                        className="edit-task-input"
-                                    />
-                                ) : (
-                                    <span>{task}</span>
-                                )}
-                                <button onClick={() => editTask(index)} className="edit-button">
-                                    <FontAwesomeIcon icon={faEdit} />
-                                </button>
-                                <button onClick={() => deleteTask(index)} className="delete-button">
-                                    <FontAwesomeIcon icon={faTrashAlt} />
-                                </button>
-                                {editIndex === index && (
-                                    <button onClick={saveTask} className="save-button">
-                                        <FontAwesomeIcon icon={faSave} />
+                    <div className="tasks-container">
+                        <ul>
+                            {currentTasks.map((task, index) => (
+                                <li 
+                                    key={index}
+                                    className="task"
+                                    onDoubleClick={() => handleDoubleClick(index)}
+                                >
+                                    {editIndex === index ? (
+                                        <input
+                                            type="text"
+                                            value={editedText}
+                                            onChange={(e) => setEditedText(e.target.value)}
+                                            onKeyDown={handleKeyPress}
+                                            autoFocus
+                                        />
+                                    ) : (
+                                        <span className='text-task-calendar'>{task}</span>
+                                    )}
+                                    <button
+                                        onClick={() => deleteTask(index)}
+                                        style={{ color: 'white', marginLeft: '10px', marginRight: '10px' }}
+                                    >
+                                    ×
                                     </button>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 ) : (
                     <p>No tasks for this day</p>
                 )}

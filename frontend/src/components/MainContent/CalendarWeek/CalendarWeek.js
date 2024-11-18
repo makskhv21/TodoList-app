@@ -90,11 +90,13 @@ const CalendarWeek = () => {
             const eventsForDay = eventsByDay[dayKey] || [];
             const newEventText = newEventByDay[dayKey] || '';
 
+            const sortedEvents = eventsForDay.sort((a, b) => a.completed - b.completed);
+
             days.push(
                 <Day
                     key={i}
                     date={date}
-                    events={eventsForDay}
+                    events={sortedEvents}
                     newEventText={newEventText}
                     onNewEventChange={(e) => setNewEventByDay({
                         ...newEventByDay,
@@ -103,6 +105,7 @@ const CalendarWeek = () => {
                     onAddEvent={() => addEvent(dayKey)}
                     onEdit={(id) => editEvent(dayKey, id)}
                     onDelete={(id) => deleteEvent(dayKey, id)}
+                    onToggleCompletion={(id) => toggleCompletion(dayKey, id)}
                     isEditing={editingEventId}
                     onSave={saveEdit}
                     editingText={editingEventText}
