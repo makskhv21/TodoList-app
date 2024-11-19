@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './SignUp.css';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
 
 import iconEyeOpen from './img/iconEyeOpen.png';
 import iconEyeClose from './img/iconEyeClose.png';
@@ -25,14 +27,24 @@ const SignUp = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        setTimeout(() => {
-        setLoading(false);
-        alert('Account created successfully!');
-        }, 1000);
+        if (formData.password !== formData.confirmPassword) {
+            alert("Passwords don't match!");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+            alert('Account created successfully!');
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const togglePasswordVisibility = () => {
@@ -86,6 +98,7 @@ const SignUp = () => {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
+              style={{ width: '95%'}}
               required
             />
           </div>
@@ -97,6 +110,7 @@ const SignUp = () => {
               value={formData.password}
               onChange={handleInputChange}
               placeholder="Password"
+              style={{ width: '95%'}}
               required
             />
             <span className="password-toggle" onClick={togglePasswordVisibility}>
@@ -115,6 +129,7 @@ const SignUp = () => {
               value={formData.confirmPassword}
               onChange={handleInputChange}
               placeholder="Confirm Password"
+              style={{ width: '95%'}}
               required
             />
             <span className="password-toggle" onClick={toggleConfirmPasswordVisibility}>
@@ -130,14 +145,6 @@ const SignUp = () => {
             {loading ? 'Creating Account...' : 'Sign Up'}
           </button>
         </form>
-
-        <div className="social-login">
-          <p>Or sign up with</p>
-          <div className="social-icons">
-            <button className="social-btn google-btn">Google</button>
-            <button className="social-btn facebook-btn">Facebook</button>
-          </div>
-        </div>
 
         <div className="account-link">
           <p>Already have an account? <a href="/login" className="login-link">Log In</a></p>

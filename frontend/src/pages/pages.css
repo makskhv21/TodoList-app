@@ -23,6 +23,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: fixed;
     z-index: 1000;
+    
 }
 
 .homepage-header a {
@@ -30,6 +31,7 @@
     align-items: center;
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
 }
 
 .homepage-header-img {
@@ -48,14 +50,14 @@
 .homepage-header ul {
     display: flex;
     list-style: none;
-    gap: 1.5rem;
+    gap: 1.1rem;
     margin: 0;
     padding: 0;
 }
 
 .homepage-header ul li {
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     color: #333333;
     transition: color 0.3s ease-in-out;
@@ -241,22 +243,24 @@
 
 .insight-nav a {
     font-size: 18px;
-    color: #333;
+    color: #ffffff;
     padding: 10px 20px;
     position: relative;
     transition: transform 0.3s ease;
+    background-color: #2349EF;
+    border-radius: 5px;
 }
 
 .insight-nav a:hover,
 .insight-nav a.active {
     transform: scale(1.1);
     cursor: pointer;
+    background-color: #933ffa;
 }
 
 .insight-nav a.active::after {
     bottom: -6px;
     width: 100%;
-    background-color: #6a4fff;
 }
 
 .insight-content {

@@ -49,8 +49,8 @@ function HomePage() {
     return (
         <div className="homepage">
             <header className="homepage-header">
-                <a>
-                    <img src={iconTodoList} alt='' className='homepage-header-img'/>
+                <a style={{ textDecoration: 'none'}}>
+                    <img src={iconTodoList} alt='iconTodoList' className='homepage-header-img'/>
                     <h1>TodoList</h1>
                 </a>
                 <ul>
@@ -61,10 +61,10 @@ function HomePage() {
                 </ul>
                 <div className='btn-log-sign'>
                     <button className='btn-login'>
-                        <Link to="/login">Login</Link>
+                        <Link to="/login" style={{ textDecoration: 'none'}}>Login</Link>
                     </button>
                     <button className='btn-sign'>
-                        <Link to="/signup">Sign Up</Link>
+                        <Link to="/signup" style={{ textDecoration: 'none'}}>Sign Up</Link>
                     </button>
                 </div>
             </header>
@@ -75,7 +75,7 @@ function HomePage() {
                     <h1>Organize Your life with TodoList</h1>
                     <p>Stay on top of your tasks with our easy-to-use task manager designed to help you prioritize and achieve your goals.</p>
                     <button className='btn-getStarted'>
-                        <Link to="/signup" className='btn-getStarted-signUp'>Get Started</Link>
+                        <Link to="/signup" className='btn-getStarted-signUp' style={{ textDecoration: 'none'}}>Get Started</Link>
                     </button>
                 </section>
 
@@ -139,7 +139,7 @@ function HomePage() {
                         <div className="insight-text">
                             <h2>{insightsData[selectedInsight].title}</h2>
                             <p>{insightsData[selectedInsight].content}</p>
-                            <Link to={`/${selectedInsight}`} className='insight-link'>Read More</Link>
+                            <Link to={`/${selectedInsight}`} className='insight-link' style={{textDecoration: 'none'}}>Read More</Link>
                         </div>
                     </div>
                 </section>

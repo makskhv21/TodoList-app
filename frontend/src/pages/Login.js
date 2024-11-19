@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../firebaseConfig';
 
 import iconLock from './img/iconLock.png';
 import iconUser from './img/iconUser.png';
-
 import iconEyeClose from './img/iconEyeClose.png';
 import iconEyeOpen from './img/iconEyeOpen.png';
 
@@ -15,15 +16,19 @@ const Login = ({ onLogin }) => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
         setLoading(true);
 
-        setTimeout(() => {
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
             onLogin();
-            navigate('/app'); 
-        }, 1000);
+            navigate('/app');
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (

@@ -15,7 +15,7 @@ const Main = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<App />} />
+                <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route

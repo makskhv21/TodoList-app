@@ -10,6 +10,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^6.7.0",
+    "dotenv": "^16.4.5",
+    "firebase": "^11.0.2",
     "resct": "^1.0.0"
   }
 }
