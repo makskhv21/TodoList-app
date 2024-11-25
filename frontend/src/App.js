@@ -8,6 +8,11 @@ import MainContent from './components/MainContent/MainContent';
 function App({ onLogout }) {
     const [selectedProject, setSelectedProject] = useState('Work 👜');
     const [projects, setProjects] = useState(['Work 👜', 'Groceries 🛒', 'Reading List 📚', 'Personal 📝']);
+    const [activeTasksCount, setActiveTasksCount] = useState(0);
+
+    const handleActiveTasksCount = (count) => {
+        setActiveTasksCount(count);
+    };
 
     const addProject = (newProject) => {
         if ( newProject && !projects.includes(newProject)) {
@@ -73,6 +78,7 @@ function App({ onLogout }) {
                 editProject={editProject}
                 deleteProject={deleteProject}
                 onLogout={onLogout}
+                activeTasksCount={activeTasksCount}
             />
             <MainContent 
                 tasks={tasks} 
@@ -82,6 +88,7 @@ function App({ onLogout }) {
                 editTask={editTask} 
                 deleteTask={deleteTask}
                 toggleImportant={toggleImportant}
+                onActiveTasksCountChange={handleActiveTasksCount}
             />
         </div>
     )

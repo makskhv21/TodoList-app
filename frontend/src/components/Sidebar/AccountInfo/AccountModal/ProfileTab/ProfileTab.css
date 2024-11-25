@@ -5,6 +5,27 @@
     gap: 10px;
 }
 
+.profile-botTodolist {
+    position: relative;
+    bottom: 0px;
+    border-radius: 50%;
+    width: 27px;
+    height: 27px;
+    background-color: #aac5ee;
+}
+
+.profile-botTodolist:hover {
+    background-color: #007BFF;
+}
+
+.profile-botTodolist img {
+    position: relative;
+    top: 1px;
+    left: 1px;
+    width: 24px;
+    height: 24px;
+}
+
 .avatar-edit-btn {
     position: relative;
     bottom: 10px;

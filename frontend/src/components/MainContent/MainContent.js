@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MainContent.css"
 import TaskList from "./TaskList/TaskList";
 import AddTask from "./AddTask/AddTask";
@@ -7,7 +7,7 @@ import CalendarWeek from './CalendarWeek/CalendarWeek';
 import Menu from './Menu/Menu';
 import themes from './Menu/themes';
 
-function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask }) {
+function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask, onActiveTasksCountChange }) {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editingTaskText, setEditingTaskText] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
@@ -31,6 +31,11 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
         ? tasks.filter(task => task.important)
         : tasks;
 
+    const activeTasksCount = filteredTasks.filter(task => !task.completed).length; // Кількість активних завдань
+    useEffect(() => {
+        onActiveTasksCountChange(activeTasksCount);
+    }, [activeTasksCount, onActiveTasksCountChange]);
+        
     const handleThemeChange = (themeName) => {
         setSelectedTheme(themes[themeName] || themes.light);
     };    
@@ -95,11 +100,11 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
             {selectedProject === 'Next 7 days' ? (
                 <CalendarWeek 
                     tasks={tasks} 
-                    addTask={addTask} 
                     editTask={editTask} 
                     deleteTask={deleteTask} 
                     addEventToTaskList={addEventToTaskList}
                     toggleTaskCompletion={toggleTaskCompletion}
+                    toggleImportant={toggleImportant}
                 />
             ) : selectedProject === 'Calendar' ? (
                 <Calendar />

@@ -8,7 +8,7 @@ import SecurityTab from './SecurityTab/SecurityTab';
 import SettingsTab from './SettingsTab/SettingsTab';
 import HelpTab from './HelpTab/HelpTab';
 
-const AccountModal = ({ isOpen, onClose, onLogout }) => {
+const AccountModal = ({ isOpen, onClose, onLogout,activeTasksCount }) => {
     if (!isOpen) return null;
 
     const [activeTab, setActiveTab] = useState("profile");
@@ -31,7 +31,7 @@ const AccountModal = ({ isOpen, onClose, onLogout }) => {
     const renderContent = () => {
         switch (activeTab) {
             case "profile":
-                return <ProfileTab avatarImage={avatarImage} setAvatarImage={setAvatarImage} formData={formData} />;
+                return <ProfileTab avatarImage={avatarImage} setAvatarImage={setAvatarImage} formData={formData} setFormData={setFormData} activeTasksCount={activeTasksCount}/>;
             case "security":
                 return <SecurityTab is2FAEnabled={is2FAEnabled} setIs2FAEnabled={setIs2FAEnabled} />;
             case "settings":

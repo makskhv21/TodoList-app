@@ -4,7 +4,7 @@ import "./AccountInfo"
 import avatar from "./img/avatar.png";
 import AccountModal from './AccountModal/AccountModal';
 
-const AccountInfo = ({ onLogout }) => {
+const AccountInfo = ({ onLogout, activeTasksCount }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => {
@@ -22,7 +22,7 @@ const AccountInfo = ({ onLogout }) => {
                 <h2 className="account-name">Username</h2>
                 <p className="account-email">myemail@example.com</p>
             </div>
-            <AccountModal isOpen={isModalOpen} onClose={handleCloseModal} onLogout={onLogout} />
+            <AccountModal isOpen={isModalOpen} onClose={handleCloseModal} onLogout={onLogout} activeTasksCount={activeTasksCount} />
         </div>
     );
 };

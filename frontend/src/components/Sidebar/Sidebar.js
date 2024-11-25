@@ -15,7 +15,7 @@ const quotes = [
     "Цитата 5: Ваша єдина межа – це ви самі.",
 ];
 
-function Sidebar({ projects, setSelectedProject, addProject, editProject, deleteProject, user, onLogout }) {
+function Sidebar({ projects, setSelectedProject, addProject, editProject, deleteProject, user, onLogout, activeTasksCount }) {
     const [newProject, setNewProject] = useState('');
     const [isDarkTheme, setIsDarkTheme] = useState(false);
     const [quote, setQuote] = useState(null);
@@ -45,10 +45,17 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
         setIsQuoteModalOpen(false); 
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAddProject();
+        }
+    };
+
     return (
         <div className="sidebar">
             <div className='container-header'>            
-                <AccountInfo user={user} onLogout={onLogout} />
+                <AccountInfo user={user} onLogout={onLogout} activeTasksCount={activeTasksCount} />
                 <div className='btn-container'>
                     <button 
                         className={`btn-quote`} 
@@ -85,13 +92,13 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
                         value={newProject}
                         onChange={(e) => setNewProject(e.target.value)}
                         placeholder="New list"
+                        onKeyDown={handleKeyDown}
                     />
                     <button onClick={handleAddProject}>
                         <FontAwesomeIcon icon={faPlus}  />
                     </button>
                 </div>
             </div>
-
             <QuoteModal quote={quote} onClose={closeModal} isOpen={isQuoteModalOpen} />
         </div>
     );

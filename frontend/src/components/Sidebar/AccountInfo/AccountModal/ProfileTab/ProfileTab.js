@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 
 import './ProfileTab.css'
 
+import iconBot from '../img/botTodoList.png'
 import iconSetting from '../img/iconSetting.png';
 import iconRenameCamera from '../img/iconRenameCamera.png';
+
 import dayIcon from '../img/dayIcon.png';
 import nightIcon from '../img/nightIcon.png';
 
 
-const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData }) => {
+const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData, activeTasksCount }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -39,7 +41,15 @@ const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData }) => {
     return (
         <div className="profile-container">
             <div className="profile-avatar-section">
-                <div className="avatar-actions">
+                <div className="avatar-actions">                
+                    <a 
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="profile-botTodolist"
+                    >
+                        <img src={iconBot} alt="Telegram Bot" />
+                    </a>
                     <button
                         className="avatar-edit-btn"
                         onClick={() => document.querySelector('#avatar-input').click()}
@@ -156,7 +166,7 @@ const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData }) => {
                 </div>
 
                 <div className="profile-detail-active">
-                    <strong>Active tasks today:</strong> 20
+                    <strong>Active tasks today:</strong> {activeTasksCount}
                 </div>
             </div>
         </div>

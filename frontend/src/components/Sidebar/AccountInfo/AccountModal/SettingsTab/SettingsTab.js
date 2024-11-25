@@ -20,6 +20,7 @@ const SettingsTab = ({ formData, setFormData }) => {
                     className="select-language"
                 >
                     <option value="en">English</option>
+                    <option value="uk">Українська</option>
                     <option value="es">Spanish</option>
                     <option value="fr">French</option>
                 </select>

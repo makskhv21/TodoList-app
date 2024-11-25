@@ -1,7 +1,7 @@
 import React from 'react';
 import Event from './Event/Event';
 
-const EventList = ({ events, onEdit, onDelete, isEditing, onSave, editingText, onTextChange, onToggleCompletion }) => (
+const EventList = ({ events, onEdit, onDelete, isEditing, onSave, editingText, onTextChange, onToggleCompletion,onToggleImportant }) => (
     <ul>
         {events.map(event => (
         <Event
@@ -14,6 +14,7 @@ const EventList = ({ events, onEdit, onDelete, isEditing, onSave, editingText, o
             onSave={onSave}
             editingText={editingText}
             onTextChange={onTextChange}
+            onToggleImportant={onToggleImportant}
         />
         ))}
     </ul>

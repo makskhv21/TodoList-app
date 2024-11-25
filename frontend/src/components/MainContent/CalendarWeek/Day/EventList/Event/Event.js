@@ -9,6 +9,7 @@ const Event = ({
     editingText,
     onTextChange,
     onToggleCompletion,
+    onToggleImportant
 }) => {
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -79,20 +80,44 @@ const Event = ({
                     </span>
                 )}
             </div>
-            <button
-                onClick={onDelete}
+            <div 
                 style={{
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    color: '#ff4d4d',
-                    cursor: 'pointer',
-                    fontSize: '18px',
-                    marginLeft: 'auto',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    position: 'relative',
+                    top: '-10px'
                 }}
-                aria-label="Delete"
             >
-                ×
-            </button>
+                <button 
+                    style={{
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        color: 'blue',
+                        cursor: 'pointer',
+                        margin: '0',
+                        width: '10px',
+                        height: '10px'
+                    }}
+                    onClick={() => onToggleImportant(event.id)}>
+                        {event.important ? '★' : '☆'}
+                </button>
+                <button
+                    onClick={onDelete}
+                    style={{
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        color: '#ff4d4d',
+                        cursor: 'pointer',
+                        fontSize: '18px',
+                        marginLeft: 'auto',
+                        width: '10px',
+                        height: '10px'
+                    }}
+                    aria-label="Delete"
+                >
+                    ×
+                </button>
+            </div>
         </li>
     );
 };

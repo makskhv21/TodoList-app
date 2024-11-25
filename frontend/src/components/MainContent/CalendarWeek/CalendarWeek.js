@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Day from './Day/Day';
 
-const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteTask, editTask }) => {
+const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteTask, editTask, toggleImportant }) => {
     const [eventsByDay, setEventsByDay] = useState({});
     const [newEventByDay, setNewEventByDay] = useState({});
     const [editingEvent, setEditingEvent] = useState({ day: null, id: null, text: '' });
@@ -95,6 +95,7 @@ const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteT
                     date={date}
                     events={eventsForDay}
                     newEventText={newEventText}
+                    onToggleImportant={(id) => toggleImportant(id)}
                     onNewEventChange={(e) => setNewEventByDay(prev => ({
                         ...prev,
                         [dayKey]: e.target.value,
