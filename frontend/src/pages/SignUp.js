@@ -28,18 +28,27 @@ const SignUp = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-
-        if (formData.password !== formData.confirmPassword) {
-            alert("Passwords don't match!");
-            setLoading(false);
-            return;
-        }
-
-        try {
-            await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-            alert('Account created successfully!');
+      e.preventDefault();
+      setLoading(true);
+  
+      if (formData.password !== formData.confirmPassword) {
+          alert("Passwords don't match!");
+          setLoading(false);
+          return;
+      }
+  
+      try {
+          await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+          alert('Account created successfully!');
+          
+          setFormData({
+              firstName: '',
+              lastName: '',
+              username: '',
+              email: '',
+              password: '',
+              confirmPassword: '',
+          });
         } catch (error) {
             alert(error.message);
         } finally {

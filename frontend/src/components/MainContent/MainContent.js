@@ -57,7 +57,14 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
     };
 
     return (
-        <div className="main-content" style={{ background: selectedTheme.background, color: selectedTheme.color }}>
+        <div 
+            className="main-content" 
+            style={
+                selectedProject === 'Calendar' || selectedProject === 'Next 7 days'
+                    ? {}
+                    : { background: selectedTheme.background, color: selectedTheme.color }
+            }
+        >
             <div className="header">
                 <h2 className="header-title">{selectedProject}</h2>
                 {selectedProject !== 'Calendar' && selectedProject !== 'Next 7 days' && (

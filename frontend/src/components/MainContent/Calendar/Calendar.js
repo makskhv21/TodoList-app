@@ -16,7 +16,6 @@ const Calendar = () => {
     const [editedText, setEditedText] = useState('');
 
     useEffect(() => {
-        // Load tasks from localStorage
         const savedTasks = localStorage.getItem('tasks');
         if (savedTasks) {
             setTasks(JSON.parse(savedTasks));
@@ -24,7 +23,6 @@ const Calendar = () => {
     }, []);
 
     useEffect(() => {
-        // Save tasks to localStorage whenever tasks change
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }, [tasks]);
 

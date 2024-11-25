@@ -8,7 +8,7 @@ import SecurityTab from './SecurityTab/SecurityTab';
 import SettingsTab from './SettingsTab/SettingsTab';
 import HelpTab from './HelpTab/HelpTab';
 
-const AccountModal = ({ isOpen, onClose }) => {
+const AccountModal = ({ isOpen, onClose, onLogout }) => {
     if (!isOpen) return null;
 
     const [activeTab, setActiveTab] = useState("profile");
@@ -23,7 +23,8 @@ const AccountModal = ({ isOpen, onClose }) => {
     const handleLogout = () => {
         const confirmed = window.confirm("Are you sure you want to log out?");
         if (confirmed) {
-            alert("Logged out successfully");
+            onLogout();
+            onClose(); 
         }
     };
 

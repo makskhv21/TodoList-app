@@ -15,7 +15,7 @@ const quotes = [
     "Цитата 5: Ваша єдина межа – це ви самі.",
 ];
 
-function Sidebar({ projects, setSelectedProject, addProject, editProject, deleteProject, user }) {
+function Sidebar({ projects, setSelectedProject, addProject, editProject, deleteProject, user, onLogout }) {
     const [newProject, setNewProject] = useState('');
     const [isDarkTheme, setIsDarkTheme] = useState(false);
     const [quote, setQuote] = useState(null);
@@ -48,7 +48,7 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
     return (
         <div className="sidebar">
             <div className='container-header'>            
-                <AccountInfo user={user} />
+                <AccountInfo user={user} onLogout={onLogout} />
                 <div className='btn-container'>
                     <button 
                         className={`btn-quote`} 

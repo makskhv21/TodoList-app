@@ -20,7 +20,7 @@ const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteT
     }, [tasks]);
 
     const addEvent = (day) => {
-        const todayKey = new Date().toDateString(); // Ключ для сьогоднішньої дати
+        const todayKey = new Date().toDateString();
 
         const newEvent = newEventByDay[day]?.trim();
         if (newEvent) {
@@ -35,7 +35,7 @@ const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteT
                 addEventToTaskList(event);
             }
 
-            setNewEventByDay(prev => ({ ...prev, [day]: '' })); // Очищення поля вводу
+            setNewEventByDay(prev => ({ ...prev, [day]: '' }));
         }
     };
 

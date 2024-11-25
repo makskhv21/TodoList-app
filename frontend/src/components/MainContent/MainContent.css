@@ -60,7 +60,6 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    border-left: 1px solid #DDDDDD;
 }
 
 .add-task-container input[type="text"] {
@@ -103,7 +102,7 @@
 .task-list {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    margin-bottom: 70px;
 }
 
 .completed-tasks {

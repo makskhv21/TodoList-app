@@ -20,6 +20,8 @@ html, body {
     --sidebar-item-bg: #e9e9e9;
     --sidebar-item-hover-bg: #f0f0f0;
     --text-color: #000;
+    --text-color-email: #666;
+    --sidebar-container-info: #ededed;
 }
 
 [data-theme='dark'] {
@@ -28,6 +30,9 @@ html, body {
     --sidebar-item-bg: #555;
     --sidebar-item-hover-bg: #666;
     --text-color: #fff;
+    --text-color-name: #fff;
+    --text-color-email: #a19e9e;
+    --sidebar-container-info: #636262;
 }
 
 .sidebar {
@@ -48,7 +53,7 @@ html, body {
 }
 
 .account-info-container:hover {
-    background-color: #ededed;
+    background-color: var(--sidebar-container-info);
     padding: 10px 0px;
     cursor: pointer;
     border-radius: 10px;
@@ -65,13 +70,13 @@ html, body {
 .account-name {
     font-size: 1.2rem;
     margin: 0;
-    color: #333;
+    color: var(--text-color-name);
 }
 
 .account-email {
     font-size: 1rem;
     margin: 5px 0 0;
-    color: #666;
+    color: var(--text-color-email);
 } 
 
 .container-header {

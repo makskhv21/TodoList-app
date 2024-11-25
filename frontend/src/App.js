@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar/Sidebar"
 import MainContent from './components/MainContent/MainContent';
 
 
-function App() {
+function App({ onLogout }) {
     const [selectedProject, setSelectedProject] = useState('Work 👜');
     const [projects, setProjects] = useState(['Work 👜', 'Groceries 🛒', 'Reading List 📚', 'Personal 📝']);
 
@@ -72,6 +72,7 @@ function App() {
                 addProject={addProject}
                 editProject={editProject}
                 deleteProject={deleteProject}
+                onLogout={onLogout}
             />
             <MainContent 
                 tasks={tasks} 
