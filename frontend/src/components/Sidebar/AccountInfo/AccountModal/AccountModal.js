@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import avatar from "../img/avatar.png";
-import './AccountModal.css';
+
 
 import ProfileTab from './ProfileTab/ProfileTab';
 import SecurityTab from './SecurityTab/SecurityTab';

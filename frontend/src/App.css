@@ -193,6 +193,48 @@ html, body {
 }
 
 .modal-box {
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: background-color 0.4s ease;
+}
+
+.dark-mode .modal-box {
+    background-color: rgb(28, 24, 30);
+    color: white;
+}
+
+.dark-mode .account-security h3 {
+ color: white;
+}
+
+.dark-mode .account-settings h3 {
+    color: white;
+}
+
+.dark-mode .language-settings h4 {
+    color: white;
+} 
+
+.dark-mode .notification-sounds h4 {
+    color: white;
+}
+
+.dark-mode .account-deletion h4 {
+    color: white;
+}
+
+.dark-mode .help-tab-content h3 {
+    color: white;
+}
+
+.dark-mode .help-tab-content p {
+    color: white;
+}
+
+.dark-mode .feedback-title {
+    color: white;
+}
+
+.modal-box {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -207,6 +249,10 @@ html, body {
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
+}
+
+.dark-mode .modal-title  {
+    color: white;
 }
 
 .modal-close {

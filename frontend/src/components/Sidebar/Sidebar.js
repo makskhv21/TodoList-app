@@ -74,7 +74,7 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
             <div className="sidebar-item large" onClick={() => setSelectedProject('Important')}>⭐ Important</div>
             <div className="sidebar-item large" onClick={() => setSelectedProject('Next 7 days')}>📆 Next 7 days</div>
             <div className="sidebar-item large" onClick={() => setSelectedProject('Calendar')}>📖 Calendar</div>
-            <div className="sidebar-item large" onClick={() => setSelectedProject('Tasks')}>📝 Missed goals</div>
+            <div className="sidebar-item large" onClick={() => setSelectedProject('Missed goals')}>📝 Missed goals</div>
             <hr />
             <div className="projects">
                 {projects.map((project, index) => (

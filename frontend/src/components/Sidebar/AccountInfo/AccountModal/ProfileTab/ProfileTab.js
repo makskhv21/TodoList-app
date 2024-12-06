@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './ProfileTab.css'
 
@@ -14,9 +14,26 @@ const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData, active
     const [isEditing, setIsEditing] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
 
+    // Завантаження теми з localStorage при першому рендері
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setIsDarkMode(savedTheme === 'dark');
+            document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+        }
+    }, []);
+
+    // Зміна теми з оновленням в localStorage
     const toggleTheme = () => {
-        setIsDarkMode(prevMode => !prevMode);
+        setIsDarkMode((prevMode) => {
+            const newMode = !prevMode;
+            const theme = newMode ? 'dark' : 'light';
+            localStorage.setItem('theme', theme); // Зберігаємо тему в localStorage
+            document.body.classList.toggle('dark-mode', newMode); // Застосовуємо клас до body
+            return newMode;
+        });
     };
+    
 
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
