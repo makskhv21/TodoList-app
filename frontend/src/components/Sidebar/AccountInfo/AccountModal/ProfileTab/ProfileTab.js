@@ -10,11 +10,19 @@ import dayIcon from '../img/dayIcon.png';
 import nightIcon from '../img/nightIcon.png';
 
 
-const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData, activeTasksCount }) => {
+const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData, activeTasksCount, setUsername }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
 
-    // Завантаження теми з localStorage при першому рендері
+    const handleUsernameChange = (e) => {
+        const newUsername = e.target.value;
+        setFormData({
+            ...formData,
+            username: newUsername,
+        });
+        setUsername(newUsername);
+    };
+
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -23,13 +31,12 @@ const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData, active
         }
     }, []);
 
-    // Зміна теми з оновленням в localStorage
     const toggleTheme = () => {
         setIsDarkMode((prevMode) => {
             const newMode = !prevMode;
             const theme = newMode ? 'dark' : 'light';
-            localStorage.setItem('theme', theme); // Зберігаємо тему в localStorage
-            document.body.classList.toggle('dark-mode', newMode); // Застосовуємо клас до body
+            localStorage.setItem('theme', theme);
+            document.body.classList.toggle('dark-mode', newMode);
             return newMode;
         });
     };
@@ -114,19 +121,19 @@ const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData, active
                     </div>
 
                     <div className='profile-header-user-email'>
-                        <div className="profile-header-item">
-                            <strong>Username:</strong>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    value={formData.username}
-                                    onChange={(e) => handleInputChange(e, 'username')}
-                                    className="input-edit"
-                                />
-                            ) : (
-                                <p>{formData.username}</p>
-                            )}
-                        </div>
+                    <div className="profile-header-item">
+                        <strong>Username:</strong>
+                        {isEditing ? (
+                            <input
+                                type="text"
+                                value={formData.username}
+                                onChange={handleUsernameChange}
+                                className="input-edit"
+                            />
+                        ) : (
+                            <p>{formData.username}</p>
+                        )}
+                    </div>
 
                         <div className="profile-header-item">
                             <strong>Email:</strong>
