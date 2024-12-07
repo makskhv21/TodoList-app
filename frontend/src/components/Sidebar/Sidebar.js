@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "./Sidebar"
+import "./Sidebar";
 
 import ProjectItem from './ProjectItem/ProjectItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,24 +7,49 @@ import { faLightbulb, faPlus } from '@fortawesome/free-solid-svg-icons';
 import QuoteModal from './QuoteModal/QuoteModal';
 import AccountInfo from './AccountInfo/AccountInfo';
 
-const quotes = [
-    "Цитата 1: Секрет успіху – це вміння приймати невдачі.",
-    "Цитата 2: Ваша робота заповнить велику частину вашого життя.",
-    "Цитата 3: Успіх – це не ключ до щастя. Щастя – це ключ до успіху.",
-    "Цитата 4: Не бійся зробити перший крок. Не має значення, наскільки малим він буде.",
-    "Цитата 5: Ваша єдина межа – це ви самі.",
-];
-
 function Sidebar({ projects, setSelectedProject, addProject, editProject, deleteProject, user, onLogout, activeTasksCount }) {
     const [newProject, setNewProject] = useState('');
     const [isDarkTheme, setIsDarkTheme] = useState(false);
     const [quote, setQuote] = useState(null);
     const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
+    const fetchRandomQuote = async () => {
+        try {
+            const response = await fetch('https://api.api-ninjas.com/v1/quotes', {
+                headers: {
+                    'X-Api-Key': 'process.env.REACT_APP_API_KEY',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data[0].quote;
+        } catch (error) {
+            console.error('Error fetching quote:', error);
+            return 'Не вдалося завантажити цитату.';
+        }
+    };
+
+    const loadDailyQuote = async () => {
+        const savedQuote = localStorage.getItem('dailyQuote');
+        const savedDate = localStorage.getItem('quoteDate');
+        const today = new Date().toDateString();
+
+        if (savedQuote && savedDate === today) {
+            setQuote(savedQuote);
+        } else {
+            const randomQuote = await fetchRandomQuote();
+            setQuote(randomQuote);
+            localStorage.setItem('dailyQuote', randomQuote);
+            localStorage.setItem('quoteDate', today);
+        }
+    };
+
     useEffect(() => {
-        const today = new Date();
-        const dayOfYear = today.getDate() % quotes.length;
-        setQuote(quotes[dayOfYear]);
+        loadDailyQuote();
     }, []);
 
     const handleAddProject = () => {
@@ -42,7 +67,7 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
     };
 
     const closeModal = () => {
-        setIsQuoteModalOpen(false); 
+        setIsQuoteModalOpen(false);
     };
 
     const handleKeyDown = (e) => {
@@ -54,16 +79,16 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
 
     return (
         <div className="sidebar">
-            <div className='container-header'>            
+            <div className='container-header'>
                 <AccountInfo user={user} onLogout={onLogout} activeTasksCount={activeTasksCount} />
                 <div className='btn-container'>
-                    <button 
-                        className={`btn-quote`} 
+                    <button
+                        className={`btn-quote`}
                         onClick={generateQuote}>
                         <FontAwesomeIcon icon={faLightbulb} style={{ width: '20px', color: 'yellow' }} />
                     </button>
-                    <button 
-                        className={`btn-theme`} 
+                    <button
+                        className={`btn-theme`}
                         onClick={toggleTheme}>
                         {isDarkTheme ? '🌞' : '🌜'}
                     </button>
@@ -95,7 +120,7 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
                         onKeyDown={handleKeyDown}
                     />
                     <button onClick={handleAddProject}>
-                        <FontAwesomeIcon icon={faPlus}  />
+                        <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>
             </div>
