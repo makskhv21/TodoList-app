@@ -1,19 +1,40 @@
 import React, { useState } from 'react';
-
 import './HelpTab.css';
-
 
 const HelpTab = () => {
     const [feedback, setFeedback] = useState("");
-    const [feedbackList, setFeedbackList] = useState([]);
+    const [status, setStatus] = useState({ message: "", type: "" });
 
     const handleFeedbackChange = (e) => setFeedback(e.target.value);
 
-    const handleFeedbackSubmit = () => {
+    const handleFeedbackSubmit = async () => {
         if (feedback.trim()) {
-            setFeedbackList([...feedbackList, feedback]);
-            setFeedback("");
+            try {
+                const response = await fetch('http://localhost:5000/send-feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ feedback }),
+                });
+
+                if (response.ok) {
+                    setStatus({ message: 'Feedback sent successfully!', type: 'success' });
+                    setFeedback('');
+                } else {
+                    setStatus({ message: 'Failed to send feedback. Please try again later.', type: 'error' });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                setStatus({ message: 'An error occurred. Please check your internet connection and try again.', type: 'error' });
+            } finally {
+                setTimeout(() => setStatus({ message: '', type: '' }), 3000);
+            }
         }
+    };
+
+    const handleStatusDismiss = () => {
+        setStatus({ message: '', type: '' });
     };
 
     return (
@@ -34,14 +55,12 @@ const HelpTab = () => {
                     />
                     <button onClick={handleFeedbackSubmit} className="submit-feedback-btn">Submit Feedback</button>
 
-                    {feedbackList.length > 0 && (
-                        <div className="feedback-list">
-                            <h4>Recent Feedback</h4>
-                            <ul>
-                                {feedbackList.map((item, index) => (
-                                    <li key={index} className="feedback-item">{item}</li>
-                                ))}
-                            </ul>
+                    {status.message && (
+                        <div
+                            className={`feedback-status ${status.type}`}
+                            onMouseEnter={handleStatusDismiss}
+                        >
+                            {status.message}
                         </div>
                     )}
                 </div>

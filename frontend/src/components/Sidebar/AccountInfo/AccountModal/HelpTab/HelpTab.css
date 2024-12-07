@@ -23,6 +23,7 @@
     margin-bottom: 10px;
 }
 
+
 .feedback-section {
     margin-top: 30px;
 }
@@ -80,18 +81,37 @@
     font-size: 16px;
     color: #555;
     margin-bottom: 10px;
-}
-
-.feedback-item:nth-child(odd) {
+    padding: 8px;
+    border-radius: 4px;
     background-color: #f9f9f9;
-    padding: 8px;
-    border-radius: 4px;
 }
 
-.feedback-item:nth-child(even) {
-    background-color: #f1f1f1;
-    padding: 8px;
-    border-radius: 4px;
+.feedback-status {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.feedback-status.success {
+    color: #28a745;
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.feedback-status.error {
+    color: #dc3545;
+}
+
+.feedback-status.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 a {
