@@ -7,62 +7,69 @@ import iconEyeOpen from './img/iconEyeOpen.png';
 import iconEyeClose from './img/iconEyeClose.png';
 
 const SignUp = () => {
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
+  const [formData, setFormData] = useState({
+    phone: '',
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords don't match!");
+      setLoading(false);
+      return;
+    }
+
+    // Перевірка на коректний формат телефону
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/; // Формат, що дозволяє перевіряти всі міжнародні телефонні номери
+
+    if (!phoneRegex.test(formData.phone)) {
+      alert('Invalid phone number format! Please enter a valid phone number with country code.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      alert('Account created successfully!');
+
+      setFormData({
+        phone: '',
         username: '',
         email: '',
         password: '',
         confirmPassword: '',
-    });
-    const [loading, setLoading] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+      });
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-        }));
-    };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-  
-      if (formData.password !== formData.confirmPassword) {
-          alert("Passwords don't match!");
-          setLoading(false);
-          return;
-      }
-  
-      try {
-          await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-          alert('Account created successfully!');
-          
-          setFormData({
-              firstName: '',
-              lastName: '',
-              username: '',
-              email: '',
-              password: '',
-              confirmPassword: '',
-          });
-        } catch (error) {
-            alert(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const toggleConfirmPasswordVisibility = () => {
-        setShowConfirmPassword(!showConfirmPassword);
-    };
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   return (
     <div className="signup-container">
@@ -73,18 +80,11 @@ const SignUp = () => {
           <div className="input-group">
             <input
               type="text"
-              name="firstName"
-              value={formData.firstName}
+              name="phone"
+              value={formData.phone}
               onChange={handleInputChange}
-              placeholder="First Name"
-              required
-            />
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              placeholder="Last Name"
+              placeholder="Phone Number (+1234567890)"
+              style={{ width: '95%' }}
               required
             />
           </div>
@@ -107,7 +107,7 @@ const SignUp = () => {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
-              style={{ width: '95%'}}
+              style={{ width: '95%' }}
               required
             />
           </div>
@@ -119,7 +119,7 @@ const SignUp = () => {
               value={formData.password}
               onChange={handleInputChange}
               placeholder="Password"
-              style={{ width: '95%'}}
+              style={{ width: '95%' }}
               required
             />
             <span className="password-toggle" onClick={togglePasswordVisibility}>
@@ -138,7 +138,7 @@ const SignUp = () => {
               value={formData.confirmPassword}
               onChange={handleInputChange}
               placeholder="Confirm Password"
-              style={{ width: '95%'}}
+              style={{ width: '95%' }}
               required
             />
             <span className="password-toggle" onClick={toggleConfirmPasswordVisibility}>
