@@ -40,7 +40,6 @@ const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData, active
             return newMode;
         });
     };
-    
 
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
@@ -58,9 +57,7 @@ const ProfileTab = ({ avatarImage, setAvatarImage, formData, setFormData, active
         });
     };
 
-    const toggleEditing = () => {
-        setIsEditing((prevState) => !prevState);
-    };
+    const toggleEditing = () => setIsEditing((prevState) => !prevState);
 
     return (
         <div className="profile-container">

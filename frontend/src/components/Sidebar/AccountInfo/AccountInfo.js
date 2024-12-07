@@ -8,13 +8,8 @@ const AccountInfo = ({ onLogout, activeTasksCount }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState("Username");
 
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
+    const handleOpenModal = () => setIsModalOpen(true);
+    const handleCloseModal = () => setIsModalOpen(false);
 
     return (
         <div className="account-info-container" onClick={handleOpenModal}>
@@ -24,11 +19,11 @@ const AccountInfo = ({ onLogout, activeTasksCount }) => {
                 <p className="account-email">myemail@example.com</p>
             </div>
             <AccountModal 
-            isOpen={isModalOpen} 
-            onClose={handleCloseModal} 
-            onLogout={onLogout} 
-            activeTasksCount={activeTasksCount} 
-            setUsername={setUsername}
+                isOpen={isModalOpen} 
+                onClose={handleCloseModal} 
+                onLogout={onLogout} 
+                activeTasksCount={activeTasksCount} 
+                setUsername={setUsername}
             />
         </div>
     );

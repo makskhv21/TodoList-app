@@ -24,7 +24,6 @@ const SecurityTab = () => {
     
         setPasswordErrors(errors);
     
-        // Визначення сили паролю
         if (errors.length === 0) {
             if (password.length < 8) {
                 setPasswordStrength('Weak');
@@ -38,16 +37,12 @@ const SecurityTab = () => {
         }
     };
     
-
     const handleNewPasswordChange = (e) => {
         setNewPassword(e.target.value);
         checkPasswordStrength(e.target.value);
     };
 
-    const handleConfirmPasswordChange = (e) => {
-        setConfirmPassword(e.target.value);
-    };
-
+    const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
     const toggleNewPasswordVisibility = () => setShowNewPassword(!showNewPassword);
     const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 

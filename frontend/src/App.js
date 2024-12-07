@@ -9,10 +9,9 @@ function App({ onLogout }) {
     const [selectedProject, setSelectedProject] = useState('Work 👜');
     const [projects, setProjects] = useState(['Work 👜', 'Groceries 🛒', 'Reading List 📚', 'Personal 📝']);
     const [activeTasksCount, setActiveTasksCount] = useState(0);
+    const [tasks, setTasks] = useState([]);
 
-    const handleActiveTasksCount = (count) => {
-        setActiveTasksCount(count);
-    };
+    const handleActiveTasksCount = (count) => setActiveTasksCount(count);
 
     const addProject = (newProject) => {
         if ( newProject && !projects.includes(newProject)) {
@@ -47,11 +46,7 @@ function App({ onLogout }) {
         ));
     };
 
-    const [tasks, setTasks] = useState([]);
-
-    const addTask = (newTask) => {
-        setTasks(prevTasks => [...prevTasks, newTask]);
-    };
+    const addTask = (newTask) => setTasks(prevTasks => [...prevTasks, newTask]);
 
     const editTask = (id, newText) => {
         setTasks(tasks.map(task => 

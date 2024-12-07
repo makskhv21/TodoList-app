@@ -80,9 +80,7 @@ const Menu = ({ isOpen, onClose, onThemeChange, selectedProject, tasks, toggleSo
         onClose();
     };
 
-    const toggleSortingMenu = () => {
-        setIsSortingMenuOpen(!isSortingMenuOpen);
-    };
+    const toggleSortingMenu = () => setIsSortingMenuOpen(!isSortingMenuOpen);
 
     return (
         <div className={`menu ${isOpen ? 'open' : ''}`}>

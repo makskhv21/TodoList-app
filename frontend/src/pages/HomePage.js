@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import './pages.css';
+import './CSSpage/pages.css';
 
 import iconTodoList from './img/icon-header.png';
 import iconManagement from './img/iconManagement.png';

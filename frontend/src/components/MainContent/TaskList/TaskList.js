@@ -35,9 +35,7 @@ function TaskList({
         }));
     };
     
-    const handleToggleCompleted = () => {
-        setShowCompleted(prevState => !prevState);
-    };
+    const handleToggleCompleted = () => setShowCompleted(prevState => !prevState);
     
     return (
         <div className="task-list">
@@ -88,7 +86,12 @@ function TaskList({
             )}
 
             {selectedTask && menuTask[selectedTask.id]?.visible && (
-                <MenuTask menuTask={menuTask} setMenuTask={setMenuTask} selectedTask={selectedTask} tasks={tasks} />
+                <MenuTask 
+                    menuTask={menuTask} 
+                    setMenuTask={setMenuTask} 
+                    selectedTask={selectedTask} 
+                    tasks={tasks} 
+                />
             )}
         </div>
     );

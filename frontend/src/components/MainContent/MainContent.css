@@ -91,14 +91,6 @@
     background-color: #6240c9;
 }
 
-
-
-
-
-
-
-
-
 .task-list {
     display: flex;
     flex-direction: column;
@@ -168,7 +160,6 @@ span, input[type="text"] {
 .btn-task-icon {
     color: #4C82D9;
 }
-
 
 .calendarWeek {
     display: flex;
@@ -262,9 +253,6 @@ button:hover {
     justify-content: space-between;
     align-items: center; 
 }
-
-
-
 
 .modal-overlay {
     position: fixed;

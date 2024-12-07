@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from "react";
+import React from "react";
 import TaskSteps from "./TaskSteps/TaskSteps"
 import Reminder from "./Reminder/Reminder";
 import Term from "./Term/Term";
@@ -9,7 +9,6 @@ import Notes from "./Notes/Notes"
 import './MenuTask.css';
 
 function MenuTask({ menuTask, setMenuTask, selectedTask, tasks }) {
-
     return (
         <div className="task-menu">
             <h3>Дії з завданням: {selectedTask.text}</h3>

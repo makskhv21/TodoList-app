@@ -17,7 +17,9 @@ function Task({
     isMenuVisible
 }) {
     const handleTaskClick = (e) => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'svg' || e.target.tagName === 'path') {
+        if (e.target.tagName === 'INPUT' ||   e.target.tagName === 'BUTTON' || 
+            e.target.tagName === 'svg'   ||   e.target.tagName === 'path'
+        ) {
             return;
         }
         onClick();

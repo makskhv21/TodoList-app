@@ -31,7 +31,7 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
         ? tasks.filter(task => task.important)
         : tasks;
 
-    const activeTasksCount = filteredTasks.filter(task => !task.completed).length; // Кількість активних завдань
+    const activeTasksCount = filteredTasks.filter(task => !task.completed).length;
     useEffect(() => {
         onActiveTasksCountChange(activeTasksCount);
     }, [activeTasksCount, onActiveTasksCountChange]);
@@ -57,9 +57,7 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
         }));
     };
 
-    const addEventToTaskList = (event) => {
-        addTask(event); 
-    };
+    const addEventToTaskList = (event) => addTask(event); 
 
     return (
         <div 

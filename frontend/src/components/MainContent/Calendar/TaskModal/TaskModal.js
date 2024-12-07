@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 
 
-const TaskModal = ({ currentTasks, setCurrentTasks, selectedDay, closeModal, tasks, setTasks, editIndex, setEditIndex, editedText, setEditedText }) => {
+const TaskModal = ({ 
+    currentTasks, 
+    setCurrentTasks, 
+    selectedDay, 
+    closeModal, 
+    tasks, 
+    setTasks, 
+    editIndex, 
+    setEditIndex, 
+    editedText, 
+    setEditedText 
+}) => {
     const [isEditing, setIsEditing] = useState(false);
 
     const deleteTask = (index) => {

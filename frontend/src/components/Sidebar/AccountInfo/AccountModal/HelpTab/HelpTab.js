@@ -7,9 +7,7 @@ const HelpTab = () => {
     const [feedback, setFeedback] = useState("");
     const [feedbackList, setFeedbackList] = useState([]);
 
-    const handleFeedbackChange = (e) => {
-        setFeedback(e.target.value);
-    };
+    const handleFeedbackChange = (e) => setFeedback(e.target.value);
 
     const handleFeedbackSubmit = () => {
         if (feedback.trim()) {

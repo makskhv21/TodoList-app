@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './SignUp.css';
+import './CSSpage/SignUp.css';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 
@@ -36,8 +36,7 @@ const SignUp = () => {
       return;
     }
 
-    // Перевірка на коректний формат телефону
-    const phoneRegex = /^\+?[1-9]\d{1,14}$/; // Формат, що дозволяє перевіряти всі міжнародні телефонні номери
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
 
     if (!phoneRegex.test(formData.phone)) {
       alert('Invalid phone number format! Please enter a valid phone number with country code.');
@@ -63,13 +62,8 @@ const SignUp = () => {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
   return (
     <div className="signup-container">

@@ -52,22 +52,17 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
         loadDailyQuote();
     }, []);
 
-    const handleAddProject = () => {
-        addProject(newProject);
-        setNewProject('');
-    };
+    const generateQuote = () => setIsQuoteModalOpen(true);
+    const closeModal = () => setIsQuoteModalOpen(false);
 
     const toggleTheme = () => {
         setIsDarkTheme(prev => !prev);
         document.documentElement.setAttribute('data-theme', isDarkTheme ? 'light' : 'dark');
     };
 
-    const generateQuote = () => {
-        setIsQuoteModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsQuoteModalOpen(false);
+    const handleAddProject = () => {
+        addProject(newProject);
+        setNewProject('');
     };
 
     const handleKeyDown = (e) => {
@@ -80,13 +75,18 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
     return (
         <div className="sidebar">
             <div className='container-header'>
-                <AccountInfo user={user} onLogout={onLogout} activeTasksCount={activeTasksCount} />
+                <AccountInfo 
+                    user={user} 
+                    onLogout={onLogout} 
+                    activeTasksCount={activeTasksCount} 
+                />
                 <div className='btn-container'>
                     <button
                         className={`btn-quote`}
                         onClick={generateQuote}>
                         <FontAwesomeIcon icon={faLightbulb} style={{ width: '20px', color: 'yellow' }} />
                     </button>
+                  
                     <button
                         className={`btn-theme`}
                         onClick={toggleTheme}>
@@ -124,7 +124,11 @@ function Sidebar({ projects, setSelectedProject, addProject, editProject, delete
                     </button>
                 </div>
             </div>
-            <QuoteModal quote={quote} onClose={closeModal} isOpen={isQuoteModalOpen} />
+            <QuoteModal 
+                quote={quote} 
+                onClose={closeModal} 
+                isOpen={isQuoteModalOpen} 
+            />
         </div>
     );
 }
