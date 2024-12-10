@@ -9,36 +9,34 @@ const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteT
     useEffect(() => {
         const eventsForTasks = {};
         tasks.forEach((task) => {
-            const taskDate = new Date(task.createdAt).toDateString();
-            if (!eventsForTasks[taskDate]) {
-                eventsForTasks[taskDate] = [];
-            }
-            eventsForTasks[taskDate].push(task);
+          const taskDate = new Date(task.createdAt).toDateString();
+          if (!eventsForTasks[taskDate]) eventsForTasks[taskDate] = [];
+          eventsForTasks[taskDate].push(task);
         });
-
+    
         setEventsByDay(eventsForTasks);
-    }, [tasks]);
+      }, [tasks]);
 
-    const addEvent = (day) => {
+      const addEvent = (day) => {
         const todayKey = new Date().toDateString();
-
         const newEvent = newEventByDay[day]?.trim();
+      
         if (newEvent) {
-            const event = { id: Date.now(), text: newEvent, completed: false, createdAt: new Date(day) };
-            
-            setEventsByDay(prev => ({
-                ...prev,
-                [day]: [...(prev[day] || []), event],
-            }));
-
-            if (day === todayKey) {
-                addEventToTaskList(event);
-            }
-
-            setNewEventByDay(prev => ({ ...prev, [day]: '' }));
+          const event = { id: Date.now(), text: newEvent, completed: false, createdAt: new Date(day) };
+      
+          addEventToTaskList(event);
+      
+          const eventsForTasks = {};
+          tasks.forEach((task) => {
+            const taskDate = new Date(task.createdAt).toDateString();
+            if (!eventsForTasks[taskDate]) eventsForTasks[taskDate] = [];
+            eventsForTasks[taskDate].push(task);
+          });
+          setEventsByDay(eventsForTasks);
+          setNewEventByDay(prev => ({ ...prev, [day]: '' }));
         }
-    };
-
+      };
+      
     const deleteEvent = (day, id) => {
         setEventsByDay(prev => ({
             ...prev,

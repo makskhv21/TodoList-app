@@ -64,6 +64,10 @@ function App({ onLogout }) {
         ));
     };
 
+    const deleteAllTasksForDate = (date) => {
+        setTasks((prevTasks) => prevTasks.filter((task) => new Date(task.createdAt).toDateString() !== date));
+    };
+
     return(
         <div className="app">
             <Sidebar 
@@ -84,6 +88,7 @@ function App({ onLogout }) {
                 deleteTask={deleteTask}
                 toggleImportant={toggleImportant}
                 onActiveTasksCountChange={handleActiveTasksCount}
+                deleteAllTasksForDate={deleteAllTasksForDate}
             />
         </div>
     )

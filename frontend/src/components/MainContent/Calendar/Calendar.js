@@ -1,100 +1,221 @@
-import React, { useState, useEffect } from 'react';
-import './Calendar.css';
-import CalendarHeader from './CalendarHeader/CalendarHeader';
-import CalendarGrid from './CalendarGrid/CalendarGrid';
-import TaskInput from './TaskInput/TaskInput';
-import TaskModal from './TaskModal/TaskModal';
+import React, { useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
+import "./Calendar.css";
 
-const Calendar = () => {
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [selectedDay, setSelectedDay] = useState(null);
-    const [taskText, setTaskText] = useState('');
-    const [tasks, setTasks] = useState({});
-    const [modalVisible, setModalVisible] = useState(false);
-    const [currentTasks, setCurrentTasks] = useState([]);
-    const [editIndex, setEditIndex] = useState(null);
-    const [editedText, setEditedText] = useState('');
+const Calendar = ({ tasks, addTask, toggleImportant, deleteTask, editTask, toggleTaskCompletion, deleteAllTasksForDate }) => {
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(new Date().toDateString());
+    const [newTaskText, setNewTaskText] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [editingTask, setEditingTask] = useState(null);
+    const [editedText, setEditedText] = useState("");
 
-    useEffect(() => {
-        const savedTasks = localStorage.getItem('tasks');
-        if (savedTasks) {
-            setTasks(JSON.parse(savedTasks));
-        }
-    }, []);
+    const handleDateClick = (date) => setSelectedDate(date);
 
-    useEffect(() => {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }, [tasks]);
+    const handleTaskClick = (task) => {
+        setEditingTask(task);
+        setEditedText(task.text);
+        setShowModal(true);
+    };
 
+    const handleAddTask = () => {
+        if (newTaskText.trim()) {
+            const newTask = {
+                id: Date.now(),
+                text: newTaskText,
+                createdAt: selectedDate,
+                completed: false,
+                important: false,
+            };
 
-    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
-    const adjustedFirstDay = (firstDay === 0) ? 6 : firstDay - 1;
-
-    const handleTaskSubmit = () => {
-        if (taskText.trim() && selectedDay !== null) {
-            const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${selectedDay}`;
-            setTasks((prev) => ({
-                ...prev,
-                [dateKey]: [...(prev[dateKey] || []), taskText],
-            }));
-            setTaskText('');
+            addTask(newTask);
+            setNewTaskText("");
         }
     };
 
-    const changeMonth = (direction) => {
-        setCurrentDate((prev) => {
-            const newDate = new Date(prev);
-            newDate.setMonth(prev.getMonth() + direction);
-            return newDate;
-        });
+    const changeMonth = (offset) => {
+        const newMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + offset, 1);
+        setCurrentMonth(newMonth);
     };
 
-    const openModal = (day) => {
-        const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${day}`;
-        setCurrentTasks(tasks[dateKey] || []);
-        setSelectedDay(day);
-        setModalVisible(true);
+    const tasksForDate = tasks.filter(
+        (task) => new Date(task.createdAt).toDateString() === selectedDate && !task.completed
+    );
+    const completedTasksForDate = tasks.filter(
+        (task) => new Date(task.createdAt).toDateString() === selectedDate && task.completed
+    );
+
+    const renderDays = () => {
+        const days = [];
+        const startOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
+        const endOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
+        const startDayOfWeek = (startOfMonth.getDay() + 6) % 7;
+
+        for (let i = 0; i < startDayOfWeek; i++) {
+            days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
+        }
+
+        for (let i = 1; i <= endOfMonth.getDate(); i++) {
+            const currentDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i).toDateString();
+            const taskCount = tasks.filter(
+                (task) => new Date(task.createdAt).toDateString() === currentDay && !task.completed
+            ).length;
+
+            days.push(
+                <div
+                    key={i}
+                    className={`calendar-day ${taskCount > 0 ? "has-tasks" : ""} ${currentDay === selectedDate ? "selected" : ""}`}
+                    onClick={() => handleDateClick(currentDay)}
+                >
+                    {i}
+                    <div className="task-count" onClick={handleTaskClick}>
+                        {taskCount > 0 ? `Tasks: ${taskCount}` : "No Tasks"}
+                    </div>
+                </div>
+            );
+        }
+
+        return days;
     };
 
     const closeModal = () => {
-        setModalVisible(false);
-        setCurrentTasks([]);
-        setEditIndex(null);
+        setShowModal(false);
+        setEditingTask(null);
+    };    
+
+    const handleDeleteAllTasks = () => {
+        if (window.confirm("Are you sure you want to delete all tasks for this date?")) {
+            deleteAllTasksForDate(selectedDate);
+        }
+        closeModal();
+    };
+
+    const handleEditTask = () => {
+        if (editedText.trim() !== "") {
+            editTask(editingTask.id, editedText);
+            setEditingTask(null);
+        }
+    };
+    const handleTaskDoubleClick = (task) => {
+        setEditingTask(task);
+        setEditedText(task.text);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            handleEditTask();
+        }
     };
 
     return (
-        <div className="calendar">
-            <CalendarHeader 
-                currentDate={currentDate} 
-                changeMonth={changeMonth} 
-            />
-            <CalendarGrid 
-                currentDate={currentDate} 
-                adjustedFirstDay={adjustedFirstDay} 
-                daysInMonth={daysInMonth} 
-                tasks={tasks} 
-                openModal={openModal} 
-                selectDayForTask={setSelectedDay} 
-            />
-            <TaskInput 
-                taskText={taskText} 
-                setTaskText={setTaskText} 
-                handleTaskSubmit={handleTaskSubmit} 
-            />
-            {modalVisible && (
-                <TaskModal 
-                    currentTasks={currentTasks} 
-                    setCurrentTasks={setCurrentTasks} 
-                    selectedDay={selectedDay} 
-                    closeModal={closeModal} 
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    editIndex={editIndex}
-                    setEditIndex={setEditIndex}
-                    editedText={editedText}
-                    setEditedText={setEditedText}
+        <div className="calendar-container">
+            <div className="calendar-month-nav">
+                <button onClick={() => changeMonth(-1)} className="calendar-nav-btn">❮</button>
+                <span className="calendar-month-title">
+                    {currentMonth
+                        .toLocaleString("default", { month: "long", year: "numeric" })
+                        .split(" ")
+                        .map((part, index) =>
+                            index === 0 ? part.charAt(0).toUpperCase() + part.slice(1) : part
+                        )
+                        .join(" ")}
+                </span>
+                <button onClick={() => changeMonth(1)} className="calendar-nav-btn">❯</button>
+            </div>
+
+            <div className="calendar-week-days">
+                {["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"].map((day, index) => (
+                    <div key={index} className="calendar-week-day">{day}</div>
+                ))}
+            </div>
+
+            <div className="calendar-grid">{renderDays()}</div>
+
+            <div className="calendar-add-task">
+                <input
+                    type="text"
+                    value={newTaskText}
+                    onChange={(e) => setNewTaskText(e.target.value)}
+                    placeholder="Enter new task"
+                    className="calendar-task-input"
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            handleAddTask();
+                        }
+                    }}
                 />
+                <button onClick={handleAddTask} className="calendar-add-btn">Add Task</button>
+            </div>
+
+            {showModal && (
+                <div className="calendar-modal">
+                    <div className="calendar-modal-content">
+                        <span className="calendar-close-btn" onClick={closeModal}>×</span>
+                        <h3 className="calendar-modal-title">Tasks for {selectedDate}</h3>
+                        <ul className="calendar-task-list">
+                        {tasksForDate.map((task) => (
+                            <li
+                                key={task.id}
+                                className="calendar-task-item"
+                                onDoubleClick={() => handleTaskDoubleClick(task)}
+                            >
+                                {editingTask && editingTask.id === task.id ? (
+                                    <input
+                                        type="text"
+                                        value={editedText}
+                                        onChange={(e) => setEditedText(e.target.value)}
+                                        onKeyDown={handleKeyDown}
+                                        autoFocus
+                                        className="calendar-task-edit-input"
+                                    />
+                                ) : (
+                                    <>
+                                        <input
+                                            type="checkbox"
+                                            checked={task.completed}
+                                            onChange={() => toggleTaskCompletion(task.id)}
+                                            className="calendar-task-checkbox"
+                                        />
+                                        <span className={`calendar-task-text ${task.important ? "important" : ""}`}>
+                                            {task.text}
+                                        </span>
+                                    </>
+                                )}
+                                <button onClick={() => toggleImportant(task.id)} className="calendar-important-btn">
+                                    {task.important ? "★" : "☆"}
+                                </button>
+                                <button onClick={() => deleteTask(task.id)} className="calendar-delete-btn">
+                                    <FaTrashAlt />
+                                </button>
+                            </li>
+                        ))}
+
+                            {completedTasksForDate.map((task) => (
+                                <li key={task.id} className="calendar-task-item completed-task">
+                                    <input
+                                        type="checkbox"
+                                        checked={task.completed}
+                                        onChange={() => toggleTaskCompletion(task.id)}
+                                        className="calendar-task-checkbox"
+                                    />
+                                    <span className="calendar-task-text completed">
+                                        {task.text}
+                                    </span>
+                                    <button onClick={() => toggleImportant(task.id)} className="calendar-important-btn">
+                                        {task.important ? "★" : "☆"}
+                                    </button>
+                                    <button onClick={() => deleteTask(task.id)} className="calendar-delete-btn">
+                                        <FaTrashAlt />
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+
+                        <button onClick={handleDeleteAllTasks} className="calendar-delete-all-btn">
+                            Delete All Tasks
+                        </button>
+                    </div>
+                </div>
             )}
         </div>
     );

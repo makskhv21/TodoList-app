@@ -7,7 +7,16 @@ import CalendarWeek from './CalendarWeek/CalendarWeek';
 import Menu from './Menu/Menu';
 import themes from './Menu/themes';
 
-function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask, onActiveTasksCountChange }) {
+const isToday = (dateString) => {
+    const taskDate = new Date(dateString);
+    const today = new Date();
+    
+    return taskDate.getFullYear() === today.getFullYear() &&
+           taskDate.getMonth() === today.getMonth() &&
+           taskDate.getDate() === today.getDate();
+};
+
+function MainContent({ deleteAllTasksForDate, toggleImportant, tasks, selectedProject, toggleTaskCompletion, addTask, editTask, deleteTask, onActiveTasksCountChange }) {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editingTaskText, setEditingTaskText] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
@@ -28,9 +37,9 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
     };
 
     const filteredTasks = selectedProject === 'Important'
-        ? tasks.filter(task => task.important)
-        : tasks;
-
+    ? tasks.filter(task => task.important) // Всі завдання, що позначені як важливі
+    : tasks.filter(task => isToday(task.createdAt));
+  
     const activeTasksCount = filteredTasks.filter(task => !task.completed).length;
     useEffect(() => {
         onActiveTasksCountChange(activeTasksCount);
@@ -59,6 +68,15 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
 
     const addEventToTaskList = (event) => addTask(event); 
 
+    const markTaskAsImportant = (taskId) => {
+        const updatedTasks = tasks.map(task => 
+            task.id === taskId ? { ...task, important: true } : task
+        );
+    
+        onTasksChange(updatedTasks);
+    };
+
+    
     return (
         <div 
             className="main-content" 
@@ -105,7 +123,15 @@ function MainContent({ toggleImportant, tasks, selectedProject, toggleTaskComple
                     toggleImportant={toggleImportant}
                 />
             ) : selectedProject === 'Calendar' ? (
-                <Calendar />
+                <Calendar 
+                    tasks={tasks}
+                    addTask={addTask}
+                    editTask={editTask}
+                    deleteTask={deleteTask}
+                    toggleTaskCompletion={toggleTaskCompletion}
+                    toggleImportant={toggleImportant}
+                    deleteAllTasksForDate={deleteAllTasksForDate }
+                />
             ) : (
                 <TaskList 
                     tasks={sortedTasks}
