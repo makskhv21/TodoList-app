@@ -94,6 +94,17 @@
     font-weight: bold;
 }
 
+.calendar-day.completed-tasks {
+    background-color: #e0ffe0;
+    border: 2px solid #27ae60;
+    position: relative;
+}
+
+.calendar-day.completed-tasks .task-count {
+    color: #27ae60;
+    font-weight: bold;
+}
+
 .task-count {
     color: #495057;
     font-size: 1rem;

@@ -12,14 +12,16 @@ const RenderDays = ({ currentMonth, selectedDate, tasks, handleDateClick, handle
 
     for (let i = 1; i <= endOfMonth.getDate(); i++) {
         const currentDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i).toDateString();
-        const taskCount = tasks.filter(
-            (task) => new Date(task.createdAt).toDateString() === currentDay && !task.completed
-        ).length;
+        const tasksForThisDay = tasks.filter(
+            (task) => new Date(task.createdAt).toDateString() === currentDay
+        );
+        const taskCount = tasksForThisDay.filter(task => !task.completed).length;
+        const allCompleted = tasksForThisDay.length && taskCount === 0;
 
         days.push(
             <div
                 key={i}
-                className={`calendar-day ${taskCount > 0 ? "has-tasks" : ""} ${currentDay === selectedDate ? "selected" : ""}`}
+                className={`calendar-day ${taskCount > 0 ? "has-tasks" : ""} ${currentDay === selectedDate ? "selected" : ""} ${allCompleted ? "completed-tasks" : ""}`} // Додаємо клас для завершених завдань
                 onClick={() => handleDateClick(currentDay)}
             >
                 {i}
