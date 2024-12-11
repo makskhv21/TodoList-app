@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./MainContent.css"
+import "./MainContent.css";
 import TaskList from "./TaskList/TaskList";
 import AddTask from "./AddTask/AddTask";
 import Calendar from './Calendar/Calendar'; 
@@ -36,18 +36,27 @@ function MainContent({ deleteAllTasksForDate, toggleImportant, tasks, selectedPr
         }
     };
 
-    const filteredTasks = selectedProject === 'Important'
-    ? tasks.filter(task => task.important) // Всі завдання, що позначені як важливі
-    : tasks.filter(task => isToday(task.createdAt));
-  
+    const isMissedGoal = (task) => {
+        const taskDate = new Date(task.createdAt);
+        const today = new Date();
+        return taskDate < today && !task.completed;
+    };
+
+    const filteredTasks = selectedProject === 'Missed goals'
+        ? tasks.filter(task => isMissedGoal(task) && !isToday(task.createdAt))
+        : selectedProject === 'Important'
+        ? tasks.filter(task => task.important)
+        : tasks.filter(task => isToday(task.createdAt)); 
+
     const activeTasksCount = filteredTasks.filter(task => !task.completed).length;
+
     useEffect(() => {
         onActiveTasksCountChange(activeTasksCount);
     }, [activeTasksCount, onActiveTasksCountChange]);
-        
+
     const handleThemeChange = (themeName) => {
         setSelectedTheme(themes[themeName] || themes.light);
-    };    
+    };
 
     const sortedTasks = [...filteredTasks].sort((a, b) => {
         if (sortOptions.alphabetically) return a.text.localeCompare(b.text);
@@ -66,17 +75,16 @@ function MainContent({ deleteAllTasksForDate, toggleImportant, tasks, selectedPr
         }));
     };
 
-    const addEventToTaskList = (event) => addTask(event); 
+    const addEventToTaskList = (event) => addTask(event);
 
     const markTaskAsImportant = (taskId) => {
         const updatedTasks = tasks.map(task => 
             task.id === taskId ? { ...task, important: true } : task
         );
-    
+
         onTasksChange(updatedTasks);
     };
 
-    
     return (
         <div 
             className="main-content" 
@@ -146,7 +154,7 @@ function MainContent({ deleteAllTasksForDate, toggleImportant, tasks, selectedPr
                     toggleImportant={toggleImportant}
                 />
             )}
-            {selectedProject !== 'Calendar' && selectedProject !== 'Next 7 days' && (
+            {selectedProject !== 'Calendar' && selectedProject !== 'Next 7 days' && selectedProject !== 'Missed goals' && (
                 <div className="add-task-container">
                     <AddTask addTask={addTask} />
                 </div>
