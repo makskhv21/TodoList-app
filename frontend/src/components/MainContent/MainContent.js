@@ -121,6 +121,7 @@ function MainContent({ deleteAllTasksForDate, toggleImportant, tasks, selectedPr
                     addEventToTaskList={addEventToTaskList}
                     toggleTaskCompletion={toggleTaskCompletion}
                     toggleImportant={toggleImportant}
+                    deleteAllTasksForDate={deleteAllTasksForDate}
                 />
             ) : selectedProject === 'Calendar' ? (
                 <Calendar 

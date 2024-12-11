@@ -191,9 +191,25 @@ span, input[type="text"] {
 }
 
 .dayWeek h4 {
+    display: flex;
+    justify-content: space-between;
     margin: 0 0 10px; 
     font-size: 1.5em;
     color: #007bff;
+}
+
+.dayWeek h4 button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+.dayWeek h4 button {
+    transition: transform 0.3s ease;
+}
+
+.dayWeek h4 button:hover {
+    transform: scale(1.5);
 }
 
 .dayWeek ul {

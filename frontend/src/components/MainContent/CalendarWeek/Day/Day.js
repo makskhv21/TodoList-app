@@ -15,7 +15,8 @@ function Day({
     editingText, 
     onTextChange, 
     onToggleCompletion, 
-    onToggleImportant
+    onToggleImportant,
+    onDeleteAllTasks
 }) { 
 
     const sortedEvents = events.sort((a, b) => {
@@ -32,7 +33,7 @@ function Day({
 
     return (
         <div className="dayWeek">
-            <h4>{date.toDateString()}</h4>
+            <h4>{date.toDateString()} <button onClick={onDeleteAllTasks}>🗑️</button></h4>
             <EventList
                 events={sortedEvents}
                 onEdit={onEdit}

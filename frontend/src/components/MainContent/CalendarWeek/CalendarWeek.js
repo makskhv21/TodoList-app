@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Day from './Day/Day';
 
-const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteTask, editTask, toggleImportant }) => {
+const CalendarWeek = ({ deleteAllTasksForDate, tasks, addEventToTaskList, toggleTaskCompletion, deleteTask, editTask, toggleImportant }) => {
     const [eventsByDay, setEventsByDay] = useState({});
     const [newEventByDay, setNewEventByDay] = useState({});
     const [editingEvent, setEditingEvent] = useState({ day: null, id: null, text: '' });
@@ -15,28 +15,28 @@ const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteT
         });
     
         setEventsByDay(eventsForTasks);
-      }, [tasks]);
+    }, [tasks]);
 
-      const addEvent = (day) => {
+    const addEvent = (day) => {
         const todayKey = new Date().toDateString();
         const newEvent = newEventByDay[day]?.trim();
       
         if (newEvent) {
-          const event = { id: Date.now(), text: newEvent, completed: false, createdAt: new Date(day) };
+            const event = { id: Date.now(), text: newEvent, completed: false, createdAt: new Date(day) };
       
-          addEventToTaskList(event);
+            addEventToTaskList(event);
       
-          const eventsForTasks = {};
-          tasks.forEach((task) => {
-            const taskDate = new Date(task.createdAt).toDateString();
-            if (!eventsForTasks[taskDate]) eventsForTasks[taskDate] = [];
-            eventsForTasks[taskDate].push(task);
-          });
-          setEventsByDay(eventsForTasks);
-          setNewEventByDay(prev => ({ ...prev, [day]: '' }));
+            const eventsForTasks = {};
+            tasks.forEach((task) => {
+                const taskDate = new Date(task.createdAt).toDateString();
+                if (!eventsForTasks[taskDate]) eventsForTasks[taskDate] = [];
+                eventsForTasks[taskDate].push(task);
+            });
+            setEventsByDay(eventsForTasks);
+            setNewEventByDay(prev => ({ ...prev, [day]: '' }));
         }
-      };
-      
+    };
+
     const deleteEvent = (day, id) => {
         setEventsByDay(prev => ({
             ...prev,
@@ -76,6 +76,14 @@ const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteT
         }
     };
 
+    const handleDeleteAllTasks = (day) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete all tasks for this day?");
+        
+        if (confirmDelete) {
+            deleteAllTasksForDate(day);
+        }
+    };
+
     const renderDays = () => {
         const days = [];
         const today = new Date();
@@ -88,27 +96,30 @@ const CalendarWeek = ({ tasks, addEventToTaskList, toggleTaskCompletion, deleteT
             const newEventText = newEventByDay[dayKey] || '';
 
             days.push(
-                <Day
-                    key={dayKey}
-                    date={date}
-                    events={eventsForDay}
-                    newEventText={newEventText}
-                    onToggleImportant={(id) => toggleImportant(id)}
-                    onNewEventChange={(e) => setNewEventByDay(prev => ({
-                        ...prev,
-                        [dayKey]: e.target.value,
-                    }))}
-                    onAddEvent={() => addEvent(dayKey)}
-                    onEdit={(id) => startEditing(dayKey, id)}
-                    onDelete={(id) => deleteEvent(dayKey, id)}
-                    onToggleCompletion={(id) => toggleCompletion(dayKey, id)}
-                    isEditing={editingEvent.id}
-                    onSave={saveEdit}
-                    editingText={editingEvent.text}
-                    onTextChange={(e) =>
-                        setEditingEvent(prev => ({ ...prev, text: e.target.value }))
-                    }
-                />
+                <div key={dayKey}>
+                    <Day
+                        key={dayKey}
+                        date={date}
+                        events={eventsForDay}
+                        newEventText={newEventText}
+                        onToggleImportant={(id) => toggleImportant(id)}
+                        onNewEventChange={(e) => setNewEventByDay(prev => ({
+                            ...prev,
+                            [dayKey]: e.target.value,
+                        }))} 
+                        onAddEvent={() => addEvent(dayKey)}
+                        onEdit={(id) => startEditing(dayKey, id)}
+                        onDelete={(id) => deleteEvent(dayKey, id)}
+                        onToggleCompletion={(id) => toggleCompletion(dayKey, id)}
+                        isEditing={editingEvent.id}
+                        onSave={saveEdit}
+                        editingText={editingEvent.text}
+                        onTextChange={(e) =>
+                            setEditingEvent(prev => ({ ...prev, text: e.target.value }))
+                        }
+                        onDeleteAllTasks={() => handleDeleteAllTasks(dayKey)} 
+                    />
+                </div>
             );
         }
         return days;
