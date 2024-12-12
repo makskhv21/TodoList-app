@@ -39,13 +39,19 @@ const SignUp = () => {
     const phoneRegex = /^\+?[1-9]\d{1,14}$/;
 
     if (!phoneRegex.test(formData.phone)) {
-      alert('Invalid phone number format! Please enter a valid phone number with country code.');
+      alert(
+        'Invalid phone number format! Please enter a valid phone number with country code.'
+      );
       setLoading(false);
       return;
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
       alert('Account created successfully!');
 
       setFormData({
@@ -63,7 +69,8 @@ const SignUp = () => {
   };
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
-  const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
+  const toggleConfirmPasswordVisibility = () =>
+    setShowConfirmPassword(!showConfirmPassword);
 
   return (
     <div className="signup-container">
@@ -116,7 +123,10 @@ const SignUp = () => {
               style={{ width: '95%' }}
               required
             />
-            <span className="password-toggle" onClick={togglePasswordVisibility}>
+            <span
+              className="password-toggle"
+              onClick={togglePasswordVisibility}
+            >
               <img
                 src={showPassword ? iconEyeOpen : iconEyeClose}
                 alt={showPassword ? 'Hide password' : 'Show password'}
@@ -135,7 +145,10 @@ const SignUp = () => {
               style={{ width: '95%' }}
               required
             />
-            <span className="password-toggle" onClick={toggleConfirmPasswordVisibility}>
+            <span
+              className="password-toggle"
+              onClick={toggleConfirmPasswordVisibility}
+            >
               <img
                 src={showConfirmPassword ? iconEyeOpen : iconEyeClose}
                 alt={showConfirmPassword ? 'Hide password' : 'Show password'}
@@ -150,7 +163,12 @@ const SignUp = () => {
         </form>
 
         <div className="account-link">
-          <p>Already have an account? <a href="/login" className="login-link">Log In</a></p>
+          <p>
+            Already have an account?{' '}
+            <a href="/login" className="login-link">
+              Log In
+            </a>
+          </p>
         </div>
       </div>
     </div>

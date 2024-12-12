@@ -1,110 +1,110 @@
 .menu {
-    position: absolute; 
-    top: 10%; 
-    right: 1%;
-    width: 300px;
-    height: auto;
-    background-color: #fff; 
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
-    z-index: 1000; 
-    display: none; 
+  position: absolute;
+  top: 10%;
+  right: 1%;
+  width: 300px;
+  height: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: none;
 }
 
 .menu.open {
-    display: block; 
+  display: block;
 }
 
 .menu ul {
-    list-style: none;
-    padding: 5px; 
-    margin-top: 70px;
+  list-style: none;
+  padding: 5px;
+  margin-top: 70px;
 }
 
 .menu li {
-    padding: 15px 5px; 
-    cursor: pointer; 
-    transition: background-color 0.2s ease; 
-    color: black;
+  padding: 15px 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: black;
 }
 
 .menu li:hover {
-    background-color: #f0f0f0; 
+  background-color: #f0f0f0;
 }
 
 .close-button {
-    background: none; 
-    border: none; 
-    font-size: 24px; 
-    color: #333; 
-    cursor: pointer;
-    position: absolute;
-    top: 5px;
-    right: 5px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .close-button:hover {
-    background-color: #9568C9;
+  background-color: #9568c9;
 }
 
 .theme-selector {
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 10px;
-    margin: 10px 0; 
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
 }
 
 .optionMenu {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .theme-square {
-    width: 30px; 
-    height: 30px; 
-    border: 2px solid #ccc; 
-    cursor: pointer; 
-    transition: transform 0.2s; 
+  width: 30px;
+  height: 30px;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 .theme-square:hover {
-    transform: scale(1.1);
-    border-color: #aaa;
+  transform: scale(1.1);
+  border-color: #aaa;
 }
 
 .sort-button {
-    margin: 0;
-    padding: 10px;
-    color: white;
-    border: none;
-    cursor: pointer;
+  margin: 0;
+  padding: 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .sorting-menu {
-    position: absolute; 
-    left: -202px; 
-    top: 73px;
-    width: 200px;
-    background-color: white; 
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
-    z-index: 1000;
+  position: absolute;
+  left: -202px;
+  top: 73px;
+  width: 200px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
 .sorting-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .sorting-menu li {
-    padding: 10px;
-    cursor: pointer;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .sorting-menu li:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .themaLi:hover {
-    cursor: default;
+  cursor: default;
 }

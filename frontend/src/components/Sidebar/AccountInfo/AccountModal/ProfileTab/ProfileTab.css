@@ -1,180 +1,180 @@
 .avatar-actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    gap: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .profile-botTodolist {
-    position: relative;
-    bottom: 0px;
-    border-radius: 50%;
-    width: 27px;
-    height: 27px;
-    background-color: #aac5ee;
+  position: relative;
+  bottom: 0px;
+  border-radius: 50%;
+  width: 27px;
+  height: 27px;
+  background-color: #aac5ee;
 }
 
 .profile-botTodolist:hover {
-    background-color: #007BFF;
+  background-color: #007bff;
 }
 
 .profile-botTodolist img {
-    position: relative;
-    top: 1px;
-    left: 1px;
-    width: 24px;
-    height: 24px;
+  position: relative;
+  top: 1px;
+  left: 1px;
+  width: 24px;
+  height: 24px;
 }
 
 .avatar-edit-btn {
-    position: relative;
-    bottom: 10px;
-    border-radius: 50%;
-    width: 27px;
-    height: 27px;
-    background-color: #aac5ee;
+  position: relative;
+  bottom: 10px;
+  border-radius: 50%;
+  width: 27px;
+  height: 27px;
+  background-color: #aac5ee;
 }
 
 .avatar-edit-btn:hover {
-    background-color: #007BFF;
+  background-color: #007bff;
 }
 
 .avatar-edit-btn img {
-    position: inherit;
-    bottom: 6px;
-    right: 8px;
-    width: 18px;
-    height: 18px;
+  position: inherit;
+  bottom: 6px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
 }
 
 .profile-header {
-    display: flex;
+  display: flex;
 }
 
 .profile-header-user-email {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
 .profile-header-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 30px;
 }
 
-.profile-header-item  p {
-    margin-left: 5px;
+.profile-header-item p {
+  margin-left: 5px;
 }
 
 .profile-header-item input {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .container-detail {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
-.container-detail  p {
-    margin-left: 5px;
+.container-detail p {
+  margin-left: 5px;
 }
 
 .container-detail input {
-    margin-left: 4px;
-    max-width: 120px;
+  margin-left: 4px;
+  max-width: 120px;
 }
 
 .profile-detail {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .goal-container-h1 {
-    text-align: center;
-    margin-left: 200px;
+  text-align: center;
+  margin-left: 200px;
 }
 
 .container-active {
-    margin-top: 20px;
-    margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .account-avatar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .avatar-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 15px;
-    margin-left: 15px;
-    border: 2px solid #007BFF;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 15px;
+  margin-left: 15px;
+  border: 2px solid #007bff;
 }
 
 .theme-toggle {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 25px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 25px;
 }
 
 .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #aac5ee;
-    transition: 0.4s;
-    border-radius: 34px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 5px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #aac5ee;
+  transition: 0.4s;
+  border-radius: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
 }
 
 .slider img {
-    width: 28px;
-    height: 28px;
-    transition: 0.4s;
+  width: 28px;
+  height: 28px;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
-    background-color: #007BFF;
+  background-color: #007bff;
 }
 
 input:checked + .slider:before {
-    transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 input:checked + .slider img {
-    transform: translateX(20px);
+  transform: translateX(20px);
 }
 
 .profile-detail-active {
-    text-align: right;
-    margin-bottom: 10px;
-    color: #007BFF;
+  text-align: right;
+  margin-bottom: 10px;
+  color: #007bff;
 }
 
 .goal-container textarea {
-    margin-top: 10px;
-    width: 480px;
+  margin-top: 10px;
+  width: 480px;
 }

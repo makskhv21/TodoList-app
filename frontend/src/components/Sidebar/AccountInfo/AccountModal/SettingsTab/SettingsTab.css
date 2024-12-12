@@ -1,55 +1,57 @@
 .account-settings {
-    margin: 20px auto;
+  margin: 20px auto;
 }
 
 .account-settings h3 {
-    color: #333;
-    text-align: center;
-    font-size: 24px;
+  color: #333;
+  text-align: center;
+  font-size: 24px;
 }
 
 h4 {
-    color: #555;
-    font-size: 18px;
-    margin-top: 20px;
+  color: #555;
+  font-size: 18px;
+  margin-top: 20px;
 }
 
 .select-language {
-    padding-right: 20px;
+  padding-right: 20px;
 }
 
-.language-settings, .notification-sounds, .account-deletion {
-    margin-bottom: 20px;
+.language-settings,
+.notification-sounds,
+.account-deletion {
+  margin-bottom: 20px;
 }
 
 .notification-sounds label {
-    display: block;
-    margin: 10px 0;
+  display: block;
+  margin: 10px 0;
 }
 
 .delete-btn {
-    background-color: #ff4d4d;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
 .delete-btn:hover {
-    background-color: #e60000;
+  background-color: #e60000;
 }
 
 .checkbox {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 
 button:focus {
-    outline: none;
+  outline: none;
 }
 
 button:hover {
-    background-color: #ff0000;
+  background-color: #ff0000;
 }

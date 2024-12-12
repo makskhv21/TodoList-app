@@ -6,7 +6,7 @@ export const handlePrint = (selectedProject, tasks, onClose) => {
             <input type="checkbox" ${task.completed ? 'checked' : ''} />
             <span>${task.text}</span>
         </div>
-    `,
+    `
     )
     .join('');
 

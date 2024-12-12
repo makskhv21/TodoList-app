@@ -1,155 +1,157 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #F0F1FF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f1ff;
 }
 
 .login-box {
-    background-color: white;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .login-title {
-    font-size: 28px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
 }
 
 .input-group {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .input-icon {
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-    object-fit: contain;
-    transition: transform 0.3s ease, fill 0.3s ease;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  object-fit: contain;
+  transition:
+    transform 0.3s ease,
+    fill 0.3s ease;
 }
 
 .input-group:hover .input-icon,
 .input-field:focus + .input-group .input-icon {
-    transform: scale(1.2);
-    fill: #7950F2;
+  transform: scale(1.2);
+  fill: #7950f2;
 }
 
 .input-field {
-    flex: 1;
-    padding: 12px 15px;
-    padding-left: 40px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    color: #333;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;
-    height: 50px;
-    box-sizing: border-box;
+  flex: 1;
+  padding: 12px 15px;
+  padding-left: 40px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  color: #333;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+  height: 50px;
+  box-sizing: border-box;
 }
 
 .input-field:focus {
-    border-color: #7950F2;
-    outline: none;
+  border-color: #7950f2;
+  outline: none;
 }
 
 .toggle-password {
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    transition: transform 0.3s ease;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .toggle-password:hover {
-    transform: translateY(-50%) scale(1.1);
+  transform: translateY(-50%) scale(1.1);
 }
 
 .eye-icon {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    transition: opacity 0.3s ease;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
 }
 
 .eye-icon:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 
 .login-btn {
-    padding: 12px;
-    border: none;
-    background-color: #7950F2;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%;
-    height: 50px;
+  padding: 12px;
+  border: none;
+  background-color: #7950f2;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  height: 50px;
 }
 
 .login-btn:hover {
-    background-color: #6332f6;
+  background-color: #6332f6;
 }
 
 .login-btn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .footer {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .footer-text {
-    font-size: 16px;
-    color: #777;
+  font-size: 16px;
+  color: #777;
 }
 
 .footer-link {
-    color: #6332f6;
-    text-decoration: none;
+  color: #6332f6;
+  text-decoration: none;
 }
 
 .footer-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .login-box {
-    animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out;
 }
