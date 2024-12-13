@@ -21,6 +21,10 @@ const transporter = nodemailer.createTransport({
 app.post('/send-feedback', async (req, res) => {
   const { feedback } = req.body;
 
+  if (!feedback || feedback.trim() === '') {
+    return res.status(400).json({ message: 'Feedback cannot be empty' });
+  }
+
   try {
     await transporter.sendMail({
       from: 'Your feedback with TodoList-app',
@@ -31,11 +35,14 @@ app.post('/send-feedback', async (req, res) => {
 
     res.status(200).json({ message: 'Feedback sent successfully' });
   } catch (error) {
-    console.error('Error sending email', error);
     res.status(500).json({ message: 'Failed to send feedback' });
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
+}
