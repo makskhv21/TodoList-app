@@ -9,10 +9,14 @@ jest.mock('firebase/auth', () => ({
   getAuth: jest.fn(() => ({})),
 }));
 
+global.alert = jest.fn();
+
 describe('SignUp Component', () => {
   beforeEach(() => {
     render(<SignUp />);
   });
+
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
 
   test('allows users to type in input fields', () => {
     fireEvent.change(
