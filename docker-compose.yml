@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: frontend/Dockerfile
     ports:
-      - "80:80"
+      - '80:80'
     depends_on:
       - backend
     networks:
@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     ports:
-      - "5000:5000"
+      - '5000:5000'
     networks:
       - app-network
 

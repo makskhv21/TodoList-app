@@ -35,9 +35,7 @@ describe('POST /send-feedback', () => {
   });
 
   it('should return 400 if feedback is missing', async () => {
-    const response = await request(app)
-      .post('/send-feedback')
-      .send({});
+    const response = await request(app).post('/send-feedback').send({});
 
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Feedback cannot be empty');
