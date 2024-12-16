@@ -79,7 +79,8 @@
     "vary": "^1.1.2"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node feedback.js"
   },
   "keywords": [],
   "author": "",

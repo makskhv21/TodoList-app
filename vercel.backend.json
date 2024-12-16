@@ -1,9 +1,16 @@
 {
     "version": 2,
-    "functions": {
-      "backend/feedback.js": {
-        "runtime": "nodejs16.x"
+    "builds": [
+      {
+        "src": "backend/package.json",
+        "use": "@vercel/node"
       }
-    }
-  }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "backend/$1"
+      }
+    ]
+}  
   
