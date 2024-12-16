@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f93e247f.css",
+    "main.js": "/static/js/main.009a9446.js",
+    "static/media/photoUser1.jpg": "/static/media/photoUser1.34c492fd8526324fafac.jpg",
+    "static/media/photoUser2.jpg": "/static/media/photoUser2.f9f1c09824f273148df2.jpg",
+    "static/media/nicePhoto3.jpg": "/static/media/nicePhoto3.b584ffc3433af3cc9271.jpg",
+    "static/media/nicePhoto2.jpg": "/static/media/nicePhoto2.cfeb35aab9f4b95ebaba.jpg",
+    "static/media/nicePhoto5.jpg": "/static/media/nicePhoto5.46be604056c4e5988091.jpg",
+    "static/media/nicePhoto4.jpg": "/static/media/nicePhoto4.241cde8ed2c65fd7a716.jpg",
+    "static/media/nicePhoto1.jpg": "/static/media/nicePhoto1.31845316e7360f79338d.jpg",
+    "static/media/botTodoList.png": "/static/media/botTodoList.c8d16102dce494a78e31.png",
+    "static/media/photoTime.png": "/static/media/photoTime.18c0f485637c617ffcc5.png",
+    "static/media/photoProductivity.png": "/static/media/photoProductivity.cc5aa44338abe9d175b4.png",
+    "static/media/photoCareer-development.png": "/static/media/photoCareer-development.8a282c3c95319fb4d854.png",
+    "static/media/avatar.png": "/static/media/avatar.551d6c389b94f88e9c8e.png",
+    "static/media/photoPrioritization.png": "/static/media/photoPrioritization.d773039e657a8b5fab51.png",
+    "static/media/iconEyeClose.png": "/static/media/iconEyeClose.cbbf23e794602415bb81.png",
+    "static/media/iconEyeOpen.png": "/static/media/iconEyeOpen.22bbc82f38339c45010e.png",
+    "index.html": "/index.html",
+    "main.f93e247f.css.map": "/static/css/main.f93e247f.css.map",
+    "main.009a9446.js.map": "/static/js/main.009a9446.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f93e247f.css",
+    "static/js/main.009a9446.js"
+  ]
+}

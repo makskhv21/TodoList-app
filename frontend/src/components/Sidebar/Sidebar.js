@@ -26,7 +26,7 @@ function Sidebar({
     try {
       const response = await fetch('https://api.api-ninjas.com/v1/quotes', {
         headers: {
-          'X-Api-Key': 'process.env.REACT_APP_API_KEY',
+          'X-Api-Key': 'Xs82lP7RTVW4bbKb05W3BQ==6MBhoQrsq40stCdg',
         },
       });
 
