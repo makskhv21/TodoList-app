@@ -15,4 +15,3 @@ function QuoteModal({ quote, onClose, isOpen }) {
 }
 
 export default QuoteModal;
-

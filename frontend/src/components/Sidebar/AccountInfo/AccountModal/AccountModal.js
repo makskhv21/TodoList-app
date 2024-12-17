@@ -45,16 +45,9 @@ const AccountModal = ({
           />
         );
       case 'security':
-        return (
-          <SecurityTab />
-        );
+        return <SecurityTab />;
       case 'settings':
-        return (
-          <SettingsTab
-            formData={formData}
-            setFormData={setFormData}
-          />
-        );
+        return <SettingsTab formData={formData} setFormData={setFormData} />;
       case 'help':
         return <HelpTab />;
       default:

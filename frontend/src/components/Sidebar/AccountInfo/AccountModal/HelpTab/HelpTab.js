@@ -21,10 +21,17 @@ const HelpTab = () => {
         setStatus({ message: 'Feedback sent successfully!', type: 'success' });
         setFeedback('');
       } else {
-        setStatus({ message: 'Failed to send feedback. Please try again later.', type: 'error' });
+        setStatus({
+          message: 'Failed to send feedback. Please try again later.',
+          type: 'error',
+        });
       }
     } catch {
-      setStatus({ message: 'An error occurred. Please check your internet connection and try again.', type: 'error' });
+      setStatus({
+        message:
+          'An error occurred. Please check your internet connection and try again.',
+        type: 'error',
+      });
     } finally {
       setTimeout(() => setStatus({ message: '', type: '' }), 3000);
     }
@@ -41,7 +48,8 @@ const HelpTab = () => {
           <strong>support@example.com</strong>.
         </p>
         <p>
-          You can also visit our <a href="/faq">FAQ page</a> for more information.
+          You can also visit our <a href="/faq">FAQ page</a> for more
+          information.
         </p>
 
         <div className="feedback-section">
@@ -53,7 +61,10 @@ const HelpTab = () => {
             rows="4"
             className="feedback-input"
           />
-          <button onClick={handleFeedbackSubmit} className="submit-feedback-btn">
+          <button
+            onClick={handleFeedbackSubmit}
+            className="submit-feedback-btn"
+          >
             Submit Feedback
           </button>
 

@@ -102,7 +102,10 @@ function Sidebar({
         <AccountInfo onLogout={onLogout} activeTasksCount={activeTasksCount} />
         <div className="btn-container">
           <button className="btn-quote" onClick={generateQuote}>
-            <FontAwesomeIcon icon={faLightbulb} style={{ width: '20px', color: 'yellow' }} />
+            <FontAwesomeIcon
+              icon={faLightbulb}
+              style={{ width: '20px', color: 'yellow' }}
+            />
           </button>
 
           <button className="btn-theme" onClick={toggleTheme}>
@@ -144,7 +147,11 @@ function Sidebar({
           </button>
         </div>
       </div>
-      <QuoteModal quote={quote} onClose={closeModal} isOpen={isQuoteModalOpen} />
+      <QuoteModal
+        quote={quote}
+        onClose={closeModal}
+        isOpen={isQuoteModalOpen}
+      />
     </div>
   );
 }

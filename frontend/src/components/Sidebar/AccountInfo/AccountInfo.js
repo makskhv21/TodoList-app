@@ -8,7 +8,10 @@ const AccountInfo = ({ onLogout, activeTasksCount }) => {
   const [username, setUsername] = useState('Username');
 
   return (
-    <div className="account-info-container" onClick={() => setIsModalOpen(true)}>
+    <div
+      className="account-info-container"
+      onClick={() => setIsModalOpen(true)}
+    >
       <img src={avatar} alt="avatar" className="account-photo" />
       <div className="account-description">
         <h2 className="account-name">{username}</h2>
