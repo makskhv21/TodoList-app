@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Sidebar';
 
-import ProjectItem from './ProjectItem/ProjectItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb, faPlus } from '@fortawesome/free-solid-svg-icons';
+
+import ProjectItem from './ProjectItem/ProjectItem';
 import QuoteModal from './QuoteModal/QuoteModal';
 import AccountInfo from './AccountInfo/AccountInfo';
 
@@ -13,7 +14,6 @@ function Sidebar({
   addProject,
   editProject,
   deleteProject,
-  user,
   onLogout,
   activeTasksCount,
 }) {
@@ -22,7 +22,7 @@ function Sidebar({
   const [quote, setQuote] = useState(null);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
-  const fetchRandomQuote = async () => {
+  const fetchRandomQuote = useCallback(async () => {
     try {
       const response = await fetch('https://api.api-ninjas.com/v1/quotes', {
         headers: {
@@ -39,9 +39,9 @@ function Sidebar({
     } catch (error) {
       return 'Не вдалося завантажити цитату.';
     }
-  };
+  }, []);
 
-  const loadDailyQuote = async () => {
+  const loadDailyQuote = useCallback(async () => {
     const savedQuote = localStorage.getItem('dailyQuote');
     const savedDate = localStorage.getItem('quoteDate');
     const today = new Date().toDateString();
@@ -54,26 +54,31 @@ function Sidebar({
       localStorage.setItem('dailyQuote', randomQuote);
       localStorage.setItem('quoteDate', today);
     }
-  };
+  }, [fetchRandomQuote]);
 
   useEffect(() => {
     loadDailyQuote();
-  }, []);
+  }, [loadDailyQuote]);
 
   const generateQuote = () => setIsQuoteModalOpen(true);
   const closeModal = () => setIsQuoteModalOpen(false);
 
   const toggleTheme = () => {
     setIsDarkTheme((prev) => !prev);
-    document.documentElement.setAttribute(
-      'data-theme',
-      isDarkTheme ? 'light' : 'dark'
-    );
   };
 
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      'data-theme',
+      isDarkTheme ? 'dark' : 'light'
+    );
+  }, [isDarkTheme]);
+
   const handleAddProject = () => {
-    addProject(newProject);
-    setNewProject('');
+    if (newProject.trim()) {
+      addProject(newProject);
+      setNewProject('');
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -83,58 +88,38 @@ function Sidebar({
     }
   };
 
+  const sidebarItems = [
+    { label: 'Today', icon: '⏳' },
+    { label: 'Important', icon: '⭐' },
+    { label: 'Next 7 days', icon: '📆' },
+    { label: 'Calendar', icon: '📖' },
+    { label: 'Missed goals', icon: '📝' },
+  ];
+
   return (
     <div className="sidebar">
       <div className="container-header">
-        <AccountInfo
-          user={user}
-          onLogout={onLogout}
-          activeTasksCount={activeTasksCount}
-        />
+        <AccountInfo onLogout={onLogout} activeTasksCount={activeTasksCount} />
         <div className="btn-container">
-          <button className={`btn-quote`} onClick={generateQuote}>
-            <FontAwesomeIcon
-              icon={faLightbulb}
-              style={{ width: '20px', color: 'yellow' }}
-            />
+          <button className="btn-quote" onClick={generateQuote}>
+            <FontAwesomeIcon icon={faLightbulb} style={{ width: '20px', color: 'yellow' }} />
           </button>
 
-          <button className={`btn-theme`} onClick={toggleTheme}>
+          <button className="btn-theme" onClick={toggleTheme}>
             {isDarkTheme ? '🌞' : '🌜'}
           </button>
         </div>
       </div>
       <hr />
-      <div
-        className="sidebar-item large"
-        onClick={() => setSelectedProject('Today')}
-      >
-        ⏳ Today
-      </div>
-      <div
-        className="sidebar-item large"
-        onClick={() => setSelectedProject('Important')}
-      >
-        ⭐ Important
-      </div>
-      <div
-        className="sidebar-item large"
-        onClick={() => setSelectedProject('Next 7 days')}
-      >
-        📆 Next 7 days
-      </div>
-      <div
-        className="sidebar-item large"
-        onClick={() => setSelectedProject('Calendar')}
-      >
-        📖 Calendar
-      </div>
-      <div
-        className="sidebar-item large"
-        onClick={() => setSelectedProject('Missed goals')}
-      >
-        📝 Missed goals
-      </div>
+      {sidebarItems.map(({ label, icon }, index) => (
+        <div
+          key={index}
+          className="sidebar-item large"
+          onClick={() => setSelectedProject(label)}
+        >
+          {icon} {label}
+        </div>
+      ))}
       <hr />
       <div className="projects">
         {projects.map((project, index) => (
@@ -159,11 +144,7 @@ function Sidebar({
           </button>
         </div>
       </div>
-      <QuoteModal
-        quote={quote}
-        onClose={closeModal}
-        isOpen={isQuoteModalOpen}
-      />
+      <QuoteModal quote={quote} onClose={closeModal} isOpen={isQuoteModalOpen} />
     </div>
   );
 }

@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
 
 function ProjectItem({ project, onSelect, onEdit, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedProjectName, setEditedProjectName] = useState(project);
 
   const handleSaveEdit = () => {
-    onEdit(project, editedProjectName);
+    if (editedProjectName !== project) {
+      onEdit(project, editedProjectName);
+    }
     setIsEditing(false);
+  };
+
+  const handleInputChange = (e) => setEditedProjectName(e.target.value);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') handleSaveEdit();
   };
 
   return (
@@ -19,24 +26,18 @@ function ProjectItem({ project, onSelect, onEdit, onDelete }) {
           <input
             className="editingInput"
             value={editedProjectName}
-            onChange={(e) => setEditedProjectName(e.target.value)}
+            onChange={handleInputChange}
             onBlur={handleSaveEdit}
-            onKeyDown={(e) => e.key === 'Enter' && handleSaveEdit()}
+            onKeyDown={handleKeyDown}
           />
         ) : (
           project
         )}
       </span>
       <div className="btn-save-edit-delete">
-        {isEditing ? (
-          <button onClick={handleSaveEdit}>
-            <FontAwesomeIcon icon={faSave} />
-          </button>
-        ) : (
-          <button onClick={() => setIsEditing(true)}>
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
-        )}
+        <button onClick={isEditing ? handleSaveEdit : () => setIsEditing(true)}>
+          <FontAwesomeIcon icon={isEditing ? faSave : faEdit} />
+        </button>
         <button onClick={() => onDelete(project)}>
           <FontAwesomeIcon icon={faTrash} />
         </button>

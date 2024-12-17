@@ -3,14 +3,11 @@ import './SettingsTab.css';
 
 const SettingsTab = ({ formData, setFormData }) => {
   const handleAccountDeletion = () => {
-    if (
-      window.confirm(
-        'Are you sure you want to delete your account? This action is irreversible.'
-      )
-    ) {
+    const message = 'Are you sure you want to delete your account? This action is irreversible.';
+    if (window.confirm(message)) {
       alert('Account deleted!');
     }
-  };
+  };  
 
   return (
     <div className="account-settings">

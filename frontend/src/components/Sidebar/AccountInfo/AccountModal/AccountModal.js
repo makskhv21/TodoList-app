@@ -22,8 +22,6 @@ const AccountModal = ({
     username: 'My name',
     email: 'myemail@example.com',
   });
-  const [emailError, setEmailError] = useState('');
-  const [is2FAEnabled, setIs2FAEnabled] = useState(false);
 
   const handleLogout = () => {
     const confirmed = window.confirm('Are you sure you want to log out?');
@@ -48,18 +46,13 @@ const AccountModal = ({
         );
       case 'security':
         return (
-          <SecurityTab
-            is2FAEnabled={is2FAEnabled}
-            setIs2FAEnabled={setIs2FAEnabled}
-          />
+          <SecurityTab />
         );
       case 'settings':
         return (
           <SettingsTab
             formData={formData}
             setFormData={setFormData}
-            emailError={emailError}
-            setEmailError={setEmailError}
           />
         );
       case 'help':
