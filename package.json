@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start", 
-    "build": "react-scripts build",  
-    "test": "react-scripts test", 
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "format": "prettier --write .",
     "prepare": "husky install"
   },
@@ -20,8 +20,8 @@
     "express": "^4.21.2",
     "firebase": "^11.0.2",
     "nodemailer": "^6.9.16",
-    "react": "^18.0.0",  
-    "react-dom": "^18.0.0"  
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "eslint-config-prettier": "^9.1.0",

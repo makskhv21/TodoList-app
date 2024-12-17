@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   backend:
@@ -16,7 +19,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/backend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
@@ -29,13 +32,21 @@ jobs:
         working-directory: ./backend
         run: npm install
 
+      - name: Run Prettier check
+        working-directory: ./backend
+        run: npx prettier --check .
+
+      - name: Run ESLint
+        working-directory: ./backend
+        run: npx eslint . --fix
+
       - name: Run backend tests
         working-directory: ./backend
         run: npm test
 
-      - name: Start backend server
+      - name: Build backend
         working-directory: ./backend
-        run: npm start &
+        run: npm run build
 
   frontend:
     runs-on: ubuntu-latest
@@ -47,7 +58,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/frontend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
@@ -60,12 +71,44 @@ jobs:
         working-directory: ./frontend
         run: npm install
 
+      - name: Run Prettier check
+        working-directory: ./frontend
+        run: npx prettier --check .
+
+      - name: Run ESLint
+        working-directory: ./frontend
+        run: npx eslint . --fix
+
       - name: Run frontend build
         working-directory: ./frontend
         run: npm run build
 
-      - name: Upload build artifacts
+      - name: Upload frontend build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: frontend-build
           path: ./frontend/build
+
+  commit-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check commit message style
+        run: npx commitlint --from=HEAD~1
+
+  deployment:
+    needs: [backend, frontend]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy backend
+        run: |
+          echo "Deploying backend to server..."
+
+      - name: Deploy frontend
+        run: |
+          echo "Deploying frontend to server..."
