@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 import Sidebar from './components/Sidebar/Sidebar';
 import MainContent from './components/MainContent/MainContent';
+import { auth, db } from './firebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
+import { ref, set, get } from 'firebase/database';
 
 function App({ onLogout }) {
   const [selectedProject, setSelectedProject] = useState('Work 👜');
@@ -14,6 +17,48 @@ function App({ onLogout }) {
   ]);
   const [activeTasksCount, setActiveTasksCount] = useState(0);
   const [tasks, setTasks] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        fetchUserTasks(user.uid);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const fetchUserTasks = async (userId) => {
+    const tasksRef = ref(db, 'tasks/' + userId);
+    const snapshot = await get(tasksRef);
+    if (snapshot.exists()) {
+      const tasksData = snapshot.val();
+      const tasksArray = Object.keys(tasksData).map((key) => ({
+        id: key,
+        ...tasksData[key],
+      }));
+      setTasks(tasksArray);
+    } else {
+      setTasks([]);
+    }
+  };
+
+  const saveTasksToDatabase = (userId, tasks) => {
+    const tasksRef = ref(db, 'tasks/' + userId);
+    set(tasksRef, tasks);
+  };
+
+  const addTask = (newTask) => {
+    const updatedTasks = [...tasks, newTask];
+    setTasks(updatedTasks);
+    if (user) {
+      saveTasksToDatabase(user.uid, updatedTasks);
+    }
+  };
 
   const handleActiveTasksCount = (count) => setActiveTasksCount(count);
 
@@ -45,39 +90,51 @@ function App({ onLogout }) {
   };
 
   const toggleTaskCompletion = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
     );
+    setTasks(updatedTasks);
+    if (user) {
+      saveTasksToDatabase(user.uid, updatedTasks);
+    }
   };
 
-  const addTask = (newTask) => setTasks((prevTasks) => [...prevTasks, newTask]);
-
   const editTask = (id, newText) => {
-    setTasks(
-      tasks.map((task) => (task.id === id ? { ...task, text: newText } : task))
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, text: newText } : task
     );
+    setTasks(updatedTasks);
+    if (user) {
+      saveTasksToDatabase(user.uid, updatedTasks);
+    }
   };
 
   const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+    if (user) {
+      saveTasksToDatabase(user.uid, updatedTasks);
+    }
   };
 
   const toggleImportant = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, important: !task.important } : task
-      )
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, important: !task.important } : task
     );
+    setTasks(updatedTasks);
+    if (user) {
+      saveTasksToDatabase(user.uid, updatedTasks);
+    }
   };
 
   const deleteAllTasksForDate = (date) => {
-    setTasks((prevTasks) =>
-      prevTasks.filter(
-        (task) => new Date(task.createdAt).toDateString() !== date
-      )
+    const updatedTasks = tasks.filter(
+      (task) => new Date(task.createdAt).toDateString() !== date
     );
+    setTasks(updatedTasks);
+    if (user) {
+      saveTasksToDatabase(user.uid, updatedTasks);
+    }
   };
 
   return (

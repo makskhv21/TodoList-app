@@ -21,10 +21,12 @@ The **Todolist-app** is a web application designed to help users efficiently man
 - Implement team collaboration features for group tasks.
 
 ### How to start? ⚡
-1. Clone repo: ``` git clone https://github.com/makskhv21/TodoList-app.git ```
-2. Running the program locally: 
-``` 
-1. cd frontend 
+
+1. Clone repo: `git clone https://github.com/makskhv21/TodoList-app.git`
+2. Running the program locally:
+
+```
+1. cd frontend
 2. npm install
 3. npm start
 4. http://localhost:3000
@@ -36,12 +38,15 @@ and
 ```
 
 ### How to test? 🧪
+
 1. Go to the `frontend` or `backend` folder.
 2. Run tests:
+
 ```
 npm install
 npm test
 ```
 
 ### Author 👨‍💻
+
 This project is developed [Khvyts Maksym](https://github.com/makskhv21)
