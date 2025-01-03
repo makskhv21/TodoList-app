@@ -24,6 +24,9 @@
     "no-console": "off",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "warn",
-    "no-magic-numbers": "off"
+    "no-magic-numbers": "off",
+    "no-unused-vars": "off",
+    "camelcase": "warn",
+    "no-undef": "error"
   }
 }

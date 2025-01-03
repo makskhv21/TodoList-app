@@ -3,8 +3,12 @@ import themes from '../utils/themes';
 
 const ThemeSelector = ({ onThemeChange, onClose }) => {
   const handleThemeSelect = (themeName) => {
-    onThemeChange(themeName);
-    onClose();
+    if (typeof onThemeChange === 'function') {
+      onThemeChange(themeName);
+      onClose();
+    } else {
+      console.error('onThemeChange is not a function');
+    }
   };
 
   return (

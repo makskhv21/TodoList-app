@@ -1,43 +1,15 @@
 import React, { useState } from 'react';
-
 import './SecurityTab.css';
-
-import iconEyeOpen from '../../../../../pages/img/iconEyeOpen.png';
-import iconEyeClose from '../../../../../pages/img/iconEyeClose.png';
+import PasswordInput from './PasswordInput/PasswordInput';
+import PasswordStrength from './PasswordStrength/PasswordStrength';
+import usePasswordValidation from './hooks/usePasswordValidation';
 
 const SecurityTab = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordStrength, setPasswordStrength] = useState(0);
-  const [passwordErrors, setPasswordErrors] = useState([]);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { passwordStrength, passwordErrors, checkPasswordStrength } =
+    usePasswordValidation();
   const [successMessage, setSuccessMessage] = useState('');
-
-  const checkPasswordStrength = (password) => {
-    const errors = [];
-    if (password.length < 6) errors.push('Password is too short');
-    if (!/[A-Z]/.test(password))
-      errors.push('Password must contain at least one uppercase letter');
-    if (!/\d/.test(password))
-      errors.push('Password must contain at least one number');
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password))
-      errors.push('Password must contain at least one special character');
-
-    setPasswordErrors(errors);
-
-    if (errors.length === 0) {
-      setPasswordStrength(
-        password.length < 8
-          ? 'Weak'
-          : password.length < 12
-            ? 'Medium'
-            : 'Strong'
-      );
-    } else {
-      setPasswordStrength('Weak');
-    }
-  };
 
   const handleNewPasswordChange = (e) => {
     setNewPassword(e.target.value);
@@ -45,10 +17,6 @@ const SecurityTab = () => {
   };
 
   const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
-  const toggleNewPasswordVisibility = () =>
-    setShowNewPassword(!showNewPassword);
-  const toggleConfirmPasswordVisibility = () =>
-    setShowConfirmPassword(!showConfirmPassword);
 
   const handleChangePassword = () => {
     const isPasswordMatching = newPassword === confirmPassword;
@@ -64,77 +32,24 @@ const SecurityTab = () => {
   const resetFields = () => {
     setNewPassword('');
     setConfirmPassword('');
-    setPasswordStrength(0);
-    setPasswordErrors([]);
+    checkPasswordStrength('');
     setSuccessMessage('');
   };
 
   return (
     <div className="account-security">
       <h3>Change Password</h3>
-      <div className="input-wrapper">
-        <input
-          type={showNewPassword ? 'text' : 'password'}
-          placeholder="New Password"
-          value={newPassword}
-          onChange={handleNewPasswordChange}
-        />
-        <button
-          className="toggle-visibility"
-          onClick={toggleNewPasswordVisibility}
-        >
-          <img
-            src={showNewPassword ? iconEyeOpen : iconEyeClose}
-            alt={showNewPassword ? 'Hide Password' : 'Show Password'}
-          />
-        </button>
-      </div>
-      <div className="input-wrapper">
-        <input
-          type={showConfirmPassword ? 'text' : 'password'}
-          placeholder="Confirm New Password"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-        />
-        <button
-          className="toggle-visibility"
-          onClick={toggleConfirmPasswordVisibility}
-        >
-          <img
-            src={showConfirmPassword ? iconEyeOpen : iconEyeClose}
-            alt={showConfirmPassword ? 'Hide Password' : 'Show Password'}
-          />
-        </button>
-      </div>
-      <div className="password-strength-container">
-        <p className="password-strength-label">Password Strength:</p>
-        <div className="password-strength-bar">
-          <div
-            className={`weak ${passwordStrength === 'Weak' ? 'weak' : ''}`}
-            style={{ width: passwordStrength === 'Weak' ? '100%' : '0%' }}
-          ></div>
-          <div
-            className={`medium ${passwordStrength === 'Medium' || passwordStrength === 'Strong' ? 'medium' : ''}`}
-            style={{
-              width:
-                passwordStrength === 'Medium' || passwordStrength === 'Strong'
-                  ? '100%'
-                  : '0%',
-            }}
-          ></div>
-          <div
-            className={`strong ${passwordStrength === 'Strong' ? 'strong' : ''}`}
-            style={{ width: passwordStrength === 'Strong' ? '100%' : '0%' }}
-          ></div>
-        </div>
-        {passwordErrors.length > 0 && (
-          <ul className="password-errors">
-            {passwordErrors.map((err, idx) => (
-              <li key={idx}>{err}</li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <PasswordInput
+        label="New Password"
+        value={newPassword}
+        onChange={handleNewPasswordChange}
+      />
+      <PasswordInput
+        label="Confirm New Password"
+        value={confirmPassword}
+        onChange={handleConfirmPasswordChange}
+      />
+      <PasswordStrength strength={passwordStrength} errors={passwordErrors} />
       <p
         className={
           successMessage.includes('successfully')

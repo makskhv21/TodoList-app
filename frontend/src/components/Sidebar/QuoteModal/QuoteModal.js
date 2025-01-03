@@ -6,9 +6,9 @@ function QuoteModal({ quote, onClose, isOpen }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h2>Цитата дня</h2>
+        <h2>Quote of the day</h2>
         <p>{quote || 'Цитата не доступна'}</p>
-        <button onClick={onClose}>Закрити</button>
+        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );

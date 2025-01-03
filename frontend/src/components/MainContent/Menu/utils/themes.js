@@ -1,8 +1,8 @@
-import nicePhoto1 from './img/nicePhoto1.jpg';
-import nicePhoto2 from './img/nicePhoto2.jpg';
-import nicePhoto3 from './img/nicePhoto3.jpg';
-import nicePhoto4 from './img/nicePhoto4.jpg';
-import nicePhoto5 from './img/nicePhoto5.jpg';
+import nicePhoto1 from '../img/nicePhoto1.jpg';
+import nicePhoto2 from '../img/nicePhoto2.jpg';
+import nicePhoto3 from '../img/nicePhoto3.jpg';
+import nicePhoto4 from '../img/nicePhoto4.jpg';
+import nicePhoto5 from '../img/nicePhoto5.jpg';
 
 const themes = {
   light: { background: '#ffffff', color: '#000000' },
@@ -11,7 +11,7 @@ const themes = {
   pink: { background: '#ff6f61', color: '#000000' },
   yellow: { background: '#f1c40f', color: '#000000' },
   purple: { background: '#CC8DE6', color: '#ffffff' },
-  light_green: { background: '#77D6BE', color: '#ffffff' },
+  lightGreen: { background: '#77D6BE', color: '#ffffff' },
   nicePhoto1: {
     background: `url(${nicePhoto1}) no-repeat center`,
     backgroundSize: 'contain',

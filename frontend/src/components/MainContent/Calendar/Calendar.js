@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 import MonthNavigation from './MonthNavigation/MonthNavigation';
 import WeekDaysHeader from './WeekDaysHeader/WeekDaysHeader';
-import TaskModalCalendar from './TaskModalCalendar/TaskModalCalendar';
-import AddTaskCalendar from './AddTaskCalendar/AddTaskCalendar';
 import RenderDays from './RenderDays/RenderDays';
+import AddTaskCalendar from './AddTaskCalendar/AddTaskCalendar';
+import TaskModalCalendar from './TaskModalCalendar/TaskModalCalendar';
 
+import { useCalendarLogic } from './hooks/useCalendarLogic';
 import './Calendar.css';
 
 const Calendar = ({
@@ -17,78 +17,33 @@ const Calendar = ({
   toggleTaskCompletion,
   deleteAllTasksForDate,
 }) => {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date().toDateString());
-  const [newTaskText, setNewTaskText] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [editingTask, setEditingTask] = useState(null);
-  const [editedText, setEditedText] = useState('');
-
-  const handleDateClick = (date) => setSelectedDate(date);
-  const handleTaskClick = (task) => openTaskModal(task);
-  const handleTaskDoubleClick = (task) => openTaskModal(task);
-
-  const handleAddTask = () => {
-    if (newTaskText.trim()) {
-      const newTask = createNewTask(newTaskText);
-      addTask(newTask);
-      setNewTaskText('');
-    }
-  };
-
-  const changeMonth = (offset) =>
-    setCurrentMonth(
-      (prevMonth) =>
-        new Date(prevMonth.getFullYear(), prevMonth.getMonth() + offset, 1)
-    );
-
-  const filterTasksByDate = (completed) =>
-    tasks.filter(
-      (task) =>
-        new Date(task.createdAt).toDateString() === selectedDate &&
-        task.completed === completed
-    );
+  const {
+    currentMonth,
+    selectedDate,
+    setSelectedDate,
+    newTaskText,
+    setNewTaskText,
+    showModal,
+    editingTask,
+    editedText,
+    setEditedText,
+    changeMonth,
+    filterTasksByDate,
+    handleAddTask,
+    closeModal,
+    openTaskModal,
+    handleDeleteAllTasks,
+  } = useCalendarLogic(tasks, addTask, editTask, deleteAllTasksForDate);
 
   const tasksForDate = filterTasksByDate(false);
   const completedTasksForDate = filterTasksByDate(true);
 
-  const closeModal = () => {
-    setShowModal(false);
-    setEditingTask(null);
-  };
-
-  const handleDeleteAllTasks = () => {
-    if (
-      window.confirm('Are you sure you want to delete all tasks for this date?')
-    ) {
-      deleteAllTasksForDate(selectedDate);
-    }
-    closeModal();
-  };
-
-  const handleEditTask = () => {
-    if (editedText.trim()) {
-      editTask(editingTask.id, editedText);
-      setEditingTask(null);
-    }
-  };
-
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') handleEditTask();
-  };
-
-  const createNewTask = (text) => ({
-    id: Date.now(),
-    text,
-    createdAt: selectedDate,
-    completed: false,
-    important: false,
-  });
-
-  const openTaskModal = (task) => {
-    setEditingTask(task);
-    setEditedText(task.text);
-    setShowModal(true);
+    if (e.key === 'Enter' && editingTask) {
+      editTask(editingTask.id, editedText);
+      setEditedText('');
+      closeModal();
+    }
   };
 
   return (
@@ -101,8 +56,8 @@ const Calendar = ({
           currentMonth={currentMonth}
           selectedDate={selectedDate}
           tasks={tasks}
-          handleDateClick={handleDateClick}
-          handleTaskClick={handleTaskClick}
+          handleDateClick={setSelectedDate}
+          handleTaskClick={openTaskModal}
         />
       </div>
 
@@ -122,7 +77,7 @@ const Calendar = ({
 
             <TaskModalCalendar
               tasksForDate={tasksForDate}
-              handleTaskDoubleClick={handleTaskDoubleClick}
+              handleTaskDoubleClick={openTaskModal}
               editingTask={editingTask}
               editedText={editedText}
               setEditedText={setEditedText}

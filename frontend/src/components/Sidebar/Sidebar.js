@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import './Sidebar';
+import React, { useState, useEffect } from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLightbulb, faPlus } from '@fortawesome/free-solid-svg-icons';
-
-import ProjectItem from './ProjectItem/ProjectItem';
+import SidebarHeader from './componentSidebar/SidebarHeader';
+import SidebarProjects from './componentSidebar/SidebarProjects';
 import QuoteModal from './QuoteModal/QuoteModal';
-import AccountInfo from './AccountInfo/AccountInfo';
+import { useDailyQuote } from './hooks/useDailyQuote';
+import { useTheme } from './hooks/useTheme';
 
 function Sidebar({
   projects,
@@ -18,61 +16,16 @@ function Sidebar({
   activeTasksCount,
 }) {
   const [newProject, setNewProject] = useState('');
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-  const [quote, setQuote] = useState(null);
+  const { quote, loadDailyQuote } = useDailyQuote();
+  const { isDarkTheme, toggleTheme } = useTheme();
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
-
-  const fetchRandomQuote = useCallback(async () => {
-    try {
-      const response = await fetch('https://api.api-ninjas.com/v1/quotes', {
-        headers: {
-          'X-Api-Key': 'Xs82lP7RTVW4bbKb05W3BQ==6MBhoQrsq40stCdg',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data[0].quote;
-    } catch (error) {
-      return 'Не вдалося завантажити цитату.';
-    }
-  }, []);
-
-  const loadDailyQuote = useCallback(async () => {
-    const savedQuote = localStorage.getItem('dailyQuote');
-    const savedDate = localStorage.getItem('quoteDate');
-    const today = new Date().toDateString();
-
-    if (savedQuote && savedDate === today) {
-      setQuote(savedQuote);
-    } else {
-      const randomQuote = await fetchRandomQuote();
-      setQuote(randomQuote);
-      localStorage.setItem('dailyQuote', randomQuote);
-      localStorage.setItem('quoteDate', today);
-    }
-  }, [fetchRandomQuote]);
-
-  useEffect(() => {
-    loadDailyQuote();
-  }, [loadDailyQuote]);
 
   const generateQuote = () => setIsQuoteModalOpen(true);
   const closeModal = () => setIsQuoteModalOpen(false);
 
-  const toggleTheme = () => {
-    setIsDarkTheme((prev) => !prev);
-  };
-
   useEffect(() => {
-    document.documentElement.setAttribute(
-      'data-theme',
-      isDarkTheme ? 'dark' : 'light'
-    );
-  }, [isDarkTheme]);
+    loadDailyQuote();
+  }, [loadDailyQuote]);
 
   const handleAddProject = () => {
     if (newProject.trim()) {
@@ -98,21 +51,13 @@ function Sidebar({
 
   return (
     <div className="sidebar">
-      <div className="container-header">
-        <AccountInfo onLogout={onLogout} activeTasksCount={activeTasksCount} />
-        <div className="btn-container">
-          <button className="btn-quote" onClick={generateQuote}>
-            <FontAwesomeIcon
-              icon={faLightbulb}
-              style={{ width: '20px', color: 'yellow' }}
-            />
-          </button>
-
-          <button className="btn-theme" onClick={toggleTheme}>
-            {isDarkTheme ? '🌞' : '🌜'}
-          </button>
-        </div>
-      </div>
+      <SidebarHeader
+        onLogout={onLogout}
+        activeTasksCount={activeTasksCount}
+        onGenerateQuote={generateQuote}
+        isDarkTheme={isDarkTheme}
+        onToggleTheme={toggleTheme}
+      />
       <hr />
       {sidebarItems.map(({ label, icon }, index) => (
         <div
@@ -124,29 +69,16 @@ function Sidebar({
         </div>
       ))}
       <hr />
-      <div className="projects">
-        {projects.map((project, index) => (
-          <ProjectItem
-            key={index}
-            project={project}
-            onSelect={setSelectedProject}
-            onEdit={editProject}
-            onDelete={deleteProject}
-          />
-        ))}
-        <div className="sidebar-item newProject">
-          <input
-            type="text"
-            value={newProject}
-            onChange={(e) => setNewProject(e.target.value)}
-            placeholder="New list"
-            onKeyDown={handleKeyDown}
-          />
-          <button onClick={handleAddProject}>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </div>
-      </div>
+      <SidebarProjects
+        projects={projects}
+        onSelectProject={setSelectedProject}
+        onEditProject={editProject}
+        onDeleteProject={deleteProject}
+        newProject={newProject}
+        setNewProject={setNewProject}
+        onAddProject={handleAddProject}
+        onKeyDown={handleKeyDown}
+      />
       <QuoteModal
         quote={quote}
         onClose={closeModal}

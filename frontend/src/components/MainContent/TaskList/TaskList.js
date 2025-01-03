@@ -72,6 +72,7 @@ function TaskList({
                 key={task.id}
                 task={task}
                 toggleTaskCompletion={toggleTaskCompletion}
+                toggleImportant={toggleImportant}
                 onEdit={() => {
                   setEditingTaskId(task.id);
                   setEditingTaskText(task.text);
