@@ -9,7 +9,7 @@ import {
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import App from './App';
+import App from './App.tsx';
 
 const Main = () => {
   const [isAuthenticated, setIsAuthenticated] = React.useState(

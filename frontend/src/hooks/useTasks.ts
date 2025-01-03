@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { ref, set, get } from 'firebase/database';
 import { db } from '../firebaseConfig';
+import { Task } from '../types';
 
-const useTasks = (user) => {
-  const [tasks, setTasks] = useState([]);
+const useTasks = (user: { uid: string } | null) => {
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     if (user) {
@@ -26,20 +27,20 @@ const useTasks = (user) => {
     }
   }, [user]);
 
-  const saveTasksToDatabase = (tasks) => {
+  const saveTasksToDatabase = (tasks: Task[]) => {
     if (user) {
       const tasksRef = ref(db, 'tasks/' + user.uid);
       set(tasksRef, tasks);
     }
   };
 
-  const addTask = (newTask) => {
+  const addTask = (newTask: Task) => {
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
     saveTasksToDatabase(updatedTasks);
   };
 
-  const toggleTaskCompletion = (id) => {
+  const toggleTaskCompletion = (id: string) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
     );
@@ -47,7 +48,7 @@ const useTasks = (user) => {
     saveTasksToDatabase(updatedTasks);
   };
 
-  const editTask = (id, newText) => {
+  const editTask = (id: string, newText: string) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, text: newText } : task
     );
@@ -55,13 +56,13 @@ const useTasks = (user) => {
     saveTasksToDatabase(updatedTasks);
   };
 
-  const deleteTask = (id) => {
+  const deleteTask = (id: string) => {
     const updatedTasks = tasks.filter((task) => task.id !== id);
     setTasks(updatedTasks);
     saveTasksToDatabase(updatedTasks);
   };
 
-  const toggleImportant = (id) => {
+  const toggleImportant = (id: string) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, important: !task.important } : task
     );
@@ -69,7 +70,7 @@ const useTasks = (user) => {
     saveTasksToDatabase(updatedTasks);
   };
 
-  const deleteAllTasksForDate = (date) => {
+  const deleteAllTasksForDate = (date: string) => {
     const updatedTasks = tasks.filter(
       (task) => new Date(task.createdAt).toDateString() !== date
     );
